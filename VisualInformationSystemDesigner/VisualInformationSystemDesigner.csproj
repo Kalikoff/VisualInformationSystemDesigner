@@ -10,6 +10,22 @@
 
   <ItemGroup>
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="SharpVectors" Version="1.8.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\pc-svgrepo-com.svg" />
+    <Resource Include="Resources\pc-svgrepo-com.svg" />
+    <None Remove="Resources\server-svgrepo-com.svg" />
+    <Resource Include="Resources\server-svgrepo-com.svg" />
+    <None Remove="Resources\node-svgrepo-com.svg" />
+    <Resource Include="Resources\node-svgrepo-com.svg" />
+    <None Remove="Resources\database-svgrepo-com.svg" />
+    <Resource Include="Resources\database-svgrepo-com.svg" />
   </ItemGroup>
 
 </Project>

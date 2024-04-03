@@ -5,7 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VisualInformationSystemDesigner.View"
       xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel"
-      mc:Ignorable="d" 
+      xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+      mc:Ignorable="d"
       d:DesignHeight="1000" d:DesignWidth="320"
       Title="DeviceView">
 
@@ -13,7 +14,10 @@
         <viewModel:DeviceViewModel/>
     </Page.DataContext>
 
-    <Grid>
-        
+    <Grid Background="LightBlue">
+        <UniformGrid Columns="1" Rows="3">
+            <svgc:SvgViewbox Source="/Resources/pc-svgrepo-com.svg"/>
+            <svgc:SvgViewbox Source="/Resources/server-svgrepo-com.svg"/>
+        </UniformGrid>
     </Grid>
 </Page>
