@@ -14,6 +14,30 @@
     </Page.DataContext>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <Menu Grid.Row="0"></Menu>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Рабочая область-->
+            <Frame Grid.Column="0"/>
+            
+            <!--Список устройств-->
+            <Frame Grid.Column="1">
+                <Frame.ContentTemplate>
+                    <DataTemplate>
+                        <local:DeviceView/>
+                    </DataTemplate>
+                </Frame.ContentTemplate>
+            </Frame>
+        </Grid>
     </Grid>
 </Page>

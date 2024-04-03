@@ -2,9 +2,9 @@
 
 namespace VisualInformationSystemDesigner.ViewModel
 {
-	public class HomeViewModel : BaseViewModel
+	public class DeviceViewModel : BaseViewModel
 	{
-		public HomeViewModel()
+		public DeviceViewModel()
 		{
 
 		}
