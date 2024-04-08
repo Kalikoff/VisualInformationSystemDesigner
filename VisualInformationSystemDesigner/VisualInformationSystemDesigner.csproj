@@ -9,23 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
     <PackageReference Include="SharpVectors" Version="1.8.4" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Remove="Resources\database-icon.png" />
+    <None Remove="Resources\pc-icon.png" />
     <None Remove="Resources\pc-svgrepo-com.svg" />
-    <Resource Include="Resources\pc-svgrepo-com.svg" />
+    <None Remove="Resources\server-icon.png" />
+    <Resource Include="Resources\database-icon.png" />
+    <Resource Include="Resources\pc-icon.png" />
+    <Resource Include="Resources\server-icon.png" />
+    <Resource Include="Resources\SVG\pc-svgrepo-com.svg" />
     <None Remove="Resources\server-svgrepo-com.svg" />
-    <Resource Include="Resources\server-svgrepo-com.svg" />
+    <Resource Include="Resources\SVG\server-svgrepo-com.svg" />
     <None Remove="Resources\node-svgrepo-com.svg" />
-    <Resource Include="Resources\node-svgrepo-com.svg" />
+    <Resource Include="Resources\SVG\node-svgrepo-com.svg" />
     <None Remove="Resources\database-svgrepo-com.svg" />
-    <Resource Include="Resources\database-svgrepo-com.svg" />
+    <Resource Include="Resources\SVG\database-svgrepo-com.svg" />
   </ItemGroup>
 
 </Project>
