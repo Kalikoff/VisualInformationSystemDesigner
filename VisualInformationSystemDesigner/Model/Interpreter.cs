@@ -60,6 +60,7 @@ namespace VisualInformationSystemDesigner.Model
 					{
 						VariableType type = VariableType.Null;
 
+
 						if (tokens[i] == "int")
 						{
 							type = VariableType.Integer;
