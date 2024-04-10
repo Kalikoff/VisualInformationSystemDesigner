@@ -11,21 +11,36 @@
 			 d:DataContext="{d:DesignInstance Type=local:ConsoleViewModel}">
 	<Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBox HorizontalAlignment="Stretch" 
+        <TextBox Grid.Row="0"
+                 HorizontalAlignment="Stretch" 
 				 VerticalAlignment="Stretch"
-                 Grid.Row="0"
-				 TextWrapping="Wrap"
-				 AcceptsReturn="True"
+                 IsReadOnly="True"
 				 Background="#0c0c0c"
 				 Foreground="#cccccc"
 				 FontFamily="Consolas"
 				 FontSize="16"
-                 Text="{Binding Source}"/>
-        
-        
+                 Text="{Binding ConsoleOutput}"
+                 Margin="0, 0, 0, 5"/>
+
+        <TextBox Grid.Row="1"
+                 HorizontalAlignment="Stretch" 
+				 VerticalAlignment="Stretch"
+				 TextWrapping="Wrap"
+                 
+				 Background="#0c0c0c"
+				 Foreground="#cccccc"
+				 FontFamily="Consolas"
+				 FontSize="16"
+                 Text="{Binding CommandText, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding ProcessCommand}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+
     </Grid>
 </UserControl>

@@ -38,7 +38,7 @@
                                  VerticalAlignment="Stretch"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True"
-                                 Text="{Binding Source}"
+                                 Text="{Binding Source, UpdateSourceTrigger=PropertyChanged}"
                                  Background="#1e1e1e"
                                  Foreground="#e6e6e6"
                                  FontFamily="Consolas"
