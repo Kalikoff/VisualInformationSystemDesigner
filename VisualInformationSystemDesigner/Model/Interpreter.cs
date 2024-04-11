@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace VisualInformationSystemDesigner.Model
 {
@@ -16,6 +17,14 @@ namespace VisualInformationSystemDesigner.Model
 
 		}
 
+		/// <summary>
+		/// Текстовые типы данных
+		/// </summary>
+		private readonly List<string> _validVariableType = ["int", "double", "string"];
+
+		/// <summary>
+		/// Представление доступных типов данных
+		/// </summary>
 		public enum VariableType
 		{
 			Integer,
@@ -24,6 +33,9 @@ namespace VisualInformationSystemDesigner.Model
 			Null
 		}
 
+		/// <summary>
+		/// Класс "Переменная"
+		/// </summary>
 		public class Variable
 		{
 			public VariableType Type { get; }
@@ -36,8 +48,10 @@ namespace VisualInformationSystemDesigner.Model
 			}
 		}
 
-
-		private readonly Dictionary<string, Variable> variables = new Dictionary<string, Variable>();
+		/// <summary>
+		/// Словарь всех переменных программы
+		/// </summary>
+		private readonly Dictionary<string, Variable> variables = new();
 
 		public string Interpret(string? code)
 		{
@@ -46,54 +60,44 @@ namespace VisualInformationSystemDesigner.Model
 				return "";
 			}
 
-            var regex = new Regex(@"(?:[^\s""]+|""[^""]*"")+");
-            string output = "";
+			var regex = new Regex(@"(?:[^\s""]+|""[^""]*"")+");
+			string output = "";
 
 			string[] lines = code.Split('\n');
 
-            foreach (string line in lines)
+			foreach (string line in lines)
 			{
-                string[] tokens = regex.Matches(line).Cast<Match>().Select(x => x.Value.Trim('"')).ToArray();
+				string[] tokens = regex.Matches(line).Cast<Match>().Select(x => x.Value.Trim('"')).ToArray();
 
-                for (int i = 0; i < tokens.Length; i++)
+				for (int i = 0; i < tokens.Length; i++)
 				{
-					if (tokens[i] == "int" || tokens[i] == "double" || tokens[i] == "string")
+					if (_validVariableType.Contains(tokens[0]))
 					{
 						VariableType type = VariableType.Null;
+						object? value = null;
 
-
-						if (tokens[i] == "int")
+						switch (tokens[i])
 						{
-							type = VariableType.Integer;
-						}
-						else if (tokens[i] == "double")
-						{
-							type = VariableType.Double;
-						}
-						else if (tokens[i] == "string")
-						{
-							type = VariableType.String;
+							case "int":
+								type = VariableType.Integer;
+								value = Convert.ChangeType(tokens[i + 3], typeof(int));
+								break;
+							case "double":
+								type = VariableType.Double;
+								value = double.Parse(tokens[i + 3], CultureInfo.InvariantCulture);
+								break;
+							case "string":
+								type = VariableType.String;
+								value = tokens[i + 3];
+								break;
 						}
 
 						string name = tokens[i + 1];
-						object? value = null;
-
-						if (type == VariableType.Integer)
-						{
-							value = Convert.ChangeType(tokens[i + 3], typeof(int));
-						}
-						else if (type == VariableType.Double)
-						{
-                            value = double.Parse(tokens[i + 3], CultureInfo.InvariantCulture);
-						}
-						else
-						{
-							value = tokens[i + 3];
-						}
-
 						variables[name] = new Variable(type, value);
+
+						break;
 					}
-					else if (tokens[i] == "print")
+					else if (tokens[0] == "print")
 					{
 						string name = tokens[i + 1];
 
@@ -104,9 +108,15 @@ namespace VisualInformationSystemDesigner.Model
 						}
 						else
 						{
-                            output += $"Ошибка: Переменная '{name}' не найдена." + "\n";
-                            //Console.WriteLine($"Error: Variable '{name}' not found.");
-                        }
+							output += $"Ошибка: Переменная '{name}' не найдена." + "\n";
+							//Console.WriteLine($"Error: Variable '{name}' not found.");
+						}
+
+						break;
+					}
+					else
+					{
+						return $"Ошибка: Такой команды не существует '{tokens[i]}'!" + "\n";
 					}
 				}
 			}
