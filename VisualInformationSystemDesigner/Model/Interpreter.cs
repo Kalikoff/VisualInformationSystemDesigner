@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace VisualInformationSystemDesigner.Model
 {
-	public class Interpreter
+    public class Interpreter
 	{
 		public Interpreter()
 		{
