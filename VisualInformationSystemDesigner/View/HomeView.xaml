@@ -31,7 +31,7 @@
             <Frame Grid.Column="0">
                 <Frame.ContentTemplate>
                     <DataTemplate>
-                        <local:Workspace/>
+                        <local:WorkspaceView/>
                     </DataTemplate>
                 </Frame.ContentTemplate>
             </Frame>
