@@ -1,15 +1,14 @@
 ﻿using MvvmHelpers;
 using System.Windows.Input;
-using VisualInformationSystemDesigner.CustomElements.Console;
 using VisualInformationSystemDesigner.Model;
 using VisualInformationSystemDesigner.Utilities;
 
-namespace VisualInformationSystemDesigner.CustomElements
+namespace VisualInformationSystemDesigner.ViewModel
 {
     public class DeviceInfoViewModel : BaseViewModel
     {
-        private Device _device;
-        public Device Device
+        private DeviceModel _device;
+        public DeviceModel Device
         {
             get => _device;
             set
@@ -29,13 +28,13 @@ namespace VisualInformationSystemDesigner.CustomElements
 
         public ICommand TabSelectionChangedCommand { get; }
 
-        public DeviceInfoViewModel(ref Device device)
+        public DeviceInfoViewModel(ref DeviceModel device)
         {
             TabSelectionChangedCommand = new RelayCommand(TabSelectionChanged);
 
             ConsoleViewModel = new ConsoleViewModel();
 
-            this.Device = device;
+            Device = device;
         }
 
 

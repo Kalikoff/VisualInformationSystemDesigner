@@ -2,7 +2,7 @@
 
 namespace VisualInformationSystemDesigner.Model
 {
-	public class Device
+	public class DeviceModel
 	{
 		private string _name; // Название
 		private ImageSource _image; // Иконка

@@ -3,17 +3,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using VisualInformationSystemDesigner.Model;
 using VisualInformationSystemDesigner.Utilities;
+using VisualInformationSystemDesigner.View;
 
-namespace VisualInformationSystemDesigner.CustomElements
+namespace VisualInformationSystemDesigner.ViewModel
 {
     public class DeviceViewModel : BaseViewModel
     {
-        private Device _device; // Данные устройства
+        private DeviceModel _device; // Данные устройства
         private double _left; // Позиция на форме по X
         private double _top; // Позиция на форме по Y
         private bool _powerStatus; // Текущий статус устройства
-       
-        public Device Device
+
+        public DeviceModel Device
         {
             get => _device;
             set
@@ -66,9 +67,9 @@ namespace VisualInformationSystemDesigner.CustomElements
 
         public DeviceViewModel(string name, ImageSource image)
         {
-            this.Device = new Device();
-            this.Device.Name = name;
-            this.Device.Image = image;
+            Device = new DeviceModel();
+            Device.Name = name;
+            Device.Image = image;
 
             ShowDeviceInfoWindowCommand = new RelayCommand(ShowDeviceInfoWindow);
         }

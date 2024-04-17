@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace VisualInformationSystemDesigner.CustomElements
+namespace VisualInformationSystemDesigner.View
 {
     public partial class DeviceView : UserControl
     {

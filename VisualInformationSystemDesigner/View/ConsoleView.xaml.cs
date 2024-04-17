@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace VisualInformationSystemDesigner.CustomElements.Console
+namespace VisualInformationSystemDesigner.View
 {
     public partial class ConsoleView : UserControl
     {

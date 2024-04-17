@@ -6,15 +6,15 @@ using System.Reflection;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Utilities;
 
-namespace VisualInformationSystemDesigner.CustomElements.Console
+namespace VisualInformationSystemDesigner.ViewModel
 {
     public class ConsoleViewModel : BaseViewModel
     {
         private string? _source;
-		private string? _consoleOutput;
-		private string? _commandText;
+        private string? _consoleOutput;
+        private string? _commandText;
 
-		public string? Source
+        public string? Source
         {
             get { return _source; }
             set
@@ -26,70 +26,70 @@ namespace VisualInformationSystemDesigner.CustomElements.Console
                 }
             }
         }
-		public string? ConsoleOutput
-		{
-			get { return _consoleOutput; }
-			set
-			{
-				if (_consoleOutput != value)
-				{
-					_consoleOutput = value;
-					OnPropertyChanged(nameof(ConsoleOutput));
-				}
-			}
-		}
-		public string? CommandText
-		{
-			get { return _commandText; }
-			set
-			{
-				if (_commandText != value)
-				{
-					_commandText = value;
-					OnPropertyChanged(nameof(CommandText));
-				}
-			}
-		}
-
-		public ConsoleViewModel()
+        public string? ConsoleOutput
         {
-			ProcessCommand = new RelayCommand(ProcessCommandExecute);
+            get { return _consoleOutput; }
+            set
+            {
+                if (_consoleOutput != value)
+                {
+                    _consoleOutput = value;
+                    OnPropertyChanged(nameof(ConsoleOutput));
+                }
+            }
+        }
+        public string? CommandText
+        {
+            get { return _commandText; }
+            set
+            {
+                if (_commandText != value)
+                {
+                    _commandText = value;
+                    OnPropertyChanged(nameof(CommandText));
+                }
+            }
         }
 
-		public ICommand ProcessCommand { get; }
+        public ConsoleViewModel()
+        {
+            ProcessCommand = new RelayCommand(ProcessCommandExecute);
+        }
 
-		private void ProcessCommandExecute(object obj)
-		{
-			string? command = CommandText?.Trim();
+        public ICommand ProcessCommand { get; }
 
-			if (command == null)
-			{
-				return;
-			}
+        private void ProcessCommandExecute(object obj)
+        {
+            string? command = CommandText?.Trim();
 
-			if (command == "/start")
-			{
+            if (command == null)
+            {
+                return;
+            }
+
+            if (command == "/start")
+            {
                 //Interpreter interpreter = new Interpreter();
                 //ConsoleOutput += interpreter.Interpret(Source) + "\n";
 
                 //var interpreter = new InterpreterImplementation();
                 CompileAndRun(Source);
             }
-			else if (command == "/clear")
-			{
-				ConsoleOutput = "";
-			}
-			else
-			{
-				ConsoleOutput += "Неизвестная команда.\n";
-			}
+            else if (command == "/clear")
+            {
+                ConsoleOutput = "";
+            }
+            else
+            {
+                ConsoleOutput += "Неизвестная команда.\n";
+            }
 
-			CommandText = "";
-		}
+            CommandText = "";
+        }
 
 
 
-		public void UpdateSource(string source)
+        public void UpdateSource(string source)
         {
             Source = source;
         }
@@ -158,7 +158,7 @@ namespace VisualInformationSystemDesigner.CustomElements.Console
             instanceMain.Main();
 
             var printType = assembly.GetType("Print");
-             dynamic printInstance = Activator.CreateInstance(printType);
+            dynamic printInstance = Activator.CreateInstance(printType);
             string printResult = printInstance.Line("Hello World");
 
             ConsoleOutput += printResult + "\n";

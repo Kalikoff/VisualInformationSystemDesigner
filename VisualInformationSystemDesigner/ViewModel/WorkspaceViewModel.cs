@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using VisualInformationSystemDesigner.CustomElements;
 
 namespace VisualInformationSystemDesigner.ViewModel
 {

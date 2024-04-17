@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace VisualInformationSystemDesigner.CustomElements
+namespace VisualInformationSystemDesigner.View
 {
     public partial class DeviceInfoView : Window
     {
