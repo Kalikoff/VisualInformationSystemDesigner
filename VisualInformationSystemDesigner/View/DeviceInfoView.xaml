@@ -10,8 +10,7 @@
         Title="DeviceInfoWindow"
         Height="600"
         Width="600"
-        d:DataContext="{d:DesignInstance Type=viewModel:ConsoleViewModel}">
-
+        d:DataContext="{d:DesignInstance Type=viewModel:DeviceInfoViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,7 +37,7 @@
                                  VerticalAlignment="Stretch"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True"
-                                 Text="{Binding Source, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding Device.Source, UpdateSourceTrigger=PropertyChanged}"
                                  Background="#1e1e1e"
                                  Foreground="#e6e6e6"
                                  FontFamily="Consolas"

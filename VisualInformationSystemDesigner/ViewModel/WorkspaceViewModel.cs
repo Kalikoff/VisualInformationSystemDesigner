@@ -2,21 +2,22 @@
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using VisualInformationSystemDesigner.Model;
 
 namespace VisualInformationSystemDesigner.ViewModel
 {
     public class WorkspaceViewModel : BaseViewModel
     {
-        private ObservableCollection<DeviceViewModel> _devices = new();
-        public ObservableCollection<DeviceViewModel> Devices
+        private ObservableCollection<ItemViewModel> _items = new();
+        public ObservableCollection<ItemViewModel> Items
         {
-            get => _devices;
+            get => _items;
             set
             {
-                if (_devices != value)
+                if (_items != value)
                 {
-                    _devices = value;
-                    OnPropertyChanged(nameof(Devices));
+                    _items = value;
+                    OnPropertyChanged(nameof(Items));
                 }
             }
         }
@@ -26,13 +27,13 @@ namespace VisualInformationSystemDesigner.ViewModel
 
         public WorkspaceViewModel()
         {
-            DeviceViewModel device1 = new DeviceViewModel("PC", LoadImage("pc-icon.png"));
-            DeviceViewModel device2 = new DeviceViewModel("Server", LoadImage("server-icon.png"));
-            DeviceViewModel device3 = new DeviceViewModel("Database", LoadImage("database-icon.png"));
+            ItemViewModel item1 = new ItemViewModel("PC", LoadImage("pc-icon.png"), ItemType.Device);
+            ItemViewModel item2 = new ItemViewModel("Server", LoadImage("server-icon.png"), ItemType.Device);
+            ItemViewModel item3 = new ItemViewModel("Database", LoadImage("database-icon.png"), ItemType.Database);
 
-            AddDevice(device1);
-            AddDevice(device2);
-            AddDevice(device3);
+            AddDevice(item1);
+            AddDevice(item2);
+            AddDevice(item3);
 
             //CanvasDragEnterCommand = new RelayCommand(CanvasDragEnter);
             //CanvasDropCommand = new RelayCommand(CanvasDrop);
@@ -43,13 +44,13 @@ namespace VisualInformationSystemDesigner.ViewModel
             return new BitmapImage(new Uri($"pack://application:,,,/Resources/{imageName}"));
         }
 
-        public void AddDevice(DeviceViewModel device)
+        public void AddDevice(ItemViewModel item)
         {
             Random random = new();
-            device.Top = random.Next(0, 500);
-            device.Left = random.Next(0, 500);
+            item.Top = random.Next(0, 500);
+            item.Left = random.Next(0, 500);
 
-            Devices.Add(device);
+            Items.Add(item);
         }
 
         private void CanvasDragEnter(object obj)

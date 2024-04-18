@@ -1,10 +1,10 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
 
 namespace VisualInformationSystemDesigner.View
 {
-    public partial class DeviceView : UserControl
+    public partial class DatabaseInfoView : Window
     {
-        public DeviceView()
+        public DatabaseInfoView()
         {
             InitializeComponent();
         }

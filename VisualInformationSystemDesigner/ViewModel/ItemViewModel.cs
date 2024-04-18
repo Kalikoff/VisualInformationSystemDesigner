@@ -7,21 +7,21 @@ using VisualInformationSystemDesigner.View;
 
 namespace VisualInformationSystemDesigner.ViewModel
 {
-    public class DeviceViewModel : BaseViewModel
+    public class ItemViewModel : BaseViewModel
     {
-        private DeviceModel _device; // Данные устройства
+        private ItemModel _item; // Данные устройства
         private double _left; // Позиция на форме по X
         private double _top; // Позиция на форме по Y
         private bool _powerStatus; // Текущий статус устройства
 
-        public DeviceModel Device
+        public ItemModel Item
         {
-            get => _device;
+            get => _item;
             set
             {
-                if (_device != value)
+                if (_item != value)
                 {
-                    _device = value;
+                    _item = value;
                     OnPropertyChanged();
                 }
             }
@@ -65,11 +65,20 @@ namespace VisualInformationSystemDesigner.ViewModel
             }
         }
 
-        public DeviceViewModel(string name, ImageSource image)
+        public ItemViewModel(string name, ImageSource image, ItemType itemType)
         {
-            Device = new DeviceModel();
-            Device.Name = name;
-            Device.Image = image;
+            if (itemType == ItemType.Device)
+            {
+                Item = new DeviceModel();
+            }
+            else if (itemType == ItemType.Database)
+            {
+                Item = new DatabaseModel();
+            }
+
+            Item.Name = name;
+            Item.Image = image;
+            Item.ItemType = itemType;
 
             ShowDeviceInfoWindowCommand = new RelayCommand(ShowDeviceInfoWindow);
         }
@@ -78,10 +87,20 @@ namespace VisualInformationSystemDesigner.ViewModel
 
         public void ShowDeviceInfoWindow(object obj)
         {
-            var deviceInfoViewModel = new DeviceInfoViewModel(ref _device);
-            var deviceInfoView = new DeviceInfoView();
-            deviceInfoView.DataContext = deviceInfoViewModel;
-            deviceInfoView.Show();
+            if (Item.ItemType == ItemType.Device)
+            {
+                var deviceInfoViewModel = new DeviceInfoViewModel(ref _item);
+                var deviceInfoView = new DeviceInfoView();
+                deviceInfoView.DataContext = deviceInfoViewModel;
+                deviceInfoView.Show();
+            }
+            else if (Item.ItemType == ItemType.Database)
+            {
+                var databaseInfoViewModel = new DatabaseInfoViewModel(ref _item);
+                var databaseInfoView = new DatabaseInfoView();
+                databaseInfoView.DataContext = databaseInfoViewModel;
+                databaseInfoView.Show();
+            }
         }
     }
 }

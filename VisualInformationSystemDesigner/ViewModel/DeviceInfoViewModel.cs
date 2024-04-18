@@ -23,25 +23,21 @@ namespace VisualInformationSystemDesigner.ViewModel
 
         public ConsoleViewModel ConsoleViewModel { get; set; }
 
-
-        public string Source { get; set; }
-
         public ICommand TabSelectionChangedCommand { get; }
 
-        public DeviceInfoViewModel(ref DeviceModel device)
+        public DeviceInfoViewModel(ref ItemModel device)
         {
             TabSelectionChangedCommand = new RelayCommand(TabSelectionChanged);
 
             ConsoleViewModel = new ConsoleViewModel();
 
-            Device = device;
+            Device = (DeviceModel)device;
         }
 
 
 
         private void TabSelectionChanged(object obj)
         {
-            Device.Source = Source;
             ConsoleViewModel.UpdateSource(Device.Source);
         }
     }
