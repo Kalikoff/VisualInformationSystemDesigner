@@ -6,15 +6,31 @@
       xmlns:local="clr-namespace:VisualInformationSystemDesigner.View"
       xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
       Title="Workspace">
 
     <Page.DataContext>
         <viewModel:WorkspaceViewModel/>
     </Page.DataContext>
 
-    <Canvas Background="White"
+    <Grid>
+        <ItemsControl ItemsSource="{Binding DevicesList}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" Margin="10"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:DevicesListView/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Page>
+    
+<!--<Canvas Background="White"
             AllowDrop="True">
         
         <ItemsControl ItemsSource="{Binding Items}">
@@ -39,7 +55,7 @@
         </ItemsControl>
 
 
-        <!--<i:Interaction.Triggers>
+        --><!--<i:Interaction.Triggers>
             <i:EventTrigger EventName="DragEnter">
                 <i:InvokeCommandAction Command="{Binding CanvasDragEnterCommand}"/>
             </i:EventTrigger>
@@ -47,6 +63,5 @@
             <i:EventTrigger EventName="Drop">
                 <i:InvokeCommandAction Command="{Binding CanvasDropCommand}"/>
             </i:EventTrigger>
-        </i:Interaction.Triggers>-->
-    </Canvas>
-</Page>
+        </i:Interaction.Triggers>--><!--
+    </Canvas>-->

@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\client-icon.png" />
     <None Remove="Resources\database-icon.png" />
-    <None Remove="Resources\pc-icon.png" />
     <None Remove="Resources\pc-svgrepo-com.svg" />
     <None Remove="Resources\server-icon.png" />
     <Resource Include="Resources\database-icon.png" />
-    <Resource Include="Resources\pc-icon.png" />
+    <Resource Include="Resources\client-icon.png" />
     <Resource Include="Resources\server-icon.png" />
     <Resource Include="Resources\SVG\pc-svgrepo-com.svg" />
     <None Remove="Resources\server-svgrepo-com.svg" />

@@ -1,4 +1,4 @@
-﻿namespace VisualInformationSystemDesigner.Model
+﻿namespace VisualInformationSystemDesigner.Model.Device.Database
 {
     public class TableModel
     {

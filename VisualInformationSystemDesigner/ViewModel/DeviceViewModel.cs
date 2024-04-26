@@ -1,0 +1,85 @@
+﻿using MvvmHelpers;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using VisualInformationSystemDesigner.Model.Device;
+using VisualInformationSystemDesigner.Model.Device.Client;
+using VisualInformationSystemDesigner.Model.Device.Database;
+using VisualInformationSystemDesigner.Model.Device.Server;
+using VisualInformationSystemDesigner.Utilities;
+
+namespace VisualInformationSystemDesigner.ViewModel
+{
+    public class DeviceViewModel : BaseViewModel
+    {
+        private DeviceModel _device; // Устройство
+
+        public DeviceModel Device
+        {
+            get => _device;
+            set
+            {
+                if (_device != value)
+                {
+                    _device = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public DeviceViewModel(string name, DeviceType itemType)
+        {
+            if (itemType == DeviceType.Database)
+            {
+                Device = new DatabaseModel();
+                Device.Image = LoadImage("database-icon.png");
+            }
+            else if (itemType == DeviceType.Server)
+            {
+                Device = new ServerModel();
+                Device.Image = LoadImage("server-icon.png");
+            }
+            else if (itemType == DeviceType.Client)
+            {
+                Device = new ClientModel();
+                Device.Image = LoadImage("client-icon.png");
+            }
+
+            Device.Name = name;
+            Device.DeviceType = itemType;
+
+            ShowDeviceInfoWindowCommand = new RelayCommand(ShowDeviceInfoWindow);
+        }
+
+        public ICommand ShowDeviceInfoWindowCommand { get; }
+
+        public void ShowDeviceInfoWindow(object obj)
+        {
+            //if (Item.ItemType == DeviceType.Device)
+            //{
+            //    var deviceInfoViewModel = new DeviceInfoViewModel(ref _item);
+            //    var deviceInfoView = new DeviceInfoView();
+            //    deviceInfoView.DataContext = deviceInfoViewModel;
+            //    deviceInfoView.Show();
+            //}
+            //else if (Item.ItemType == DeviceType.Database)
+            //{
+            //    var databaseInfoViewModel = new DatabaseInfoViewModel(ref _item);
+            //    var databaseInfoView = new DatabaseInfoView();
+            //    databaseInfoView.DataContext = databaseInfoViewModel;
+            //    databaseInfoView.Show();
+            //}
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="imageName"></param>
+        /// <returns></returns>
+        private ImageSource LoadImage(string imageName)
+        {
+            return new BitmapImage(new Uri($"pack://application:,,,/Resources/{imageName}"));
+        }
+    }
+}

@@ -7,38 +7,38 @@ namespace VisualInformationSystemDesigner.ViewModel
 {
     public class DeviceInfoViewModel : BaseViewModel
     {
-        private DeviceModel _device;
-        public DeviceModel Device
-        {
-            get => _device;
-            set
-            {
-                if (_device != value)
-                {
-                    _device = value;
-                    OnPropertyChanged(nameof(Device));
-                }
-            }
-        }
+        //private DeviceModel _device;
+        //public DeviceModel Device
+        //{
+        //    get => _device;
+        //    set
+        //    {
+        //        if (_device != value)
+        //        {
+        //            _device = value;
+        //            OnPropertyChanged(nameof(Device));
+        //        }
+        //    }
+        //}
 
-        public ConsoleViewModel ConsoleViewModel { get; set; }
+        //public ConsoleViewModel ConsoleViewModel { get; set; }
 
-        public ICommand TabSelectionChangedCommand { get; }
+        //public ICommand TabSelectionChangedCommand { get; }
 
-        public DeviceInfoViewModel(ref ItemModel device)
-        {
-            TabSelectionChangedCommand = new RelayCommand(TabSelectionChanged);
+        //public DeviceInfoViewModel(ref ItemModel device)
+        //{
+        //    TabSelectionChangedCommand = new RelayCommand(TabSelectionChanged);
 
-            ConsoleViewModel = new ConsoleViewModel();
+        //    ConsoleViewModel = new ConsoleViewModel();
 
-            Device = (DeviceModel)device;
-        }
+        //    Device = (DeviceModel)device;
+        //}
 
 
 
-        private void TabSelectionChanged(object obj)
-        {
-            ConsoleViewModel.UpdateSource(Device.Source);
-        }
+        //private void TabSelectionChanged(object obj)
+        //{
+        //    ConsoleViewModel.UpdateSource(Device.Source);
+        //}
     }
 }

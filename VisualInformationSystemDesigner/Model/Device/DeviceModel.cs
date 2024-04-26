@@ -1,11 +1,11 @@
 ﻿using System.Windows.Media;
 
-namespace VisualInformationSystemDesigner.Model
+namespace VisualInformationSystemDesigner.Model.Device
 {
-    public class ItemModel
+    public class DeviceModel
     {
         public string Name { get; set; }
         public ImageSource Image { get; set; }
-        public ItemType ItemType { get; set; }
+        public DeviceType DeviceType { get; set; }
     }
 }

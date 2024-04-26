@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using VisualInformationSystemDesigner.Model;
+using VisualInformationSystemDesigner.Model.Device.Database;
 
 namespace VisualInformationSystemDesigner.ViewModel
 {
@@ -19,9 +20,9 @@ namespace VisualInformationSystemDesigner.ViewModel
             }
         }
 
-        public DatabaseInfoViewModel(ref ItemModel device)
+        public DatabaseInfoViewModel()
         {
-            Database = (DatabaseModel)device;
+            //Database = (DatabaseModel)device;
         }
     }
 }

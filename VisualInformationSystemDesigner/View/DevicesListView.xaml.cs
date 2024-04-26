@@ -2,9 +2,9 @@
 
 namespace VisualInformationSystemDesigner.View
 {
-    public partial class ItemView : UserControl
+    public partial class DevicesListView : UserControl
     {
-        public ItemView()
+        public DevicesListView()
         {
             InitializeComponent();
         }
