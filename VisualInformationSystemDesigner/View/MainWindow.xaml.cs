@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace VisualInformationSystemDesigner
+namespace VisualInformationSystemDesigner.View
 {
 	public partial class MainWindow : Window
     {
