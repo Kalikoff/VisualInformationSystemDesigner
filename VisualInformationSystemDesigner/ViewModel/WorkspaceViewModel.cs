@@ -21,9 +21,9 @@ namespace VisualInformationSystemDesigner.ViewModel
 
         public WorkspaceViewModel()
         {
-            DevicesListViewModel databases = new DevicesListViewModel("БАЗЫ ДАННЫХ", DeviceType.Database);
-            DevicesListViewModel servers = new DevicesListViewModel("СЕРВЕРА", DeviceType.Server);
-            DevicesListViewModel clients = new DevicesListViewModel("КЛИЕНТЫ", DeviceType.Client);
+            var databases = new DevicesListViewModel("БАЗЫ ДАННЫХ", DeviceType.Database);
+            var servers = new DevicesListViewModel("СЕРВЕРА", DeviceType.Server);
+            var clients = new DevicesListViewModel("КЛИЕНТЫ", DeviceType.Client);
 
             DevicesList.Add(databases);
             DevicesList.Add(servers);

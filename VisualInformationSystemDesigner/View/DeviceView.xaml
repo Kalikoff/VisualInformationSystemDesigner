@@ -10,65 +10,27 @@
              d:DataContext="{d:DesignInstance Type=viewModel:DeviceViewModel}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseDoubleClick">
-            <i:InvokeCommandAction Command="{Binding ShowDeviceInfoWindowCommand}" />
+            <i:InvokeCommandAction Command="{Binding ShowDeviceInfoWindowCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
     <Grid Margin="0, 0, 10, 0">
-        <Border BorderBrush="{StaticResource BorderColor}"
-                BorderThickness="1"
-                Background="{StaticResource SecondaryColor}">
-            <Button Width="120"
-                    Height="120"
-                    BorderBrush="Transparent"
-                    Background="Transparent">
-                <StackPanel Orientation="Vertical">
-                    <Image Source="{Binding Device.Image}"
-                           Stretch="Uniform"
-                           Height="85"
-                           Width="85"
-                           Margin="0, 0, 0, 5"
-                           RenderOptions.BitmapScalingMode="HighQuality"/>
-
-                    <TextBlock Grid.Row="1"
-                               HorizontalAlignment="Center"
-                               Text="{Binding Device.Name}"
-                               Style="{StaticResource TextBlockStyle}"/>
-                </StackPanel>
-            </Button>
-        </Border>
-
-        <!--<Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Border Grid.Row="0" CornerRadius="5" Width="60" Height="60">
-            <Border.Background>
-                <SolidColorBrush Color="LightBlue"/>
-            </Border.Background>
-
-            <Canvas Width="60" Height="60">
-                <Ellipse Fill="Red"
-                         Width="5"
-                         Height="5"
-                         Canvas.Top="5"
-                         Canvas.Right="5"/>
-
-                <Image Source="{Binding Item.Image}"
+        <Border Style="{StaticResource BorderStyle}">
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                <Image Source="{Binding Device.Image}"
                        Stretch="Uniform"
-                       Height="50"
-                       Width="50"
-                       Margin="5"
+                       Height="85"
+                       Width="85"
+                       Margin="0, 0, 0, 5"
                        RenderOptions.BitmapScalingMode="HighQuality"/>
-            </Canvas>
-            
 
+                <TextBlock Grid.Row="1"
+                           HorizontalAlignment="Center"
+                           Text="{Binding Device.Name}"
+                           Style="{StaticResource TextBlockStyle}"/>
+            </StackPanel>
         </Border>
-
-        <TextBlock Grid.Row="1"
-                   Text="{Binding Item.Name}"
-                   VerticalAlignment="Bottom"
-                   HorizontalAlignment="Center"/>-->
     </Grid>
 </UserControl>

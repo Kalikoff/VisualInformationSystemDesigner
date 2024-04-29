@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis;
-using MvvmHelpers;
+﻿using MvvmHelpers;
 using System.IO;
 using System.Reflection;
 using System.Windows.Input;
@@ -73,7 +71,7 @@ namespace VisualInformationSystemDesigner.ViewModel
                 //ConsoleOutput += interpreter.Interpret(Source) + "\n";
 
                 //var interpreter = new InterpreterImplementation();
-                CompileAndRun(Source);
+                //CompileAndRun(Source);
             }
             else if (command == "/clear")
             {
@@ -96,75 +94,75 @@ namespace VisualInformationSystemDesigner.ViewModel
 
 
 
-        public string CompileAndRun(string source)
-        {
-            string printCode = @"
-                public static class Print
-                {
-                    public static string Line(string str)
-                    {
-                        return str;
-                    }
-                }
-            ";
-            // Ваша строка с кодом на C#
-            //    string code = @"
-            //    using System;
+        //public string CompileAndRun(string source)
+        //{
+        //    string printCode = @"
+        //        public static class Print
+        //        {
+        //            public static string Line(string str)
+        //            {
+        //                return str;
+        //            }
+        //        }
+        //    ";
+        //    // Ваша строка с кодом на C#
+        //    //    string code = @"
+        //    //    using System;
 
-            //    public class DynamicClass
-            //    {
-            //        public string GetMessage()
-            //        {
-            //            return ""Этот код был выполнен динамически!"";
-            //        }
-            //    }
-            //";
+        //    //    public class DynamicClass
+        //    //    {
+        //    //        public string GetMessage()
+        //    //        {
+        //    //            return ""Этот код был выполнен динамически!"";
+        //    //        }
+        //    //    }
+        //    //";
 
-            string code = @source + "\n" + printCode;
+        //    string code = @source + "\n" + printCode;
 
-            // Создание синтаксического дерева из строки кода
-            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code);
+        //    // Создание синтаксического дерева из строки кода
+        //    SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code);
 
-            // Компиляция кода
-            CSharpCompilation compilation = CSharpCompilation.Create("DynamicAssembly")
-                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
-                .AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
-                .AddSyntaxTrees(syntaxTree);
+        //    // Компиляция кода
+        //    CSharpCompilation compilation = CSharpCompilation.Create("DynamicAssembly")
+        //        .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+        //        .AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
+        //        .AddSyntaxTrees(syntaxTree);
 
-            using var ms = new MemoryStream();
+        //    using var ms = new MemoryStream();
 
-            // Компиляция в память
-            var result = compilation.Emit(ms);
+        //    // Компиляция в память
+        //    var result = compilation.Emit(ms);
 
-            if (!result.Success)
-            {
-                string errors = "";
+        //    if (!result.Success)
+        //    {
+        //        string errors = "";
 
-                // Если есть ошибки, выводим их в консоль
-                foreach (var diagnostic in result.Diagnostics)
-                {
-                    errors += diagnostic.GetMessage() + "\n";
-                }
+        //        // Если есть ошибки, выводим их в консоль
+        //        foreach (var diagnostic in result.Diagnostics)
+        //        {
+        //            errors += diagnostic.GetMessage() + "\n";
+        //        }
 
-                return errors;
-            }
+        //        return errors;
+        //    }
 
-            // Загрузка сборки и выполнение кода
-            ms.Seek(0, SeekOrigin.Begin);
-            var assembly = Assembly.Load(ms.ToArray());
+        //    // Загрузка сборки и выполнение кода
+        //    ms.Seek(0, SeekOrigin.Begin);
+        //    var assembly = Assembly.Load(ms.ToArray());
 
-            var mainType = assembly.GetType("Program");
-            dynamic instanceMain = Activator.CreateInstance(mainType);
-            instanceMain.Main();
+        //    var mainType = assembly.GetType("Program");
+        //    dynamic instanceMain = Activator.CreateInstance(mainType);
+        //    instanceMain.Main();
 
-            var printType = assembly.GetType("Print");
-            dynamic printInstance = Activator.CreateInstance(printType);
-            string printResult = printInstance.Line("Hello World");
+        //    var printType = assembly.GetType("Print");
+        //    dynamic printInstance = Activator.CreateInstance(printType);
+        //    string printResult = printInstance.Line("Hello World");
 
-            ConsoleOutput += printResult + "\n";
+        //    ConsoleOutput += printResult + "\n";
 
-            return "";
-        }
+        //    return "";
+        //}
 
     }
 }

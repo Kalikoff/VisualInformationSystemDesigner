@@ -13,7 +13,7 @@
         <viewModel:WorkspaceViewModel/>
     </Page.DataContext>
 
-    <Grid>
+    <Grid Background="{StaticResource SecondaryColor}">
         <ItemsControl ItemsSource="{Binding DevicesList}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

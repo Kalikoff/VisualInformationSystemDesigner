@@ -1,5 +1,9 @@
 ﻿using MvvmHelpers;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device;
+using VisualInformationSystemDesigner.Utilities;
+using VisualInformationSystemDesigner.View;
 
 namespace VisualInformationSystemDesigner.ViewModel
 {
@@ -9,9 +13,8 @@ namespace VisualInformationSystemDesigner.ViewModel
 
         public DeviceType DeviceType { get; set; }
 
-
-        private List<DeviceViewModel> _devices = new();
-        public List<DeviceViewModel> Devices
+        private ObservableCollection<DeviceViewModel> _devices;
+        public ObservableCollection<DeviceViewModel> Devices
         {
             get => _devices;
             set
@@ -24,11 +27,18 @@ namespace VisualInformationSystemDesigner.ViewModel
             }
         }
 
+        public ICommand AddDeviceCommand { get; }
+
         public DevicesListViewModel(string itemTypeName, DeviceType deviceType)
         {
+            _devices = new ObservableCollection<DeviceViewModel>();
+
+            AddDeviceCommand = new RelayCommand(AddDevice);
+
             ItemTypeName = itemTypeName;
             DeviceType = deviceType;
 
+            // Тестовый код
             if (DeviceType == DeviceType.Database)
             {
                 var database1 = new DeviceViewModel("Название БД 1", DeviceType);
@@ -52,6 +62,20 @@ namespace VisualInformationSystemDesigner.ViewModel
                 Devices.Add(client1);
                 Devices.Add(client2);
                 Devices.Add(client3);
+            }
+        }
+
+
+        private void AddDevice(object parameter)
+        {
+            var dialogAddDeviceViewModel = new DialogAddDeviceViewModel();
+            var dialogAddDeviceView = new DialogAddDeviceView();
+            dialogAddDeviceView.DataContext = dialogAddDeviceViewModel;
+
+            if (dialogAddDeviceView.ShowDialog() == true)
+            {
+                var device = new DeviceViewModel(dialogAddDeviceViewModel.DeviceName, DeviceType);
+                Devices.Add(device);
             }
         }
     }

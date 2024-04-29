@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
-using VisualInformationSystemDesigner.Model;
+using System.Windows.Controls;
+using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Model.Device.Database;
 
 namespace VisualInformationSystemDesigner.ViewModel
@@ -20,9 +21,22 @@ namespace VisualInformationSystemDesigner.ViewModel
             }
         }
 
-        public DatabaseInfoViewModel()
+        public Page CurrentPage { get; set; }
+
+        public string WindowName {
+            get
+            {
+                return "Настройка устройства: \"" + Database.Name + "\"";
+            }
+        }
+
+        public DatabaseInfoViewModel(ref DeviceModel device)
         {
-            //Database = (DatabaseModel)device;
+            //TabSelectionChangedCommand = new RelayCommand(TabSelectionChanged);
+
+            //ConsoleViewModel = new ConsoleViewModel();
+
+            Database = (DatabaseModel)device;
         }
     }
 }

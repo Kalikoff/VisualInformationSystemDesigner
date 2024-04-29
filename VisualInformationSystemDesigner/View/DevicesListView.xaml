@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VisualInformationSystemDesigner.View" xmlns:viewmodel="clr-namespace:VisualInformationSystemDesigner.ViewModel"
+             xmlns:local="clr-namespace:VisualInformationSystemDesigner.View"
              xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=viewModel:DevicesListViewModel}">
     <Grid Background="{StaticResource PrimaryColor}">
@@ -52,24 +53,23 @@
                 </Grid>
 
                 <!--Кнопка добавления нового устройства-->
-                <Border BorderBrush="{StaticResource BorderColor}"
-                        BorderThickness="1"
-                        Background="{StaticResource SecondaryColor}">
-                    <Button Width="120"
-                            Height="120"
-                            BorderBrush="Transparent"
-                            Background="Transparent">
-                        <Grid Width="50" Height="50">
-                            <Rectangle HorizontalAlignment="Stretch" 
-                                       VerticalAlignment="Center" 
-                                       Fill="{StaticResource BorderColor}"
-                                       Height="7"/>
-                            <Rectangle HorizontalAlignment="Center" 
-                                       VerticalAlignment="Stretch" 
-                                       Fill="{StaticResource BorderColor}"
-                                       Width="7"/>
-                        </Grid>
-                    </Button>
+                <Border Style="{StaticResource BorderStyle}">
+                    <Grid Width="50" Height="50">
+                        <Rectangle HorizontalAlignment="Stretch" 
+                                   VerticalAlignment="Center" 
+                                   Height="7"
+                                   Style="{StaticResource RectangleStyle}"/>
+                        <Rectangle HorizontalAlignment="Center" 
+                                   VerticalAlignment="Stretch" 
+                                   Width="7"
+                                   Style="{StaticResource RectangleStyle}"/>
+                    </Grid>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding AddDeviceCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </Border>
             </StackPanel>
         </Grid>
