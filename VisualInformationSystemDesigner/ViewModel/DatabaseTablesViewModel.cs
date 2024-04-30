@@ -1,13 +1,13 @@
 ﻿using MvvmHelpers;
-using System.Windows.Controls;
 using System.Windows.Input;
+using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Model.Device.Database;
 using VisualInformationSystemDesigner.Utilities;
 using VisualInformationSystemDesigner.View;
 
 namespace VisualInformationSystemDesigner.ViewModel
 {
-    public class TablesListViewModel : BaseViewModel
+    public class DatabaseTablesViewModel : BaseViewModel
     {
         private DatabaseModel _database;
         public DatabaseModel Database
@@ -24,14 +24,26 @@ namespace VisualInformationSystemDesigner.ViewModel
         }
 
         public ICommand AddTableCommand { get; }
+        public ICommand ShowColumnsListWindowCommand { get; }
 
 
 
-        public TablesListViewModel(ref DatabaseModel databaseModel, ref Page currentPage)
+        public DatabaseTablesViewModel(ref DeviceModel device)
         {
-            Database = databaseModel;
+            //TabSelectionChangedCommand = new RelayCommand(TabSelectionChanged);
+
+            //ConsoleViewModel = new ConsoleViewModel();
+
+            Database = (DatabaseModel)device;
 
             AddTableCommand = new RelayCommand(AddTable);
+            ShowColumnsListWindowCommand = new RelayCommand(ShowColumnsListWindow);
+
+            //var tablesListViewModel = new TablesListViewModel(ref _database);
+            //var tablesListView = new TablesListView();
+            //tablesListView.DataContext = tablesListViewModel;
+
+            //_currentPage.Content = tablesListView;
         }
 
 
@@ -47,6 +59,19 @@ namespace VisualInformationSystemDesigner.ViewModel
                 var table = new TableModel { Name = dialogAddDeviceViewModel.ItemName };
                 Database.Tables.Add(table);
             }
+        }
+
+
+
+        public void ShowColumnsListWindow(object obj)
+        {
+            //if (Device.DeviceType == DeviceType.Database)
+            //{
+            //    var databaseInfoViewModel = new DatabaseInfoViewModel(ref _device);
+            //    var databaseInfoView = new DatabaseInfoView();
+            //    databaseInfoView.DataContext = databaseInfoViewModel;
+            //    databaseInfoView.Show();
+            //}
         }
     }
 }

@@ -1,0 +1,131 @@
+﻿<Window x:Class="VisualInformationSystemDesigner.View.DatabaseTablesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VisualInformationSystemDesigner.View"
+        xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="Настройка устройства"
+        Height="510"
+        Width="463"
+        ResizeMode="NoResize"
+        d:DataContext="{d:DesignInstance Type=viewModel:DatabaseTablesViewModel}"
+        Style="{StaticResource WindowStyle}">
+    <Grid Margin="10" Background="{StaticResource PrimaryColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid Margin="10, 10, 10, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Название БД: "
+                           Style="{StaticResource TextBlockStyle}"/>
+
+                <TextBox Grid.Column="1"
+                         Text="{Binding Database.Name}"
+                         Background="{StaticResource PrimaryColor}"
+                         Foreground="{StaticResource BorderColor}"
+                         BorderBrush="{StaticResource BorderColor}"
+                         FontSize="14"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="ТАБЛИЦЫ"
+                           FontSize="18"
+                           Style="{StaticResource TextBlockStyle}"
+                           Margin="0, 0, 10, 0"/>
+
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch" 
+                           VerticalAlignment="Center" 
+                           Fill="{StaticResource BorderColor}" 
+                           Height="1"
+                           Margin="0, 0, 10, 0"/>
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource BorderStyle}"
+                        Height="Auto"
+                        Width="Auto"
+                        BorderThickness="1">
+                    <TextBlock Text="Добавить"
+                               Style="{StaticResource TextBlockStyle}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Padding="4, 0"
+                               FontSize="14"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding AddTableCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 0, 0, 0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <!--Список таблиц-->
+                    <ItemsControl ItemsSource="{Binding Database.Tables}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0, 0, 10, 10">
+                                    <Border Style="{StaticResource BorderStyle}">
+                                        <StackPanel Orientation="Vertical"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center">
+                                            <Image Source="/Resources/sheet-icon.png"
+                                                   Stretch="Uniform"
+                                                   Height="85"
+                                                   Width="85"
+                                                   RenderOptions.BitmapScalingMode="HighQuality"/>
+
+                                            <TextBlock Grid.Row="1"
+                                                       HorizontalAlignment="Center"
+                                                       Text="{Binding Name}"
+                                                       FontSize="14"
+                                                       Style="{StaticResource TextBlockStyle}"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDoubleClick">
+                                            <i:InvokeCommandAction Command="{Binding ShowColumnsListWindowCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

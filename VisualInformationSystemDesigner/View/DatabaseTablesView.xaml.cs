@@ -2,9 +2,9 @@
 
 namespace VisualInformationSystemDesigner.View
 {
-    public partial class DatabaseInfoView : Window
+    public partial class DatabaseTablesView : Window
     {
-        public DatabaseInfoView()
+        public DatabaseTablesView()
         {
             InitializeComponent();
         }

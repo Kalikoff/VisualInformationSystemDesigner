@@ -61,10 +61,10 @@ namespace VisualInformationSystemDesigner.ViewModel
         {
             if (Device.DeviceType == DeviceType.Database)
             {
-                var databaseInfoViewModel = new DatabaseInfoViewModel(ref _device);
-                var databaseInfoView = new DatabaseInfoView();
-                databaseInfoView.DataContext = databaseInfoViewModel;
-                databaseInfoView.Show();
+                var databaseTablesViewModel = new DatabaseTablesViewModel(ref _device);
+                var databaseTablesView = new DatabaseTablesView();
+                databaseTablesView.DataContext = databaseTablesViewModel;
+                databaseTablesView.Show();
             }
             else if (Device.DeviceType == DeviceType.Server)
             {
