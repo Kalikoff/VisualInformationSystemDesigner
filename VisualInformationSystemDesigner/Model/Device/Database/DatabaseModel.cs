@@ -1,7 +1,9 @@
-﻿namespace VisualInformationSystemDesigner.Model.Device.Database
+﻿using System.Collections.ObjectModel;
+
+namespace VisualInformationSystemDesigner.Model.Device.Database
 {
     public class DatabaseModel : DeviceModel
     {
-        public List<TableModel> Tables { get; set; } // Таблицы
+        public ObservableCollection<TableModel> Tables { get; set; } = new(); // Таблицы
     }
 }

@@ -24,7 +24,7 @@
         </Menu>
 
         <!--Рабочая область-->
-        <Frame Grid.Row="1">
+        <Frame Grid.Row="1" Background="{StaticResource SecondaryColor}">
             <Frame.ContentTemplate>
                 <DataTemplate>
                     <local:WorkspaceView/>

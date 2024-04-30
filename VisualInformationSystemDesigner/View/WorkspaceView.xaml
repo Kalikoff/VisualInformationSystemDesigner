@@ -13,17 +13,17 @@
         <viewModel:WorkspaceViewModel/>
     </Page.DataContext>
 
-    <Grid Background="{StaticResource SecondaryColor}">
+    <Grid Background="{StaticResource SecondaryColor}" Margin="10">
         <ItemsControl ItemsSource="{Binding DevicesList}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" Margin="10"/>
+                    <StackPanel Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <local:DevicesListView/>
+                    <local:DevicesListView Margin="0, 0, 0, 10"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

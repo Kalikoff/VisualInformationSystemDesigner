@@ -68,13 +68,13 @@ namespace VisualInformationSystemDesigner.ViewModel
 
         private void AddDevice(object parameter)
         {
-            var dialogAddDeviceViewModel = new DialogAddDeviceViewModel();
-            var dialogAddDeviceView = new DialogAddDeviceView();
-            dialogAddDeviceView.DataContext = dialogAddDeviceViewModel;
+            var addItemDialogViewModel = new AddItemDialogViewModel();
+            var addItemDialogView = new AddItemDialogView();
+            addItemDialogView.DataContext = addItemDialogViewModel;
 
-            if (dialogAddDeviceView.ShowDialog() == true)
+            if (addItemDialogView.ShowDialog() == true)
             {
-                var device = new DeviceViewModel(dialogAddDeviceViewModel.DeviceName, DeviceType);
+                var device = new DeviceViewModel(addItemDialogViewModel.ItemName, DeviceType);
                 Devices.Add(device);
             }
         }

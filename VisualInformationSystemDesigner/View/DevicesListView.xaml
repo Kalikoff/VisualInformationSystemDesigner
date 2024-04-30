@@ -23,7 +23,7 @@
 
                 <TextBlock Grid.Column="0"
                            Text="{Binding ItemTypeName}"
-                           FontSize="16"
+                           FontSize="18"
                            Style="{StaticResource TextBlockStyle}"
                            Margin="0, 0, 10, 0"/>
 
@@ -36,32 +36,30 @@
 
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <!--Список устройств-->
-                <Grid>
-                    <ItemsControl ItemsSource="{Binding Devices}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                <ItemsControl ItemsSource="{Binding Devices}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:DeviceView/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Grid>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:DeviceView/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
                 <!--Кнопка добавления нового устройства-->
                 <Border Style="{StaticResource BorderStyle}">
                     <Grid Width="50" Height="50">
                         <Rectangle HorizontalAlignment="Stretch" 
                                    VerticalAlignment="Center" 
-                                   Height="7"
+                                   Height="8"
                                    Style="{StaticResource RectangleStyle}"/>
                         <Rectangle HorizontalAlignment="Center" 
                                    VerticalAlignment="Stretch" 
-                                   Width="7"
+                                   Width="8"
                                    Style="{StaticResource RectangleStyle}"/>
                     </Grid>
 

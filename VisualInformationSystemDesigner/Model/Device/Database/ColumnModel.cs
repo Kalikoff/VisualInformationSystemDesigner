@@ -1,8 +1,10 @@
-﻿namespace VisualInformationSystemDesigner.Model.Device.Database
+﻿using System.Collections.ObjectModel;
+
+namespace VisualInformationSystemDesigner.Model.Device.Database
 {
     public class ColumnModel
     {
         public string Name { get; set; } // Название
-        public List<object> Data { get; set; } // Данные
+        public ObservableCollection<object> Data { get; set; } // Данные
     }
 }

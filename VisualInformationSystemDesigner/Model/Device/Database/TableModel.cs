@@ -1,9 +1,11 @@
-﻿namespace VisualInformationSystemDesigner.Model.Device.Database
+﻿using System.Collections.ObjectModel;
+
+namespace VisualInformationSystemDesigner.Model.Device.Database
 {
     public class TableModel
     {
         public string Name { get; set; } // Название
-        public List<ColumnModel> Columns { get; set; } // Столбцы
-        public List<RelationModel> Relations { get; set; } // Связи с другими таблицами
+        public ObservableCollection<ColumnModel> Columns { get; set; } = new(); // Столбцы
+        public ObservableCollection<RelationModel>? Relations { get; set; } = new(); // Связи с другими таблицами
     }
 }

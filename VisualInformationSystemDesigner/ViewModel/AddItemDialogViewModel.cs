@@ -5,33 +5,33 @@ using VisualInformationSystemDesigner.Utilities;
 
 namespace VisualInformationSystemDesigner.ViewModel
 {
-    public class DialogAddDeviceViewModel : BaseViewModel
+    public class AddItemDialogViewModel : BaseViewModel
     {
-        private string _deviceName;
-        public string DeviceName
+        private string _itemName;
+        public string ItemName
         {
-            get => _deviceName;
+            get => _itemName;
             set
             {
-                if (_deviceName != value)
+                if (_itemName != value)
                 {
-                    _deviceName = value;
-                    OnPropertyChanged(nameof(DeviceName));
+                    _itemName = value;
+                    OnPropertyChanged(nameof(ItemName));
                 }
             }
         }
 
-        public ICommand AddDeviceCommand { get; }
+        public ICommand AddItemCommand { get; }
 
         public ICommand CancelCommand { get; }
 
-        public DialogAddDeviceViewModel()
+        public AddItemDialogViewModel()
         {
-            AddDeviceCommand = new RelayCommand(AddDevice);
+            AddItemCommand = new RelayCommand(AddItem);
             CancelCommand = new RelayCommand(Cancel);
         }
 
-        public void AddDevice(object parameter)
+        public void AddItem(object parameter)
         {
             var window = parameter as Window;
 

@@ -2,9 +2,9 @@
 
 namespace VisualInformationSystemDesigner.View
 {
-    public partial class DialogAddDeviceView : Window
+    public partial class AddItemDialogView : Window
     {
-        public DialogAddDeviceView()
+        public AddItemDialogView()
         {
             InitializeComponent();
         }

@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:VisualInformationSystemDesigner.View"
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel"
         mc:Ignorable="d"
-        Title="{Binding WindowName}"
-        Height="600"
-        Width="600"
+        Title="Настройка устройства"
+        Height="510"
+        Width="463"
+        ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=viewModel:DatabaseInfoViewModel}">
-    <Grid>
+    <Grid Background="{StaticResource SecondaryColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -18,8 +19,9 @@
 
         <TextBox Grid.Row="0"
                  Text="{Binding Database.Name}"/>
-        
+
         <Frame Grid.Row="1"
+               Margin="10"
                Content="{Binding CurrentPage}"/>
     </Grid>
 </Window>
