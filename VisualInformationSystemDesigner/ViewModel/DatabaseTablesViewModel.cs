@@ -28,22 +28,12 @@ namespace VisualInformationSystemDesigner.ViewModel
 
 
 
-        public DatabaseTablesViewModel(ref DeviceModel device)
+        public DatabaseTablesViewModel(ref DeviceModel database)
         {
-            //TabSelectionChangedCommand = new RelayCommand(TabSelectionChanged);
-
-            //ConsoleViewModel = new ConsoleViewModel();
-
-            Database = (DatabaseModel)device;
+            Database = (DatabaseModel)database;
 
             AddTableCommand = new RelayCommand(AddTable);
-            ShowColumnsListWindowCommand = new RelayCommand(ShowColumnsListWindow);
-
-            //var tablesListViewModel = new TablesListViewModel(ref _database);
-            //var tablesListView = new TablesListView();
-            //tablesListView.DataContext = tablesListViewModel;
-
-            //_currentPage.Content = tablesListView;
+            //ShowColumnsListWindowCommand = new RelayCommand(ShowColumnsListWindow);
         }
 
 
@@ -56,8 +46,9 @@ namespace VisualInformationSystemDesigner.ViewModel
 
             if (dialogAddDeviceView.ShowDialog() == true)
             {
-                var table = new TableModel { Name = dialogAddDeviceViewModel.ItemName };
-                Database.Tables.Add(table);
+                Database.Tables.Add(new TableViewModel(new TableModel { Name = dialogAddDeviceViewModel.ItemName }));
+                //var table = new TableModel { Name = dialogAddDeviceViewModel.ItemName };
+                //Database.Tables.Add(table);
             }
         }
 
@@ -65,13 +56,7 @@ namespace VisualInformationSystemDesigner.ViewModel
 
         public void ShowColumnsListWindow(object obj)
         {
-            //if (Device.DeviceType == DeviceType.Database)
-            //{
-            //    var databaseInfoViewModel = new DatabaseInfoViewModel(ref _device);
-            //    var databaseInfoView = new DatabaseInfoView();
-            //    databaseInfoView.DataContext = databaseInfoViewModel;
-            //    databaseInfoView.Show();
-            //}
+            
         }
     }
 }

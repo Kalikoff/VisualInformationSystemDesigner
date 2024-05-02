@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="Настройка устройства"
+        Title="Таблицы базы данных"
         Height="510"
         Width="463"
         ResizeMode="NoResize"
@@ -86,8 +86,23 @@
 
             <Grid Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 0, 0, 0">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <!--Список таблиц-->
+                    <!--Список устройств-->
                     <ItemsControl ItemsSource="{Binding Database.Tables}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:TableView/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!--Список таблиц-->
+                    <!--<ItemsControl ItemsSource="{Binding Database.Tables}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="3"/>
@@ -114,16 +129,16 @@
                                                        Style="{StaticResource TextBlockStyle}"/>
                                         </StackPanel>
                                     </Border>
-
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDoubleClick">
-                                            <i:InvokeCommandAction Command="{Binding ShowColumnsListWindowCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding ShowColumnsListWindowCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ItemsControl>-->
                 </ScrollViewer>
             </Grid>
         </Grid>
