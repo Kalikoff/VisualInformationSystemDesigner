@@ -14,22 +14,10 @@
         d:DataContext="{d:DesignInstance Type=viewModel:DatabaseColumnsViewModel}"
         Style="{StaticResource WindowStyle}">
     <Grid>
-        <DataGrid ItemsSource="{Binding Database.Tables}">
+        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Table}">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Columns">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ItemsControl ItemsSource="{Binding Columns}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Data}"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

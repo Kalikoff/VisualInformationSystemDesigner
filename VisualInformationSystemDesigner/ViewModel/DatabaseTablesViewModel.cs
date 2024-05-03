@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Model.Device.Database;
@@ -46,7 +47,23 @@ namespace VisualInformationSystemDesigner.ViewModel
 
             if (dialogAddDeviceView.ShowDialog() == true)
             {
-                Database.Tables.Add(new TableViewModel(new TableModel { Name = dialogAddDeviceViewModel.ItemName }));
+                Database.Tables.Add(new TableViewModel(new TableModel
+                {
+                    Name = dialogAddDeviceViewModel.ItemName,
+                    Columns = new ObservableCollection<ColumnModel>
+                    {
+                        new ColumnModel 
+                        {
+                            Name = "1",
+                            Data= new ObservableCollection<object>
+                            {
+                                "101",
+                                "102",
+                                "103"
+                            }
+                        }
+                    }
+                }));
                 //var table = new TableModel { Name = dialogAddDeviceViewModel.ItemName };
                 //Database.Tables.Add(table);
             }
