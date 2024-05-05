@@ -6,5 +6,10 @@ namespace VisualInformationSystemDesigner.Model.Device.Database
     {
         public string Name { get; set; } // Название
         public ObservableCollection<object> Data { get; set; } // Данные
+
+        public ColumnModel()
+        {
+            Data = new ObservableCollection<object>();
+        }
     }
 }

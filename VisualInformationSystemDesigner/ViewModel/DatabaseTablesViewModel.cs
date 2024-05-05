@@ -49,17 +49,38 @@ namespace VisualInformationSystemDesigner.ViewModel
             {
                 Database.Tables.Add(new TableViewModel(new TableModel
                 {
-                    Name = dialogAddDeviceViewModel.ItemName,
-                    Columns = new ObservableCollection<ColumnModel>
+                    Name = "Table 1",
+                    ColumnsName = new ObservableCollection<string>
                     {
-                        new ColumnModel 
+                        "Id",
+                        "Name",
+                        "Role"
+                    },
+                    Rows = new ObservableCollection<RowModel>
+                    {
+                        new RowModel
                         {
-                            Name = "1",
-                            Data= new ObservableCollection<object>
+                            Columns = new ObservableCollection<object>
                             {
-                                "101",
-                                "102",
-                                "103"
+                                "1",
+                                "Masha",
+                                "Admin"
+                            },
+                        },
+                        new RowModel
+                        {
+                            Columns = new ObservableCollection<object>
+                            {
+                                "2",
+                                "Misha"
+                            }
+                        },
+                        new RowModel
+                        {
+                            Columns = new ObservableCollection<object>
+                            {
+                                "3",
+                                "Roma"
                             }
                         }
                     }

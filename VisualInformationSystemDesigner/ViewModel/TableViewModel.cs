@@ -37,7 +37,7 @@ namespace VisualInformationSystemDesigner.ViewModel
 
         public void ShowColumnsListWindow(object obj)
         {
-            var databaseColumnsViewModel = new DatabaseColumnsViewModel(ref _table);
+            var databaseColumnsViewModel = new DatabaseColumnsViewModel(_table);
             var databaseColumnsView = new DatabaseColumnsView();
             databaseColumnsView.DataContext = databaseColumnsViewModel;
             databaseColumnsView.Show();

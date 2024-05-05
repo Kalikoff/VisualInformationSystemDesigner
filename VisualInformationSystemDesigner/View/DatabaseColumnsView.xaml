@@ -14,11 +14,59 @@
         d:DataContext="{d:DesignInstance Type=viewModel:DatabaseColumnsViewModel}"
         Style="{StaticResource WindowStyle}">
     <Grid>
-        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Table}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid>
+            <!-- Здесь ваша разметка для отображения данных -->
+            <StackPanel>
+                <!-- Название таблицы -->
+                <TextBox Text="{Binding Table.Name}" FontWeight="Bold" Margin="10"/>
+
+                <!-- Заголовки столбцов -->
+                <ItemsControl ItemsSource="{Binding Table.ColumnsName}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="5">
+                                <TextBlock Text="{Binding}" FontWeight="Bold" Width="100" Padding="5"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Строки таблицы -->
+                <ItemsControl ItemsSource="{Binding Table.Rows}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding Columns}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="5">
+                                            <TextBlock Text="{Binding}" Width="100" Padding="5"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+
+        <Button Grid.Row="1" Command="{Binding Command}"/>
     </Grid>
 </Window>
