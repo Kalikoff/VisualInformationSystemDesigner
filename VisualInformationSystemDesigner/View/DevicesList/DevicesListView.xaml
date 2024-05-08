@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="VisualInformationSystemDesigner.View.DevicesList.DevicesListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VisualInformationSystemDesigner.View.DevicesList"
+             xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.DevicesList"
+             xmlns:deviceView="clr-namespace:VisualInformationSystemDesigner.View.Device"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModel:DevicesListViewModel}">
+    <Grid Background="{StaticResource PrimaryColor}">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0, 0, 0, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="{Binding ItemTypeName}"
+                           FontSize="18"
+                           Style="{StaticResource TextBlockStyle}"
+                           Margin="0, 0, 10, 0"/>
+
+                <Rectangle Grid.Column="1"
+                           HorizontalAlignment="Stretch" 
+                           VerticalAlignment="Center" 
+                           Fill="{StaticResource BorderColor}" 
+                           Height="1"/>
+            </Grid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <!--Список устройств-->
+                <ItemsControl ItemsSource="{Binding Devices}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <deviceView:DeviceView/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!--Кнопка добавления нового устройства-->
+                <Border Style="{StaticResource BorderStyle}">
+                    <Grid Width="50" Height="50">
+                        <Rectangle HorizontalAlignment="Stretch" 
+                                   VerticalAlignment="Center" 
+                                   Height="8"
+                                   Style="{StaticResource RectangleStyle}"/>
+                        <Rectangle HorizontalAlignment="Center" 
+                                   VerticalAlignment="Stretch" 
+                                   Width="8"
+                                   Style="{StaticResource RectangleStyle}"/>
+                    </Grid>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding AddDeviceCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

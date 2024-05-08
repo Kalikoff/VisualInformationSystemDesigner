@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using VisualInformationSystemDesigner.ViewModel;
+using VisualInformationSystemDesigner.ViewModel.Device.Database;
 
 namespace VisualInformationSystemDesigner.Model.Device.Database
 {
