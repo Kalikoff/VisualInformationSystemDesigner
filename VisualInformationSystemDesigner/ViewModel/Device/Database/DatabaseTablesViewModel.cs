@@ -11,7 +11,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 {
     public class DatabaseTablesViewModel : BaseViewModel
     {
-        private DatabaseModel _database;
+        private DatabaseModel _database; // Ссылка на базу данных
         public DatabaseModel Database
         {
             get => _database;
@@ -25,21 +25,40 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
             }
         }
 
+        private ObservableCollection<TableViewModel> _tablesVM = new(); // Список таблиц базы данных
+        public ObservableCollection<TableViewModel> TablesVM
+        {
+            get => _tablesVM;
+            set
+            {
+                if (_tablesVM != value)
+                {
+                    _tablesVM = value;
+                    OnPropertyChanged(nameof(TablesVM));
+                }
+            }
+        }
+
         public ICommand AddTableCommand { get; }
-        public ICommand ShowColumnsListWindowCommand { get; }
-
-
 
         public DatabaseTablesViewModel(ref DeviceModel database)
         {
             Database = (DatabaseModel)database;
 
+            // Получение всех таблиц из БД
+            for (int i = 0; i < Database.Tables.Count; i++)
+            {
+                var table = Database.Tables[i];
+                TablesVM.Add(new TableViewModel(ref table));
+            }
+
             AddTableCommand = new RelayCommand(AddTable);
-            //ShowColumnsListWindowCommand = new RelayCommand(ShowColumnsListWindow);
         }
 
-
-
+        /// <summary>
+        /// Создание новой таблицы
+        /// </summary>
+        /// <param name="parameter"></param>
         private void AddTable(object parameter)
         {
             var dialogAddDeviceViewModel = new AddItemDialogViewModel();
@@ -48,9 +67,10 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 
             if (dialogAddDeviceView.ShowDialog() == true)
             {
-                Database.Tables.Add(new TableViewModel(new TableModel
+                // Тестовый код
+                Database.Tables.Add(new TableModel
                 {
-                    Name = "Table 1",
+                    Name = dialogAddDeviceViewModel.ItemName,
                     ColumnsName = new ObservableCollection<string>
                     {
                         "Id",
@@ -85,17 +105,14 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
                             }
                         }
                     }
-                }));
-                //var table = new TableModel { Name = dialogAddDeviceViewModel.ItemName };
-                //Database.Tables.Add(table);
+                });
+
+                //Database.Tables.Add(new TableModel { Name = dialogAddDeviceViewModel.ItemName }); // Добавление таблицы
+
+                var table = Database.Tables[^1];
+
+                TablesVM.Add(new TableViewModel(ref table));
             }
-        }
-
-
-
-        public void ShowColumnsListWindow(object obj)
-        {
-
         }
     }
 }

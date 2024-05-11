@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
-                           Text="{Binding ItemTypeName}"
+                           Text="{Binding DevicesListName}"
                            FontSize="18"
                            Style="{StaticResource TextBlockStyle}"
                            Margin="0, 0, 10, 0"/>
@@ -37,7 +37,7 @@
 
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <!--Список устройств-->
-                <ItemsControl ItemsSource="{Binding Devices}">
+                <ItemsControl ItemsSource="{Binding DevicesVM}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>

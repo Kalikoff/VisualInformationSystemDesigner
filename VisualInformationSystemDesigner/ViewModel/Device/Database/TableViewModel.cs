@@ -8,7 +8,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 {
     public class TableViewModel : BaseViewModel
     {
-        private TableModel _table;
+        private TableModel _table; // Ссылка на таблицу
         public TableModel Table
         {
             get => _table;
@@ -24,20 +24,20 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 
         public ICommand ShowColumnsListWindowCommand { get; }
 
-
-
-        public TableViewModel(TableModel table)
+        public TableViewModel(ref TableModel table)
         {
             Table = table;
 
             ShowColumnsListWindowCommand = new RelayCommand(ShowColumnsListWindow);
         }
 
-
-
-        public void ShowColumnsListWindow(object obj)
+        /// <summary>
+        /// Отображение окна с данными из таблицы
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void ShowColumnsListWindow(object parameter)
         {
-            var databaseColumnsViewModel = new DatabaseColumnsViewModel(_table);
+            var databaseColumnsViewModel = new DatabaseColumnsViewModel(ref _table);
             var databaseColumnsView = new DatabaseColumnsView();
             databaseColumnsView.DataContext = databaseColumnsViewModel;
             databaseColumnsView.Show();

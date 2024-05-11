@@ -7,22 +7,30 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 {
     public class DatabaseColumnsViewModel : BaseViewModel
     {
-        private TableModel _table;
+        private TableModel _table; // Ссылка на таблицу
         public TableModel Table
         {
-            get; set;
+            get => _table;
+            set
+            {
+                if (_table != value)
+                {
+                    _table = value;
+                    OnPropertyChanged(nameof(Table));
+                }
+            }
         }
 
         public ICommand Command { get; }
-
-        public DatabaseColumnsViewModel(TableModel table)
+        
+        public DatabaseColumnsViewModel(ref TableModel table)
         {
             Table = table;
 
             Command = new RelayCommand(MyCommand);
         }
 
-        private void MyCommand(object obj)
+        private void MyCommand(object parameter)
         {
 
         }

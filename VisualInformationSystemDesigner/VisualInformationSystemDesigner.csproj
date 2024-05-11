@@ -33,9 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModel\Device\Server\" />
     <Folder Include="ViewModel\Device\Client\" />
-    <Folder Include="View\Device\Server\" />
     <Folder Include="View\Device\Client\" />
   </ItemGroup>
 
