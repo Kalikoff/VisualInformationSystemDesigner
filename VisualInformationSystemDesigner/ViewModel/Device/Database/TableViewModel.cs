@@ -22,25 +22,25 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
             }
         }
 
-        public ICommand ShowColumnsListWindowCommand { get; }
+        public ICommand ShowFieldsWindowCommand { get; }
 
         public TableViewModel(ref TableModel table)
         {
             Table = table;
 
-            ShowColumnsListWindowCommand = new RelayCommand(ShowColumnsListWindow);
+            ShowFieldsWindowCommand = new RelayCommand(ShowFieldsWindow);
         }
 
         /// <summary>
         /// Отображение окна с данными из таблицы
         /// </summary>
         /// <param name="parameter"></param>
-        public void ShowColumnsListWindow(object parameter)
+        public void ShowFieldsWindow(object parameter)
         {
-            var databaseColumnsViewModel = new DatabaseColumnsViewModel(ref _table);
-            var databaseColumnsView = new DatabaseColumnsView();
-            databaseColumnsView.DataContext = databaseColumnsViewModel;
-            databaseColumnsView.Show();
+            var tableFieldsViewModel = new TableFieldsViewModel(ref _table);
+            var tableFieldsView = new TableFieldsView();
+            tableFieldsView.DataContext = tableFieldsViewModel;
+            tableFieldsView.Show();
         }
     }
 }

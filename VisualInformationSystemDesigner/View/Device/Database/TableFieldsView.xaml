@@ -1,0 +1,71 @@
+﻿<Window x:Class="VisualInformationSystemDesigner.View.Device.Database.TableFieldsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VisualInformationSystemDesigner.View.Device.Database"
+        xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.Device.Database"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="Колонки таблицы"
+        Height="510"
+        Width="463"
+        ResizeMode="NoResize"
+        d:DataContext="{d:DesignInstance Type=viewModel:TableFieldsViewModel}"
+        Style="{StaticResource WindowStyle}">
+    <Grid Background="{StaticResource PrimaryColor}" Margin="10">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Название таблицы -->
+            <Grid Grid.Row="0" Margin="0, 0, 0, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Название таблицы: "
+                           Style="{StaticResource TextBlockStyle}"/>
+
+                <TextBox Grid.Column="1"
+                         Text="{Binding Table.Name}"
+                         Background="{StaticResource PrimaryColor}"
+                         Foreground="{StaticResource BorderColor}"
+                         BorderBrush="{StaticResource BorderColor}"
+                         FontSize="14"/>
+            </Grid>
+
+            <!--Данные-->
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Table.Fields}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="5"/>
+
+                            <ItemsControl ItemsSource="{Binding Data}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" Margin="5"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!--<Button Grid.Row="2" Command="{Binding Command}"/>-->
+        </Grid>
+    </Grid>
+</Window>

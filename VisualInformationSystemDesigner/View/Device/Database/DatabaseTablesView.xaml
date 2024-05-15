@@ -16,6 +16,7 @@
     <Grid Margin="10" Background="{StaticResource PrimaryColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -39,69 +40,62 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Column="0"
+            <TextBlock Grid.Column="0"
                            Text="ТАБЛИЦЫ"
                            FontSize="18"
                            Style="{StaticResource TextBlockStyle}"
                            Margin="0, 0, 10, 0"/>
 
-                <Rectangle Grid.Column="1"
+            <Rectangle Grid.Column="1"
                            HorizontalAlignment="Stretch" 
                            VerticalAlignment="Center" 
                            Fill="{StaticResource BorderColor}" 
                            Height="1"
                            Margin="0, 0, 10, 0"/>
 
-                <Border Grid.Column="2"
+            <Border Grid.Column="2"
                         Style="{StaticResource BorderStyle}"
                         Height="Auto"
                         Width="Auto"
                         BorderThickness="1">
-                    <TextBlock Text="Добавить"
+                <TextBlock Text="Добавить"
                                Style="{StaticResource TextBlockStyle}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                Padding="4, 0"
                                FontSize="14"/>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding AddTableCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Border>
-            </Grid>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding AddTableCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Border>
+        </Grid>
+        
+        <!--Список таблиц-->
+        <Grid Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 0, 0, 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding TablesVM}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-            <Grid Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 0, 0, 0">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <!--Список таблиц-->
-                    <ItemsControl ItemsSource="{Binding TablesVM}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="3"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:TableView/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Grid>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:TableView/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>

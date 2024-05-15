@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
     <None Remove="Resources\pc-svgrepo-com.svg" />
     <None Remove="Resources\server-icon.png" />
     <None Remove="Resources\sheet-icon.png" />
+    <None Remove="Resources\switch-svgrepo.png" />
     <Resource Include="Resources\database-icon.png" />
     <Resource Include="Resources\client-icon.png" />
     <Resource Include="Resources\server-icon.png" />
@@ -29,7 +31,9 @@
     <None Remove="Resources\node-svgrepo-com.svg" />
     <Resource Include="Resources\SVG\node-svgrepo-com.svg" />
     <None Remove="Resources\database-svgrepo-com.svg" />
+    <Content Include="Resources\icon.ico" />
     <Resource Include="Resources\SVG\database-svgrepo-com.svg" />
+    <Resource Include="Resources\switch-svgrepo.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -40,7 +40,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
         }
 
         public ICommand AddTableCommand { get; }
-
+        
         public DatabaseTablesViewModel(ref DeviceModel database)
         {
             Database = (DatabaseModel)database;
@@ -71,40 +71,24 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
                 Database.Tables.Add(new TableModel
                 {
                     Name = dialogAddDeviceViewModel.ItemName,
-                    ColumnsName = new ObservableCollection<string>
-                    {
-                        "Id",
-                        "Name",
-                        "Role"
-                    },
-                    Rows = new ObservableCollection<RowModel>
-                    {
-                        new RowModel
+                    Fields =
+                    [
+                        new()
                         {
-                            Columns = new ObservableCollection<object>
-                            {
-                                "1",
-                                "Masha",
-                                "Admin"
-                            },
+                            Name = "Id",
+                            Data = [1,2,3]
                         },
-                        new RowModel
+                        new()
                         {
-                            Columns = new ObservableCollection<object>
-                            {
-                                "2",
-                                "Misha"
-                            }
+                            Name = "Name",
+                            Data = ["Masha", "Misha", "Alex"]
                         },
-                        new RowModel
+                        new()
                         {
-                            Columns = new ObservableCollection<object>
-                            {
-                                "3",
-                                "Roma"
-                            }
+                            Name = "Role",
+                            Data = ["Admin", "Client", "Client"]
                         }
-                    }
+                    ]
                 });
 
                 //Database.Tables.Add(new TableModel { Name = dialogAddDeviceViewModel.ItemName }); // Добавление таблицы

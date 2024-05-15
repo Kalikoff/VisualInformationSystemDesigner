@@ -5,14 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VisualInformationSystemDesigner.View.Device.Server"
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.Device.Server"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="ServerMethodsView"
-        Height="450"
-        Width="800"
+        Title="Методы сервера"
+        Height="510"
+        Width="463"
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=viewModel:ServerMethodsViewModel}"
         Style="{StaticResource WindowStyle}">
-    <Grid>
-        
+    <Grid Margin="10" Background="{StaticResource PrimaryColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid Margin="10, 10, 10, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                       Text="Название Сервера: "
+                       Style="{StaticResource TextBlockStyle}"/>
+
+                <TextBox Grid.Column="1"
+                     Text="{Binding Server.Name}"
+                     Background="{StaticResource PrimaryColor}"
+                     Foreground="{StaticResource BorderColor}"
+                     BorderBrush="{StaticResource BorderColor}"
+                     FontSize="14"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="МЕТОДЫ"
+                       FontSize="18"
+                       Style="{StaticResource TextBlockStyle}"
+                       Margin="0, 0, 10, 0"/>
+
+            <Rectangle Grid.Column="1"
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Center" 
+                       Fill="{StaticResource BorderColor}" 
+                       Height="1"
+                       Margin="0, 0, 10, 0"/>
+
+            <Border Grid.Column="2"
+                    Style="{StaticResource BorderStyle}"
+                    Height="Auto"
+                    Width="Auto"
+                    BorderThickness="1">
+                <TextBlock Text="Добавить"
+                           Style="{StaticResource TextBlockStyle}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Padding="4, 0"
+                           FontSize="14"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding AddMethodCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Border>
+        </Grid>
+
+        <!--Список таблиц-->
+        <Grid Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 0, 0, 0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding MethodsVM}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:MethodView/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>

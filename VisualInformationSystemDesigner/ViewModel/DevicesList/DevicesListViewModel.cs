@@ -13,7 +13,7 @@ namespace VisualInformationSystemDesigner.ViewModel.DevicesList
     {
         public string DevicesListName { get; set; } // Название категории списка устройств
         
-        private List<DeviceModel> _devices; // Список устройств
+        private ObservableCollection<DeviceModel> _devices; // Список устройств
         private DeviceType _deviceType { get; set; } // Тип устройств
 
         private ObservableCollection<DeviceViewModel> _devicesVM = new(); // Список представления устройств
@@ -32,7 +32,7 @@ namespace VisualInformationSystemDesigner.ViewModel.DevicesList
 
         public ICommand AddDeviceCommand { get; }
 
-        public DevicesListViewModel(string devicesListName, ref List<DeviceModel> devices, DeviceType deviceType)
+        public DevicesListViewModel(string devicesListName, ref ObservableCollection<DeviceModel> devices, DeviceType deviceType)
         {
             DevicesListName = devicesListName;
             _devices = devices;

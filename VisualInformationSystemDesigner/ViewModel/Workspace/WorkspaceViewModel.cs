@@ -1,13 +1,15 @@
 ﻿using MvvmHelpers;
+using System.Collections.ObjectModel;
 using VisualInformationSystemDesigner.Model.Device;
+using VisualInformationSystemDesigner.Utilities;
 using VisualInformationSystemDesigner.ViewModel.DevicesList;
 
 namespace VisualInformationSystemDesigner.ViewModel.Workspace
 {
     public class WorkspaceViewModel : BaseViewModel
     {
-        private List<DevicesListViewModel> _devicesList = new(); // Список категорий устройств
-        public List<DevicesListViewModel> DevicesList
+        private ObservableCollection<DevicesListViewModel> _devicesList = new(); // Список категорий устройств
+        public ObservableCollection<DevicesListViewModel> DevicesList
         {
             get => _devicesList;
             set
@@ -21,8 +23,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
         }
 
 
-        private List<DeviceModel> _databases = new(); // Список баз данных
-        public List<DeviceModel> Databases
+        private ObservableCollection<DeviceModel> _databases = new(); // Список баз данных
+        public ObservableCollection<DeviceModel> Databases
         {
             get => _databases;
             set
@@ -36,8 +38,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
         }
 
 
-        private List<DeviceModel> _servers = new(); // Список серверов
-        public List<DeviceModel> Servers
+        private ObservableCollection<DeviceModel> _servers = new(); // Список серверов
+        public ObservableCollection<DeviceModel> Servers
         {
             get => _servers;
             set
@@ -51,8 +53,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
         }
 
 
-        private List<DeviceModel> _clients = new(); // Список клиентов
-        public List<DeviceModel> Clients
+        private ObservableCollection<DeviceModel> _clients = new(); // Список клиентов
+        public ObservableCollection<DeviceModel> Clients
         {
             get => _clients;
             set
@@ -65,7 +67,6 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             }
         }
 
-
         public WorkspaceViewModel()
         {
             var databases = new DevicesListViewModel("БАЗЫ ДАННЫХ", ref _databases, DeviceType.Database);
@@ -75,6 +76,10 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             DevicesList.Add(databases);
             DevicesList.Add(servers);
             DevicesList.Add(clients);
+
+            DeviceListLocator.Instance.Databases = _databases;
+            DeviceListLocator.Instance.Servers = _servers;
+            DeviceListLocator.Instance.Clients = _clients;
         }
     }
 }
