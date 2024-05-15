@@ -1,10 +1,12 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Utilities;
 using VisualInformationSystemDesigner.View.Dialogs;
 using VisualInformationSystemDesigner.ViewModel.Device;
+using VisualInformationSystemDesigner.ViewModel.Device.Server;
 using VisualInformationSystemDesigner.ViewModel.Dialogs;
 
 namespace VisualInformationSystemDesigner.ViewModel.DevicesList
@@ -37,6 +39,13 @@ namespace VisualInformationSystemDesigner.ViewModel.DevicesList
             DevicesListName = devicesListName;
             _devices = devices;
             _deviceType = deviceType;
+
+            // Отображение всех устройств
+            for (int i = 0; i < _devices.Count; i++)
+            {
+                var device = _devices[i];
+                DevicesVM.Add(new DeviceViewModel(ref device));
+            }
 
             AddDeviceCommand = new RelayCommand(AddDevice);
         }

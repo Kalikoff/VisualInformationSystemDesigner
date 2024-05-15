@@ -6,18 +6,35 @@
         xmlns:local="clr-namespace:VisualInformationSystemDesigner.View.Device.Server"
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.Device.Server"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:sys="clr-namespace:System;assembly=netstandard"
         mc:Ignorable="d"
         Title="Настройки метода"
-        Height="450"
-        Width="800"
+        Height="600"
+        Width="700"
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=viewModel:MethodSettingsViewModel}"
         Style="{StaticResource WindowStyle}">
+    <Window.Resources>
+        <x:Array x:Key="ArgumentTypes" Type="sys:String">
+            <sys:String>int</sys:String>
+            <sys:String>double</sys:String>
+            <sys:String>string</sys:String>
+        </x:Array>
+
+        <x:Array x:Key="ConditionTypes" Type="sys:String">
+            <sys:String>==</sys:String>
+            <sys:String>!=</sys:String>
+            <sys:String>&gt;=</sys:String>
+            <sys:String>&lt;=</sys:String>
+        </x:Array>
+    </Window.Resources>
+    
     <Grid Background="{StaticResource PrimaryColor}" Margin="10">
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Название метода -->
@@ -38,6 +55,194 @@
                          BorderBrush="{StaticResource BorderColor}"
                          FontSize="14"/>
             </Grid>
+
+            <TabControl Grid.Row="1" Margin="0, 0, 0, 10">
+                <!--Аргументы метода-->
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock Text="Аргументы" Style="{StaticResource TextBlockStyle}"/>
+                    </TabItem.Header>
+
+                    <TabItem.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--Список аргументов-->
+                            <ListBox Grid.Row="0" ItemsSource="{Binding Method.Arguments}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource ArgumentTypes}}"
+                                                      SelectedItem="{Binding Type}"
+                                                      Width="100"/>
+                                            <TextBox Text="{Binding Name}"
+                                                     Width="150"
+                                                     Margin="10,0,10,0"/>
+                                            <Button Content="Удалить"
+                                                    Command="{Binding DataContext.RemoveArgumentCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                                    CommandParameter="{Binding}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <!--Добавление нового арумента-->
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+                                <ComboBox ItemsSource="{Binding Source={StaticResource ArgumentTypes}}"
+                                          SelectedItem="{Binding NewArgument.Type}"
+                                          Width="100"/>
+                                <TextBox Text="{Binding NewArgument.Name}"
+                                         Width="150"
+                                         Margin="10,0,10,0"/>
+                                <Button Content="Добавить"
+                                        Command="{Binding AddArgumentCommand}" />
+                            </StackPanel>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+
+                <!--Выбор таблиц-->
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock Text="Таблицы и поля" Style="{StaticResource TextBlockStyle}"/>
+                    </TabItem.Header>
+
+                    <TabItem.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TreeView Grid.Column="0" ItemsSource="{Binding Databases}" x:Name="DatabaseTreeView">
+                                <TreeView.ItemTemplate>
+                                    <HierarchicalDataTemplate ItemsSource="{Binding Tables}">
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5, 0">
+                                <Button Content="→"
+                                        Command="{Binding SelectTableCommand}"
+                                        CommandParameter="{Binding ElementName=DatabaseTreeView, Path=SelectedItem}"/>
+                                <Button Content="←"
+                                        Command="{Binding DeselectTableCommand}"
+                                        CommandParameter="{Binding ElementName=SelectedTablesTreeView, Path=SelectedItem}"/>
+                            </StackPanel>
+
+                            <TreeView Grid.Column="2" ItemsSource="{Binding Method.SelectedTables}" x:Name="SelectedTablesTreeView">
+                                <TreeView.ItemTemplate>
+                                    <HierarchicalDataTemplate ItemsSource="{Binding Fields}">
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+
+                <!--Условия метода-->
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock Text="Условия" Style="{StaticResource TextBlockStyle}"/>
+                    </TabItem.Header>
+
+                    <TabItem.Content>
+                        <Grid>
+                            <Grid.Resources>
+                                <CollectionViewSource x:Key="SelectedTables" Source="{Binding Method.SelectedTables}"/>
+                                <CollectionViewSource x:Key="Arguments" Source="{Binding Method.Arguments}"/>
+                            </Grid.Resources>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--Список условий-->
+                            <ListBox Grid.Row="0" ItemsSource="{Binding Method.Conditions}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource SelectedTables}}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedItem="{Binding Table}"
+                                                      Width="150"
+                                                      Margin="0,0,10,0"/>
+                                            <ComboBox ItemsSource="{Binding Table.Fields}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedItem="{Binding Field}"
+                                                      Width="150"
+                                                      Margin="0,0,10,0"/>
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource ConditionTypes}}"
+                                                      SelectedItem="{Binding Condition}"
+                                                      Width="50"
+                                                      Margin="0,0,10,0"/>
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource Arguments}}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedItem="{Binding Argument}"
+                                                      Width="150"
+                                                      Margin="0,0,10,0"/>
+                                            <Button Content="Удалить"
+                                                    Command="{Binding DataContext.RemoveConditionCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                                    CommandParameter="{Binding}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <!-- Добавление нового условия -->
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+                                <ComboBox ItemsSource="{Binding Method.SelectedTables}"
+                                          DisplayMemberPath="Name"
+                                          SelectedItem="{Binding NewCondition.Table}"
+                                          Width="150"
+                                          Margin="0,0,10,0"/>
+                                <ComboBox ItemsSource="{Binding NewCondition.Table.Fields}"
+                                          DisplayMemberPath="Name"
+                                          SelectedItem="{Binding NewCondition.Field}"
+                                          Width="150"
+                                          Margin="0,0,10,0"/>
+                                <ComboBox ItemsSource="{Binding Source={StaticResource ConditionTypes}}"
+                                          SelectedItem="{Binding NewCondition.Condition}"
+                                          Width="50"
+                                          Margin="0,0,10,0"/>
+                                <ComboBox ItemsSource="{Binding Method.Arguments}"
+                                          DisplayMemberPath="Name"
+                                          SelectedItem="{Binding NewCondition.Argument}"
+                                          Width="150"
+                                          Margin="0,0,10,0"/>
+                                <Button Content="Добавить"
+                                        Command="{Binding AddConditionCommand}"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+
+                <!--Действия метода-->
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock Text="Условия" Style="{StaticResource TextBlockStyle}"/>
+                    </TabItem.Header>
+                    
+                    <TabItem.Content>
+                        <Grid>
+                            
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+            </TabControl>
+            
+            <UniformGrid Grid.Row="2" Rows="1" HorizontalAlignment="Right">
+                <Button Content="Далее"/>
+                <Button Content="Ок"/>
+                <Button Content="Отмена"/>
+            </UniformGrid>
         </Grid>
     </Grid>
 </Window>

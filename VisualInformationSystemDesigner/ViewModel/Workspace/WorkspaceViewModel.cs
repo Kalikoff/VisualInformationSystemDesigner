@@ -1,6 +1,8 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
 using VisualInformationSystemDesigner.Model.Device;
+using VisualInformationSystemDesigner.Model.Device.Database;
+using VisualInformationSystemDesigner.Model.Device.Server;
 using VisualInformationSystemDesigner.Utilities;
 using VisualInformationSystemDesigner.ViewModel.DevicesList;
 
@@ -69,6 +71,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
 
         public WorkspaceViewModel()
         {
+            Test();
+
             var databases = new DevicesListViewModel("БАЗЫ ДАННЫХ", ref _databases, DeviceType.Database);
             var servers = new DevicesListViewModel("СЕРВЕРА", ref _servers, DeviceType.Server);
             var clients = new DevicesListViewModel("КЛИЕНТЫ", ref _clients, DeviceType.Client);
@@ -80,6 +84,63 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             DeviceListLocator.Instance.Databases = _databases;
             DeviceListLocator.Instance.Servers = _servers;
             DeviceListLocator.Instance.Clients = _clients;
+        }
+
+        private void Test()
+        {
+            Databases.Add(new DatabaseModel
+            {
+                DeviceType = DeviceType.Database,
+                Name = "DB1",
+                Tables = new ObservableCollection<TableModel>
+                {
+                    new TableModel
+                    {
+                        Name = "t1",
+                        Fields =
+                        [
+                            new()
+                            {
+                                Name = "Id",
+                                Data = [1,2,3]
+                            },
+                            new()
+                            {
+                                Name = "Name",
+                                Data = ["Masha", "Misha", "Alex"]
+                            },
+                            new()
+                            {
+                                Name = "Role",
+                                Data = ["Admin", "Client", "Client"]
+                            }
+                        ]
+                    },
+                    new TableModel
+                    {
+                        Name = "t2",
+                        Fields =
+                        [
+                            new()
+                            {
+                                Name = "Id",
+                                Data = [1,2]
+                            },
+                            new()
+                            {
+                                Name = "Work",
+                                Data = ["Admin", "Programmer"]
+                            }
+                        ]
+                    }
+                }
+            });
+
+            Servers.Add(new ServerModel
+            {
+                DeviceType = DeviceType.Server,
+                Name = "S1"
+            });
         }
     }
 }

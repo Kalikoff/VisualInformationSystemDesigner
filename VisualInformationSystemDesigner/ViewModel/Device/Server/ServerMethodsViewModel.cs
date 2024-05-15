@@ -45,8 +45,12 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         {
             Server = (ServerModel)server;
 
-            var databases = DeviceListLocator.Instance.Databases;
-
+            // Отображение всех существующих методов сервера
+            for (int i = 0; i < Server.Methods.Count; i++)
+            {
+                var method = Server.Methods[i];
+                MethodsVM.Add(new MethodViewModel(ref method));
+            }
 
             AddMethodCommand = new RelayCommand(AddMethod);
         }
