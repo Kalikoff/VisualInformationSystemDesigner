@@ -9,11 +9,6 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         public string Condition { get; set; } // Условие
         public ArgumentModel Argument { get; set; } // Аргумент
 
-        public ConditionModel()
-        {
-            Table = new TableModel();
-            Field = new FieldModel();
-            Argument = new ArgumentModel();
-        }
+        public ConditionModel() { }
     }
 }

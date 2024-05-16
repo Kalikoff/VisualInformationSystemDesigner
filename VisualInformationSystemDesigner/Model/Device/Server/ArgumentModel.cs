@@ -6,6 +6,6 @@
         public string Type { get; set; } // Тип переменной
         public object Value { get; set; } // Значение
 
-        public ArgumentModel() {}
+        public ArgumentModel() { }
     }
 }
