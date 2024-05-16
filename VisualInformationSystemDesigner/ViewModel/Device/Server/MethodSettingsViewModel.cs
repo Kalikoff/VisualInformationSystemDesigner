@@ -56,7 +56,9 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         public ICommand AddConditionCommand { get; } // Добавить условие
         public ICommand RemoveConditionCommand { get; } // Удалить условие
 
-        public MethodSettingsViewModel(ref MethodModel method)
+		public ICommand AddActionCommand { get; } // Добавить действие
+
+		public MethodSettingsViewModel(ref MethodModel method)
         {
             Method = method;
 
@@ -70,6 +72,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
 
             AddConditionCommand = new RelayCommand(AddCondition);
             RemoveConditionCommand = new RelayCommand(RemoveCondition);
+
+			AddActionCommand = new RelayCommand(AddAction);
         }
 
         /// <summary>
@@ -149,5 +153,14 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
                 Method.Conditions.Remove(conditionToRemove);
             }
         }
-    }
+
+		/// <summary>
+		/// Добавить действие
+		/// </summary>
+		/// <param name="parameter"></param>
+		private void AddAction(object parameter)
+		{
+            Method.Actions.Add(new ActionModel());
+		}
+	}
 }
