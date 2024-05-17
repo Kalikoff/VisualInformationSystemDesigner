@@ -29,8 +29,11 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
             get { return _newArgument; }
             set
             {
-                _newArgument = value;
-                OnPropertyChanged(nameof(NewArgument));
+                if (_newArgument != value)
+                {
+                    _newArgument = value;
+                    OnPropertyChanged(nameof(NewArgument));
+                }
             }
         }
 
@@ -40,8 +43,11 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
             get => _newCondition;
             set
             {
-                _newCondition = value;
-                OnPropertyChanged(nameof(NewCondition));
+                if (_newCondition != value)
+                {
+                    _newCondition = value;
+                    OnPropertyChanged(nameof(NewCondition));
+                }
             }
         }
 
@@ -138,8 +144,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
                 return;
             }
 
-            Method.Conditions.Add(NewCondition);
-            NewCondition = new ConditionModel();
+			Method.Conditions.Add(NewCondition);
+			NewCondition = new ConditionModel();
         }
 
         /// <summary>

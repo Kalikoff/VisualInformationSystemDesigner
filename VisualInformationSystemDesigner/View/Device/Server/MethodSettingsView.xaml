@@ -161,11 +161,6 @@
 
                     <TabItem.Content>
                         <Grid>
-                            <Grid.Resources>
-                                <CollectionViewSource x:Key="SelectedTables" Source="{Binding Method.SelectedTables}"/>
-                                <CollectionViewSource x:Key="Arguments" Source="{Binding Method.Arguments}"/>
-                            </Grid.Resources>
-
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
@@ -176,7 +171,7 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <ComboBox ItemsSource="{Binding Source={StaticResource SelectedTables}}"
+                                            <ComboBox ItemsSource="{Binding DataContext.Method.SelectedTables, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                       DisplayMemberPath="Name"
                                                       SelectedItem="{Binding Table}"
                                                       Width="150"
@@ -190,7 +185,7 @@
                                                       SelectedItem="{Binding Condition}"
                                                       Width="50"
                                                       Margin="0,0,10,0"/>
-                                            <ComboBox ItemsSource="{Binding Source={StaticResource Arguments}}"
+                                            <ComboBox ItemsSource="{Binding DataContext.Method.Arguments, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                       DisplayMemberPath="Name"
                                                       SelectedItem="{Binding Argument}"
                                                       Width="150"
@@ -239,39 +234,36 @@
                     
                     <TabItem.Content>
                         <Grid>
-                            <!--Повторяющийся код-->
-                            <Grid.Resources>
-                                <CollectionViewSource x:Key="SelectedTables" Source="{Binding Method.SelectedTables}"/>
-                            </Grid.Resources>
-
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             
                             <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1">
-                                <ListBox Grid.Row="0" ItemsSource="{Binding Method.Actions}">
+                                <ListBox Grid.Row="0" ItemsSource="{Binding Method.Actions}" x:Name="ActionsListBox">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <Grid>
+                                            <Grid Margin="5">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
 
                                                 <StackPanel Grid.Row="0" Orientation="Horizontal">
-                                                    <ComboBox ItemsSource="{Binding Source={StaticResource SelectedTables}}"
+                                                    <ComboBox ItemsSource="{Binding DataContext.Method.SelectedTables, ElementName=ActionsListBox}"
                                                               SelectedItem="{Binding Table}"
                                                               DisplayMemberPath="Name"
                                                               Width="100"
-                                                              Margin="0,0,10,0"/>
+                                                              Margin="0,0,10,0"
+                                                              Name="SelectedTablesComboBox"/>
 
                                                     <ComboBox x:Name="comboBoxActions"
                                                               ItemsSource="{StaticResource ActionTypes}"
                                                               SelectedItem="{Binding Action}"
                                                               Width="150"/>
                                                 </StackPanel>
-
+                                                
                                                 <ContentControl Grid.Row="1">
                                                     <ContentControl.Style>
                                                         <Style TargetType="ContentControl">
@@ -287,7 +279,19 @@
                                                                 <DataTrigger Binding="{Binding ElementName=comboBoxActions, Path=SelectedIndex}" Value="1">
                                                                     <Setter Property="Content">
                                                                         <Setter.Value>
-                                                                            <TextBlock Text="Добавить"/>
+                                                                            <ListBox ItemsSource="{Binding SelectedItem.Fields, ElementName=SelectedTablesComboBox}">
+                                                                                <ListBox.ItemTemplate>
+                                                                                    <DataTemplate>
+                                                                                        <StackPanel Orientation="Horizontal" Margin="5">
+                                                                                            <TextBlock Text="{Binding Name}" Width="150" />
+                                                                                            <ComboBox ItemsSource="{Binding DataContext.Method.Arguments, ElementName=ActionsListBox}"
+                                                                                                      DisplayMemberPath="Name"
+                                                                                                      Width="150"
+                                                                                                      Margin="0,0,10,0"/>
+                                                                                        </StackPanel>
+                                                                                    </DataTemplate>
+                                                                                </ListBox.ItemTemplate>
+                                                                            </ListBox>
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </DataTrigger>
@@ -311,6 +315,7 @@
                                                         </Style>
                                                     </ContentControl.Style>
                                                 </ContentControl>
+
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>

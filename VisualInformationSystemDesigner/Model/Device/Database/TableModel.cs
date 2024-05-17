@@ -12,5 +12,5 @@ namespace VisualInformationSystemDesigner.Model.Device.Database
         {
             Fields = new ObservableCollection<FieldModel>();
         }
-    }
+	}
 }
