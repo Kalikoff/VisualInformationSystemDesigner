@@ -41,7 +41,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Название метода -->
@@ -63,7 +62,7 @@
                          FontSize="14"/>
             </Grid>
 
-            <TabControl Grid.Row="1" Margin="0, 0, 0, 10">
+            <TabControl Grid.Row="1">
                 <!--Аргументы метода-->
                 <TabItem>
                     <TabItem.Header>
@@ -142,7 +141,7 @@
                                         CommandParameter="{Binding ElementName=SelectedTablesTreeView, Path=SelectedItem}"/>
                             </StackPanel>
 
-                            <TreeView Grid.Column="2" ItemsSource="{Binding Method.SelectedTables}" x:Name="SelectedTablesTreeView">
+                            <TreeView Grid.Column="2" ItemsSource="{Binding Tables}" x:Name="SelectedTablesTreeView">
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Fields}">
                                         <TextBlock Text="{Binding Name}"/>
@@ -171,12 +170,7 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <ComboBox ItemsSource="{Binding DataContext.Method.SelectedTables, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                      DisplayMemberPath="Name"
-                                                      SelectedItem="{Binding Table}"
-                                                      Width="150"
-                                                      Margin="0,0,10,0"/>
-                                            <ComboBox ItemsSource="{Binding Table.Fields}"
+                                            <ComboBox ItemsSource="{Binding DataContext.Method.SelectedTable.Fields, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                       DisplayMemberPath="Name"
                                                       SelectedItem="{Binding Field}"
                                                       Width="150"
@@ -191,7 +185,7 @@
                                                       Width="150"
                                                       Margin="0,0,10,0"/>
                                             <Button Content="Удалить"
-                                                    Command="{Binding DataContext.RemoveConditionCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                                    Command="{Binding DataContext.RemoveConditionCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                     CommandParameter="{Binding}"/>
                                         </StackPanel>
                                     </DataTemplate>
@@ -200,12 +194,7 @@
 
                             <!-- Добавление нового условия -->
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
-                                <ComboBox ItemsSource="{Binding Method.SelectedTables}"
-                                          DisplayMemberPath="Name"
-                                          SelectedItem="{Binding NewCondition.Table}"
-                                          Width="150"
-                                          Margin="0,0,10,0"/>
-                                <ComboBox ItemsSource="{Binding NewCondition.Table.Fields}"
+                                <ComboBox ItemsSource="{Binding Method.SelectedTable.Fields}"
                                           DisplayMemberPath="Name"
                                           SelectedItem="{Binding NewCondition.Field}"
                                           Width="150"
@@ -226,21 +215,32 @@
                     </TabItem.Content>
                 </TabItem>
 
-                <!--Действия метода-->
+                <!--Действие метода-->
                 <TabItem>
                     <TabItem.Header>
-                        <TextBlock Text="Действия" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Text="Действие" Style="{StaticResource TextBlockStyle}"/>
                     </TabItem.Header>
-                    
+
                     <TabItem.Content>
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            
-                            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1">
-                                <ListBox Grid.Row="0" ItemsSource="{Binding Method.Actions}" x:Name="ActionsListBox">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
+                                <TextBlock Text="Выбор дейтсвия:"/>
+                                <ComboBox ItemsSource="{StaticResource ActionTypes}"
+                                          SelectedItem="{Binding Method.ActionName}"
+                                          Width="150"/>
+                            </StackPanel>
+                        </Grid>
+                        <!--<StackPanel Grid.Row="0" Orientation="Horizontal">
+                                    
+
+                                    
+                                </StackPanel>-->
+
+                        <!--<ListBox Grid.Row="0" ItemsSource="{Binding Method.Actions}" x:Name="actionsListBox">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Margin="5">
@@ -251,88 +251,109 @@
                                                 </Grid.RowDefinitions>
 
                                                 <StackPanel Grid.Row="0" Orientation="Horizontal">
-                                                    <ComboBox ItemsSource="{Binding DataContext.Method.SelectedTables, ElementName=ActionsListBox}"
+                                                    <ComboBox ItemsSource="{Binding DataContext.Method.SelectedTables, ElementName=actionsListBox}"
                                                               SelectedItem="{Binding Table}"
                                                               DisplayMemberPath="Name"
                                                               Width="100"
                                                               Margin="0,0,10,0"
-                                                              Name="SelectedTablesComboBox"/>
+                                                              x:Name="selectedTablesComboBox"/>
 
-                                                    <ComboBox x:Name="comboBoxActions"
-                                                              ItemsSource="{StaticResource ActionTypes}"
+                                                    <ComboBox ItemsSource="{StaticResource ActionTypes}"
                                                               SelectedItem="{Binding Action}"
-                                                              Width="150"/>
+                                                              Width="150"
+                                                              x:Name="comboBoxActions"/>
                                                 </StackPanel>
-                                                
-                                                <ContentControl Grid.Row="1">
-                                                    <ContentControl.Style>
-                                                        <Style TargetType="ContentControl">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=comboBoxActions, Path=SelectedIndex}" Value="0">
-                                                                    <Setter Property="Content">
-                                                                        <Setter.Value>
-                                                                            <TextBlock Text="Получить"/>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
 
-                                                                <DataTrigger Binding="{Binding ElementName=comboBoxActions, Path=SelectedIndex}" Value="1">
-                                                                    <Setter Property="Content">
-                                                                        <Setter.Value>
-                                                                            <ListBox ItemsSource="{Binding SelectedItem.Fields, ElementName=SelectedTablesComboBox}">
-                                                                                <ListBox.ItemTemplate>
-                                                                                    <DataTemplate>
-                                                                                        <StackPanel Orientation="Horizontal" Margin="5">
-                                                                                            <TextBlock Text="{Binding Name}" Width="150" />
-                                                                                            <ComboBox ItemsSource="{Binding DataContext.Method.Arguments, ElementName=ActionsListBox}"
-                                                                                                      DisplayMemberPath="Name"
-                                                                                                      Width="150"
-                                                                                                      Margin="0,0,10,0"/>
-                                                                                        </StackPanel>
-                                                                                    </DataTemplate>
-                                                                                </ListBox.ItemTemplate>
-                                                                            </ListBox>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
+                                                -->
+                        <!--Выбор действия-->
+                        <!--
+                                                <TabControl Grid.Row="1"
+                                                            SelectedIndex="{Binding Action, Converter={StaticResource ActionToTabIndexConverter}}">
+                                                    -->
+                        <!--Добавить-->
+                        <!--
+                                                    <TabItem Visibility="Collapsed">
+                                                        <TabItem.Header>
+                                                            <TextBlock Text="Добавить" Style="{StaticResource TextBlockStyle}"/>
+                                                        </TabItem.Header>
 
-                                                                <DataTrigger Binding="{Binding ElementName=comboBoxActions, Path=SelectedIndex}" Value="2">
-                                                                    <Setter Property="Content">
-                                                                        <Setter.Value>
-                                                                            <TextBlock Text="Изменить"/>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
+                                                        <TabItem.Content>
+                                                            <ListBox ItemsSource="{Binding SelectedItem.Fields, ElementName=selectedTablesComboBox}">
+                                                                <ListBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal" Margin="5">
+                                                                            <TextBlock Text="{Binding Name}" Width="150" />
+                                                                            <ComboBox ItemsSource="{Binding DataContext.Method.Arguments, ElementName=actionsListBox}"
+                                                                                      SelectedItem="{Binding }"
+                                                                                      DisplayMemberPath="Name"
+                                                                                      Width="150"
+                                                                                      Margin="0,0,10,0"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ListBox.ItemTemplate>
+                                                            </ListBox>
+                                                        </TabItem.Content>
+                                                    </TabItem>
 
-                                                                <DataTrigger Binding="{Binding ElementName=comboBoxActions, Path=SelectedIndex}" Value="3">
-                                                                    <Setter Property="Content">
-                                                                        <Setter.Value>
-                                                                            <TextBlock Text="Удалить"/>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </ContentControl.Style>
-                                                </ContentControl>
+                                                    -->
+                        <!--Изменить-->
+                        <!--
+                                                    <TabItem Visibility="Collapsed">
+                                                        <TabItem.Header>
+                                                            <TextBlock Text="Изменить" Style="{StaticResource TextBlockStyle}"/>
+                                                        </TabItem.Header>
 
+                                                        <TabItem.Content>
+                                                            <ListBox ItemsSource="{Binding SelectedItem.Fields, ElementName=selectedTablesComboBox}">
+                                                                <ListBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal" Margin="5">
+                                                                            <TextBlock Text="{Binding Name}" Width="150" />
+                                                                            <ComboBox ItemsSource="{Binding DataContext.Method.Arguments, ElementName=actionsListBox}"
+                                                                                      DisplayMemberPath="Name"
+                                                                                      Width="150"
+                                                                                      Margin="0,0,10,0"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ListBox.ItemTemplate>
+                                                            </ListBox>
+                                                        </TabItem.Content>
+                                                    </TabItem>
+
+                                                    -->
+                        <!--Получить-->
+                        <!--
+                                                    <TabItem Visibility="Collapsed">
+                                                        <TabItem.Header>
+                                                            <TextBlock Text="Получить" Style="{StaticResource TextBlockStyle}"/>
+                                                        </TabItem.Header>
+
+                                                        <TabItem.Content>
+                                                            <TextBlock Text="Получает строки по заданым условиям"/>
+                                                        </TabItem.Content>
+                                                    </TabItem>
+
+                                                    -->
+                        <!--Удалить-->
+                        <!--
+                                                    <TabItem Visibility="Collapsed">
+                                                        <TabItem.Header>
+                                                            <TextBlock Text="Удалить" Style="{StaticResource TextBlockStyle}"/>
+                                                        </TabItem.Header>
+
+                                                        <TabItem.Content>
+                                                            <TextBlock Text="Удаляет строки по заданым условиям"/>
+                                                        </TabItem.Content>
+                                                    </TabItem>
+                                                </TabControl>-->
+                        <!--
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Border>
-
-                            <Button Grid.Row="1" Content="Добавить" Command="{Binding AddActionCommand}"/>
-                        </Grid>
+                                </ListBox>-->
                     </TabItem.Content>
                 </TabItem>
             </TabControl>
-            
-            <UniformGrid Grid.Row="2" Rows="1" HorizontalAlignment="Right">
-                <Button Content="Далее"/>
-                <Button Content="Ок"/>
-                <Button Content="Отмена"/>
-            </UniformGrid>
         </Grid>
     </Grid>
 </Window>

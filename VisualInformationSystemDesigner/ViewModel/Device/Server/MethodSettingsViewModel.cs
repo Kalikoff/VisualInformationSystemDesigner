@@ -51,6 +51,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
             }
         }
 
+        public ObservableCollection<TableModel> Tables { get; set; } = new();
+
         public ObservableCollection<DatabaseModel> Databases { get; set; } // Список доступных баз данных
 
         public ICommand AddArgumentCommand { get; } // Добавить аргумент
@@ -61,8 +63,6 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
 
         public ICommand AddConditionCommand { get; } // Добавить условие
         public ICommand RemoveConditionCommand { get; } // Удалить условие
-
-		public ICommand AddActionCommand { get; } // Добавить действие
 
 		public MethodSettingsViewModel(ref MethodModel method)
         {
@@ -78,8 +78,6 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
 
             AddConditionCommand = new RelayCommand(AddCondition);
             RemoveConditionCommand = new RelayCommand(RemoveCondition);
-
-			AddActionCommand = new RelayCommand(AddAction);
         }
 
         /// <summary>
@@ -115,9 +113,11 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         /// <param name="parameter"></param> 
         private void SelectTable(object parameter)
         {
-            if (parameter is TableModel selectedTable && !Method.SelectedTables.Contains(selectedTable))
+            if (parameter is TableModel selectedTable && !Tables.Contains(selectedTable) && Tables.Count == 0)
             {
-                Method.SelectedTables.Add(selectedTable);
+                Tables.Add(selectedTable);
+                Method.SelectedTable = selectedTable;
+                OnPropertyChanged(nameof(Method));
             }
         }
 
@@ -127,9 +127,11 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         /// <param name="parameter"></param>
         private void DeselectTable(object parameter)
         {
-            if (parameter is TableModel selectedTable && Method.SelectedTables.Contains(selectedTable))
+            if (parameter is TableModel selectedTable && Tables.Contains(selectedTable))
             {
-                Method.SelectedTables.Remove(selectedTable);
+                Tables.Remove(selectedTable);
+                Method.SelectedTable = new TableModel();
+                OnPropertyChanged(nameof(Method));
             }
         }
 
@@ -139,7 +141,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         /// <param name="parameter"></param>
         private void AddCondition(object parameter)
         {
-            if (NewCondition.Table == null || NewCondition.Field == null || NewCondition.Condition == null || NewCondition.Argument == null)
+            if (NewCondition.Field == null || NewCondition.Condition == null || NewCondition.Argument == null)
             {
                 return;
             }
@@ -159,14 +161,5 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
                 Method.Conditions.Remove(conditionToRemove);
             }
         }
-
-		/// <summary>
-		/// Добавить действие
-		/// </summary>
-		/// <param name="parameter"></param>
-		private void AddAction(object parameter)
-		{
-            Method.Actions.Add(new ActionModel());
-		}
 	}
 }

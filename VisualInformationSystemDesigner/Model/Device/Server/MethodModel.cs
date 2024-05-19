@@ -8,16 +8,37 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         public string Name { get; set; } // Название
 
         public ObservableCollection<ArgumentModel> Arguments { get; set; } // Аргументы метода
-        public ObservableCollection<TableModel> SelectedTables { get; set; } // Список выбранных таблиц
+        public TableModel SelectedTable { get; set; } // Выбранная таблица
         public ObservableCollection<ConditionModel> Conditions { get; set; } // Список условий
-        public ObservableCollection<ActionModel> Actions { get; set; } // Список действий
+        public string ActionName { get; set; } // Действие
 
         public MethodModel()
         {
             Arguments = new ObservableCollection<ArgumentModel>();
-            SelectedTables = new ObservableCollection<TableModel>();
             Conditions = new ObservableCollection<ConditionModel>();
-            Actions = new ObservableCollection<ActionModel>();
+        }
+
+
+        public object GetResponse()
+        {
+            if (ActionName == "Получить")
+            {
+
+            }
+            else if (ActionName == "Добавить")
+            {
+
+            }
+            else if (ActionName == "Изменить")
+            {
+
+            }
+            else if (ActionName == "Удалить")
+            {
+
+            }
+
+            return null;
         }
     }
 }

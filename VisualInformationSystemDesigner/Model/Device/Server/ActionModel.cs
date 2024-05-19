@@ -4,8 +4,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 {
 	public class ActionModel
 	{
-		public TableModel Table { get; set; } // Таблица с которой происходит действие
-		public string Action {  get; set; } // Действие
+		public string ActionName {  get; set; } // Действие
 
 		public ActionModel() { }
 	}
