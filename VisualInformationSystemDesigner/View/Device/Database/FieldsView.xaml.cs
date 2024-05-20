@@ -2,9 +2,9 @@
 
 namespace VisualInformationSystemDesigner.View.Device.Database
 {
-    public partial class TableFieldsView : Window
+    public partial class FieldsView : Window
     {
-        public TableFieldsView()
+        public FieldsView()
         {
             InitializeComponent();
         }

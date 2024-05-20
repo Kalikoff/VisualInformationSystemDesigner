@@ -5,7 +5,7 @@ using VisualInformationSystemDesigner.Utilities;
 
 namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 {
-    public class TableFieldsViewModel : BaseViewModel
+    public class FieldsViewModel : BaseViewModel
     {
         private TableModel _table; // Ссылка на таблицу
         public TableModel Table
@@ -23,7 +23,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 
         public ICommand Command { get; }
         
-        public TableFieldsViewModel(ref TableModel table)
+        public FieldsViewModel(ref TableModel table)
         {
             Table = table;
 

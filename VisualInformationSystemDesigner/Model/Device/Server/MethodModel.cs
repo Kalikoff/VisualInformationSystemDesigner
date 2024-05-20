@@ -40,5 +40,18 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 
             return null;
         }
-    }
+
+        private bool CheckingConditions()
+        {
+            foreach (var condition in Conditions)
+            {
+				if (!condition.Check())
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+	}
 }

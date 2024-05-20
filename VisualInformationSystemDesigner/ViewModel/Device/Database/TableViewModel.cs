@@ -37,10 +37,10 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
         /// <param name="parameter"></param>
         public void ShowFieldsWindow(object parameter)
         {
-            var tableFieldsViewModel = new TableFieldsViewModel(ref _table);
-            var tableFieldsView = new TableFieldsView();
-            tableFieldsView.DataContext = tableFieldsViewModel;
-            tableFieldsView.Show();
+            var fieldsViewModel = new FieldsViewModel(ref _table);
+            var fieldsView = new FieldsView();
+			fieldsView.DataContext = fieldsViewModel;
+			fieldsView.Show();
         }
     }
 }

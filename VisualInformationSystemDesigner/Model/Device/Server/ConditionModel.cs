@@ -10,5 +10,64 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         public ArgumentModel Argument { get; set; } // Аргумент
 
         public ConditionModel() { }
+
+		public bool Check()
+        {
+			bool result = false;
+
+			foreach (var data in Field.Data)
+			{
+				if (Condition == "==")
+				{
+					if (data == Argument.Value)
+					{
+						return true;
+					}
+				}
+				else if (Condition == "!=")
+				{
+					if (data != Argument.Value)
+					{
+						return true;
+					}
+				}
+				else if (Condition == ">=")
+				{
+					if (Argument.Type == "int")
+					{
+						if (Convert.ToInt32(data) >= Convert.ToInt32(Argument.Value))
+						{
+							result = true;
+						}
+					}
+					else if (Argument.Type == "double")
+					{
+						if (Convert.ToDouble(data) >= Convert.ToDouble(Argument.Value))
+						{
+							result = true;
+						}
+					}
+				}
+				else if (Condition == "<=")
+				{
+					if (Argument.Type == "int")
+					{
+						if (Convert.ToInt32(data) <= Convert.ToInt32(Argument.Value))
+						{
+							result = true;
+						}
+					}
+					else if (Argument.Type == "double")
+					{
+						if (Convert.ToDouble(data) <= Convert.ToDouble(Argument.Value))
+						{
+							result = true;
+						}
+					}
+				}
+			}
+
+			return result;
+		}
 	}
 }
