@@ -76,7 +76,26 @@
 
                     <TabItem.Content>
                         <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
+                            <TextBox Grid.Row="0"
+                                     HorizontalAlignment="Stretch" 
+				                     VerticalAlignment="Stretch"
+                                     IsReadOnly="True"
+				                     Background="#0c0c0c"
+				                     Foreground="#cccccc"
+				                     FontFamily="Consolas"
+				                     FontSize="16"
+                                     Text="{Binding ConsoleOutput}"
+                                     Margin="0, 0, 0, 5"/>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                <Button Content="Очистить" Command="{Binding ClearConsoleCommand}"/>
+                                <Button Content="Получить ответ" Command="{Binding GetResponseCommand}"/>
+                            </StackPanel>
                         </Grid>
                     </TabItem.Content>
                 </TabItem>

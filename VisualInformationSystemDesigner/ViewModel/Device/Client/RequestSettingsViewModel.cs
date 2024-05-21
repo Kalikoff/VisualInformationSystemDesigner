@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device.Client;
 using VisualInformationSystemDesigner.Model.Device.Server;
 using VisualInformationSystemDesigner.Utilities;
@@ -36,11 +37,49 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 			}
 		}
 
-		public RequestSettingsViewModel(ref RequestModel request)
+        private string _consoleOutput;
+        public string ConsoleOutput
+        {
+            get => _consoleOutput;
+            set
+            {
+                if (_consoleOutput != value)
+                {
+                    _consoleOutput = value;
+                    OnPropertyChanged(nameof(ConsoleOutput));
+                }
+            }
+        }
+
+		public ICommand GetResponseCommand { get; set; }
+		public ICommand ClearConsoleCommand { get; set; }
+
+        public RequestSettingsViewModel(ref RequestModel request)
         {
 			Request = request;
 
 			Servers = new ObservableCollection<ServerModel>(DeviceListLocator.Instance.Servers.Cast<ServerModel>());
+
+			GetResponseCommand = new RelayCommand(GetResponse);
+			ClearConsoleCommand = new RelayCommand(ClearConsole);
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="parameter"></param>
+		private void GetResponse(object parameter)
+		{
+
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="parameter"></param>
+        private void ClearConsole(object parameter)
+        {
+
+        }
     }
 }
