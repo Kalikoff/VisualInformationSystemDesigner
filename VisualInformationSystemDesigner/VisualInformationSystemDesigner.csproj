@@ -18,11 +18,13 @@
     <None Remove="Resources\client-icon.png" />
     <None Remove="Resources\database-icon.png" />
     <None Remove="Resources\pc-svgrepo-com.svg" />
+    <None Remove="Resources\request-icon.png" />
     <None Remove="Resources\server-icon.png" />
     <None Remove="Resources\sheet-icon.png" />
     <None Remove="Resources\switch-svgrepo.png" />
     <Resource Include="Resources\database-icon.png" />
     <Resource Include="Resources\client-icon.png" />
+    <Resource Include="Resources\request-icon.png" />
     <Resource Include="Resources\server-icon.png" />
     <Resource Include="Resources\sheet-icon.png" />
     <Resource Include="Resources\SVG\pc-svgrepo-com.svg" />

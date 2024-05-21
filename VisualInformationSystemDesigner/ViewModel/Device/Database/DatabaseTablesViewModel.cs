@@ -90,6 +90,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
                         }
                     ]
                 });
+                ///////////////////////////////////////////////////
 
                 //Database.Tables.Add(new TableModel { Name = dialogAddDeviceViewModel.ItemName }); // Добавление таблицы
 

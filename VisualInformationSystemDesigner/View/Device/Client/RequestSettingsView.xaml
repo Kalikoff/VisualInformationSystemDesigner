@@ -1,0 +1,45 @@
+﻿<Window x:Class="VisualInformationSystemDesigner.View.Device.Client.RequestSettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VisualInformationSystemDesigner.View.Device.Client"
+        xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.Device.Client"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="Настройки запроса"
+        Height="600"
+        Width="700"
+        ResizeMode="NoResize"
+        d:DataContext="{d:DesignInstance Type=viewModel:RequestSettingsViewModel}"
+        Style="{StaticResource WindowStyle}">
+    <Grid Background="{StaticResource PrimaryColor}" Margin="10">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Название запроса -->
+            <Grid Grid.Row="0" Margin="0, 0, 0, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Название метода: "
+                           Style="{StaticResource TextBlockStyle}"/>
+
+                <TextBox Grid.Column="1"
+                         Text="{Binding Request.Name}"
+                         Background="{StaticResource PrimaryColor}"
+                         Foreground="{StaticResource BorderColor}"
+                         BorderBrush="{StaticResource BorderColor}"
+                         FontSize="14"/>
+            </Grid>
+            
+            
+        </Grid>
+    </Grid>
+</Window>
