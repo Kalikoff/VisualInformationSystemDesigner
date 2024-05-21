@@ -38,8 +38,49 @@
                          BorderBrush="{StaticResource BorderColor}"
                          FontSize="14"/>
             </Grid>
-            
-            
+
+            <TabControl Grid.Row="1">
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock Text="Настройка запроса"/>
+                    </TabItem.Header>
+
+                    <TabItem.Content>
+                        <StackPanel Orientation="Vertical">
+                            <ComboBox ItemsSource="{Binding Servers}"
+                                      SelectedItem="{Binding Request.SelectedServer}"
+                                      DisplayMemberPath="Name"/>
+                            <ComboBox ItemsSource="{Binding Request.SelectedServer.Methods}"
+                                      SelectedItem="{Binding Request.SelectedMethod}"
+                                      DisplayMemberPath="Name"/>
+
+                            <ListBox ItemsSource="{Binding Request.SelectedMethod.Arguments}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0, 5">
+                                            <TextBlock Text="{Binding Name}" Width="100"/>
+                                            <TextBlock Text="{Binding Type}" Width="100"/>
+                                            <TextBox Text="{Binding Value}" Width="150"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </TabItem.Content>
+                </TabItem>
+
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock Text="Выполнение запроса"/>
+                    </TabItem.Header>
+
+                    <TabItem.Content>
+                        <Grid>
+
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+            </TabControl>
         </Grid>
     </Grid>
 </Window>

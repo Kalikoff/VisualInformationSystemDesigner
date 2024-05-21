@@ -1,5 +1,8 @@
 ﻿using MvvmHelpers;
+using System.Collections.ObjectModel;
 using VisualInformationSystemDesigner.Model.Device.Client;
+using VisualInformationSystemDesigner.Model.Device.Server;
+using VisualInformationSystemDesigner.Utilities;
 
 namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 {
@@ -19,9 +22,25 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 			}
 		}
 
+		private ObservableCollection<ServerModel> _servers;
+		public ObservableCollection<ServerModel> Servers
+		{
+			get => _servers;
+			set
+			{
+				if (_servers != value)
+				{
+					_servers = value;
+					OnPropertyChanged(nameof(Servers));
+				}
+			}
+		}
+
 		public RequestSettingsViewModel(ref RequestModel request)
         {
 			Request = request;
-        }
+
+			Servers = new ObservableCollection<ServerModel>(DeviceListLocator.Instance.Servers.Cast<ServerModel>());
+		}
     }
 }
