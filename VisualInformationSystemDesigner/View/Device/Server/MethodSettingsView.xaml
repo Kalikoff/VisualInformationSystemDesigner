@@ -24,8 +24,8 @@
         <x:Array x:Key="ConditionTypes" Type="sys:String">
             <sys:String>==</sys:String>
             <sys:String>!=</sys:String>
-            <sys:String>&gt;=</sys:String>
-            <sys:String>&lt;=</sys:String>
+            <sys:String>&gt;</sys:String>
+            <sys:String>&lt;</sys:String>
         </x:Array>
 
         <x:Array x:Key="ActionTypes" Type="sys:String">

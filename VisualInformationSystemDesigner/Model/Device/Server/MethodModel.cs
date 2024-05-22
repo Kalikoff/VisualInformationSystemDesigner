@@ -18,9 +18,11 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
             Conditions = new ObservableCollection<ConditionModel>();
         }
 
-
-
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		/// <exception cref="InvalidOperationException"></exception>
 		public object GetResponse()
 		{
 			switch (ActionName)
@@ -38,6 +40,10 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 			}
 		}
 
+		/// <summary>
+		/// Получить записи из таблицы
+		/// </summary>
+		/// <returns></returns>
 		private object GetRecords()
 		{
 			var records = SelectedTable.Fields.First().Data
@@ -50,46 +56,100 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				var fieldIndex = SelectedTable.Fields.IndexOf(field);
 				var argumentValue = condition.Argument.Value;
 
-				records = records.Where(record => EvaluateCondition(record[field.Name], condition.Condition, argumentValue)).ToList();
+				records = records.Where(record => EvaluateCondition(record[field.Name], condition, argumentValue)).ToList();
 			}
 
 			return records;
 		}
 
-		private bool EvaluateCondition(object fieldValue, string condition, object argumentValue)
+        /// <summary>
+        /// Сравнение всех записей с значением аргумента
+        /// </summary>
+        /// <param name="fieldValue">Значение из поля</param>
+        /// <param name="condition">Тип условия</param>
+        /// <param name="argumentValue">Значеие аргумента</param>
+        /// <returns>Статус</returns>
+        /// <exception cref="InvalidOperationException">Ошибка данных</exception>
+        private bool EvaluateCondition(object fieldValue, ConditionModel condition, object argumentValue)
 		{
-			var fieldValueAsString = fieldValue.ToString();
+            if (condition.Argument.Type == "string" && (condition.Condition == "<" || condition.Condition == ">"))
+            {
+                throw new InvalidOperationException("Несравнимые типы данных!");
+            }
 
-			switch (condition)
+            var fieldValueAsString = fieldValue.ToString();
+			var argumentValueAsString = argumentValue.ToString();
+
+            switch (condition.Condition)
 			{
 				case "==":
-					return Equals(fieldValueAsString, argumentValue);
+					return Equals(fieldValueAsString, argumentValueAsString);
 				case "!=":
-					return !Equals(fieldValueAsString, argumentValue);
-				case "<=":
-					return Compare(fieldValue, argumentValue) <= 0;
-				case ">=":
-					return Compare(fieldValue, argumentValue) >= 0;
+					return !Equals(fieldValueAsString, argumentValueAsString);
+				case "<":
+					return Compare(fieldValue, condition, argumentValue) < 0;
+				case ">":
+					return Compare(fieldValue, condition, argumentValue) > 0;
 				default:
-					throw new InvalidOperationException("Неизвестное условие");
+					throw new InvalidOperationException("Неизвестное условие!");
 			}
 		}
 
-		private int Compare(object fieldValue, object conditionValue)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="fieldValue"></param>
+		/// <param name="conditionValue"></param>
+		/// <returns></returns>
+		/// <exception cref="InvalidOperationException"></exception>
+		private int Compare(object fieldValue, ConditionModel condition, object conditionValue)
 		{
-			if (fieldValue is IComparable fieldComparable && conditionValue is IComparable conditionComparable)
+			object conditionValueAsNumber = null;
+
+			if (condition.Argument.Type == "int")
 			{
-				return fieldComparable.CompareTo(conditionValue);
+                conditionValueAsNumber = Convert.ToInt32(conditionValue);
+            }
+			else if (condition.Argument.Type == "double")
+			{
+                conditionValueAsNumber = Convert.ToDouble(conditionValue);
+            }
+
+            if (fieldValue is IComparable fieldComparable && conditionValue is IComparable conditionComparable)
+			{
+				return fieldComparable.CompareTo(conditionValueAsNumber);
 			}
 
 			throw new InvalidOperationException("Значения не сравнимы");
 		}
 
+		/// <summary>
+		/// Добавить запись
+		/// </summary>
+		/// <returns></returns>
 		private object AddRecord()
 		{
-			foreach (var argument in Arguments)
+            // Проверяем наличие всех полей с названиями аргументов
+            var missingFields = Arguments.Where(argument =>
+                SelectedTable.Fields.All(field => field.Name != argument.Name)).ToList();
+
+            if (missingFields.Any())
+            {
+                // Если найдены отсутствующие поля, возвращаем строку с их перечислением
+                var missingFieldNames = string.Join(", ", missingFields.Select(field => field.Name));
+                return $"Неверные аргументы: {missingFieldNames}";
+            }
+
+            // Проверяем, что количество аргументов не превышает количество полей
+            if (Arguments.Count > SelectedTable.Fields.Count)
+            {
+                return $"Количество аргументов превышает количество полей в таблице";
+            }
+
+            foreach (var argument in Arguments)
 			{
 				var field = SelectedTable.Fields.FirstOrDefault(f => f.Name == argument.Name);
+
 				if (field != null)
 				{
 					field.Data.Add(argument.Value);
@@ -107,7 +167,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 			{
 				var field = condition.Field;
 				var fieldIndex = SelectedTable.Fields.IndexOf(field);
-				indicesToUpdate = indicesToUpdate.Where(index => EvaluateCondition(field.Data[index], condition.Condition, condition.Argument.Value)).ToList();
+				indicesToUpdate = indicesToUpdate.Where(index => EvaluateCondition(field.Data[index], condition, condition.Argument.Value)).ToList();
 			}
 
 			foreach (var index in indicesToUpdate)
@@ -133,7 +193,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 			{
 				var field = condition.Field;
 				var fieldIndex = SelectedTable.Fields.IndexOf(field);
-				indicesToDelete = indicesToDelete.Where(index => EvaluateCondition(field.Data[index], condition.Condition, condition.Argument.Value)).ToList();
+				indicesToDelete = indicesToDelete.Where(index => EvaluateCondition(field.Data[index], condition, condition.Argument.Value)).ToList();
 			}
 
 			foreach (var index in indicesToDelete.OrderByDescending(i => i))

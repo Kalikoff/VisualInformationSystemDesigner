@@ -72,13 +72,18 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 		{
 			var response = Request.SelectedMethod.GetResponse();
 
-			foreach (var record in (List<Dictionary<string, object>>)response)
+			if (response is List<Dictionary<string, object>>)
 			{
-				string recordString = string.Join(", ", record.Select(kv => $"{kv.Key}: {kv.Value}"));
-				ConsoleOutput += recordString + "\n";
+                foreach (var record in (List<Dictionary<string, object>>)response)
+                {
+                    string recordString = string.Join(", ", record.Select(kv => $"{kv.Key}: {kv.Value}"));
+                    ConsoleOutput += recordString + "\n";
+                }
+            }
+			else if (response is string)
+			{
+				ConsoleOutput += response + "\n";
 			}
-
-			ConsoleOutput += "\n";
 		}
 
 		/// <summary>
