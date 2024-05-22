@@ -65,12 +65,20 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 		}
 
 		/// <summary>
-		/// 
+		/// Получить ответ от выбранного метода
 		/// </summary>
 		/// <param name="parameter"></param>
 		private void GetResponse(object parameter)
 		{
+			var response = Request.SelectedMethod.GetResponse();
 
+			foreach (var record in (List<Dictionary<string, object>>)response)
+			{
+				string recordString = string.Join(", ", record.Select(kv => $"{kv.Key}: {kv.Value}"));
+				ConsoleOutput += recordString + "\n";
+			}
+
+			ConsoleOutput += "\n";
 		}
 
 		/// <summary>

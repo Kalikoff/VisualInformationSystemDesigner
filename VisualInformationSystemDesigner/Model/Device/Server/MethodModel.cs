@@ -19,29 +19,138 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         }
 
 
-        public object GetResponse()
-        {
-            if (ActionName == "Получить")
-            {
 
-            }
-            else if (ActionName == "Добавить")
-            {
 
-            }
-            else if (ActionName == "Изменить")
-            {
+		public object GetResponse()
+		{
+			switch (ActionName)
+			{
+				case "Получить":
+					return GetRecords();
+				case "Добавить":
+					return AddRecord();
+				case "Изменить":
+					return UpdateRecord();
+				case "Удалить":
+					return DeleteRecord();
+				default:
+					throw new InvalidOperationException("Неизвестное действие");
+			}
+		}
 
-            }
-            else if (ActionName == "Удалить")
-            {
+		private object GetRecords()
+		{
+			var records = SelectedTable.Fields.First().Data
+				.Select((_, index) => SelectedTable.Fields.ToDictionary(field => field.Name, field => field.Data[index]))
+				.ToList();
 
-            }
+			foreach (var condition in Conditions)
+			{
+				var field = condition.Field;
+				var fieldIndex = SelectedTable.Fields.IndexOf(field);
+				var argumentValue = condition.Argument.Value;
 
-            return null;
-        }
+				records = records.Where(record => EvaluateCondition(record[field.Name], condition.Condition, argumentValue)).ToList();
+			}
 
-        private bool CheckingConditions()
+			return records;
+		}
+
+		private bool EvaluateCondition(object fieldValue, string condition, object argumentValue)
+		{
+			var fieldValueAsString = fieldValue.ToString();
+
+			switch (condition)
+			{
+				case "==":
+					return Equals(fieldValueAsString, argumentValue);
+				case "!=":
+					return !Equals(fieldValueAsString, argumentValue);
+				case "<=":
+					return Compare(fieldValue, argumentValue) <= 0;
+				case ">=":
+					return Compare(fieldValue, argumentValue) >= 0;
+				default:
+					throw new InvalidOperationException("Неизвестное условие");
+			}
+		}
+
+		private int Compare(object fieldValue, object conditionValue)
+		{
+			if (fieldValue is IComparable fieldComparable && conditionValue is IComparable conditionComparable)
+			{
+				return fieldComparable.CompareTo(conditionValue);
+			}
+
+			throw new InvalidOperationException("Значения не сравнимы");
+		}
+
+		private object AddRecord()
+		{
+			foreach (var argument in Arguments)
+			{
+				var field = SelectedTable.Fields.FirstOrDefault(f => f.Name == argument.Name);
+				if (field != null)
+				{
+					field.Data.Add(argument.Value);
+				}
+			}
+
+			return "Запись добавлена";
+		}
+
+		private object UpdateRecord()
+		{
+			var indicesToUpdate = Enumerable.Range(0, SelectedTable.Fields.First().Data.Count).ToList();
+
+			foreach (var condition in Conditions)
+			{
+				var field = condition.Field;
+				var fieldIndex = SelectedTable.Fields.IndexOf(field);
+				indicesToUpdate = indicesToUpdate.Where(index => EvaluateCondition(field.Data[index], condition.Condition, condition.Argument.Value)).ToList();
+			}
+
+			foreach (var index in indicesToUpdate)
+			{
+				foreach (var argument in Arguments)
+				{
+					var field = SelectedTable.Fields.FirstOrDefault(f => f.Name == argument.Name);
+					if (field != null)
+					{
+						field.Data[index] = argument.Value;
+					}
+				}
+			}
+
+			return "Запись обновлена";
+		}
+
+		private object DeleteRecord()
+		{
+			var indicesToDelete = Enumerable.Range(0, SelectedTable.Fields.First().Data.Count).ToList();
+
+			foreach (var condition in Conditions)
+			{
+				var field = condition.Field;
+				var fieldIndex = SelectedTable.Fields.IndexOf(field);
+				indicesToDelete = indicesToDelete.Where(index => EvaluateCondition(field.Data[index], condition.Condition, condition.Argument.Value)).ToList();
+			}
+
+			foreach (var index in indicesToDelete.OrderByDescending(i => i))
+			{
+				foreach (var field in SelectedTable.Fields)
+				{
+					field.Data.RemoveAt(index);
+				}
+			}
+
+			return "Запись удалена";
+		}
+
+
+
+
+		private bool CheckingConditions()
         {
             foreach (var condition in Conditions)
             {

@@ -6,7 +6,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Client
     {
         public string Name { get; set; }
 
-        public ServerModel SelectedServer { get; set; }
+        public ServerModel SelectedServer { get; set; } // Не обязательное поле, можно вынести в ViewModel
         public MethodModel SelectedMethod { get; set; }
 
 
