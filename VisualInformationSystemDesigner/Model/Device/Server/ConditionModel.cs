@@ -33,14 +33,14 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				}
 				else if (Condition == ">=")
 				{
-					if (Argument.Type == "int")
+					if (Argument.DataType == DataType.Int)
 					{
 						if (Convert.ToInt32(data) >= Convert.ToInt32(Argument.Value))
 						{
 							result = true;
 						}
 					}
-					else if (Argument.Type == "double")
+					else if (Argument.DataType == DataType.Double)
 					{
 						if (Convert.ToDouble(data) >= Convert.ToDouble(Argument.Value))
 						{
@@ -50,14 +50,14 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				}
 				else if (Condition == "<=")
 				{
-					if (Argument.Type == "int")
+					if (Argument.DataType == DataType.Int)
 					{
 						if (Convert.ToInt32(data) <= Convert.ToInt32(Argument.Value))
 						{
 							result = true;
 						}
 					}
-					else if (Argument.Type == "double")
+					else if (Argument.DataType == DataType.Double)
 					{
 						if (Convert.ToDouble(data) <= Convert.ToDouble(Argument.Value))
 						{

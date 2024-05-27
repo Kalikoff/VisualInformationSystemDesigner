@@ -20,6 +20,8 @@
         <Setter Property="Width" Value="120"/>
         <Setter Property="Height" Value="120"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
         <Style.Triggers>

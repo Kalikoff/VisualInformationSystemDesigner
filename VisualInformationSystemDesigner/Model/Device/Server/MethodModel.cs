@@ -72,7 +72,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         /// <exception cref="InvalidOperationException">Ошибка данных</exception>
         private bool EvaluateCondition(object fieldValue, ConditionModel condition, object argumentValue)
 		{
-            if (condition.Argument.Type == "string" && (condition.Condition == "<" || condition.Condition == ">"))
+            if (condition.Argument.DataType == DataType.String && (condition.Condition == "<" || condition.Condition == ">"))
             {
                 throw new InvalidOperationException("Несравнимые типы данных!");
             }
@@ -106,11 +106,11 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 		{
 			object conditionValueAsNumber = null;
 
-			if (condition.Argument.Type == "int")
+			if (condition.Argument.DataType == DataType.Int)
 			{
                 conditionValueAsNumber = Convert.ToInt32(conditionValue);
             }
-			else if (condition.Argument.Type == "double")
+			else if (condition.Argument.DataType == DataType.Double)
 			{
                 conditionValueAsNumber = Convert.ToDouble(conditionValue);
             }

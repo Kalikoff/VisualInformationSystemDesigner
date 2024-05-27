@@ -3,7 +3,8 @@
     public class ArgumentModel
     {
         public string Name { get; set; } // Название
-        public string Type { get; set; } // Тип переменной
+        //public string Type { get; set; } // Тип переменной
+        public DataType DataType { get; set; }
         public object Value { get; set; } // Значение
 
         public ArgumentModel() { }

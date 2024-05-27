@@ -79,7 +79,7 @@
             </Border>
         </Grid>
 
-        <!--Список таблиц-->
+        <!--Список методов-->
         <Grid Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 0, 0, 0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding MethodsVM}">

@@ -70,6 +70,11 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
 
             Databases = new ObservableCollection<DatabaseModel>(DeviceListLocator.Instance.Databases.Cast<DatabaseModel>());
 
+            if (Method.SelectedTable != null)
+            {
+                Tables.Add(Method.SelectedTable);
+            }
+
             AddArgumentCommand = new RelayCommand(AddArgument);
             RemoveArgumentCommand = new RelayCommand(RemoveArgument);
 
@@ -86,7 +91,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         /// <param name="parameter"></param>
         private void AddArgument(object parameter)
         {
-            if (NewArgument.Type == null || NewArgument.Name == null)
+            if (NewArgument.DataType == null || NewArgument.Name == null)
             {
                 return;
             }
