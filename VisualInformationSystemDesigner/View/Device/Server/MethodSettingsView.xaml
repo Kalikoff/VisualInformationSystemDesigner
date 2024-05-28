@@ -121,7 +121,7 @@
                                             <ComboBox ItemsSource="{x:Static variableType:VariableType.dataTypeDictionary}"
                                                       DisplayMemberPath="Value"
                                                       SelectedValuePath="Key"
-                                                      SelectedItem="{Binding DataType}"
+                                                      SelectedValue="{Binding DataType}"
                                                       Width="100"/>
                                             <TextBox Text="{Binding Name}"
                                                      Width="150"
@@ -139,7 +139,7 @@
                                 <ComboBox ItemsSource="{x:Static variableType:VariableType.dataTypeDictionary}"
                                           DisplayMemberPath="Value"
                                           SelectedValuePath="Key"
-                                          SelectedItem="{Binding NewArgument.DataType}"
+                                          SelectedValue="{Binding NewArgument.DataType}"
                                           Width="100"/>
                                 <TextBox Text="{Binding NewArgument.Name}"
                                          Width="150"

@@ -1,14 +1,19 @@
 ﻿namespace VisualInformationSystemDesigner.Model.Device
 {
+    public enum DataType
+    {
+        Int,
+        Double,
+        String
+    }
+
     public class VariableType
     {
-        public static Dictionary<DataType, string> dataTypeDictionary = new Dictionary<DataType, string>();
-
-        static VariableType()
+        public static Dictionary<DataType, string> dataTypeDictionary = new Dictionary<DataType, string>
         {
-            dataTypeDictionary[DataType.Int] = "int";
-            dataTypeDictionary[DataType.Double] = "double";
-            dataTypeDictionary[DataType.String] = "string";
-        }
+            { DataType.Int, "int" },
+            { DataType.Double, "double" },
+            { DataType.String, "string" }
+        };
     }
 }
