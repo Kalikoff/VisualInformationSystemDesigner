@@ -36,7 +36,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				case "Удалить":
 					return DeleteRecord();
 				default:
-					throw new InvalidOperationException("Неизвестное действие");
+					throw new InvalidOperationException("Неизвестное действие!\n");
 			}
 		}
 
@@ -74,7 +74,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 		{
             if (condition.Argument.DataType == DataType.String && (condition.Condition == "<" || condition.Condition == ">"))
             {
-                throw new InvalidOperationException("Несравнимые типы данных!");
+                throw new InvalidOperationException("Несравнимые типы данных!\n");
             }
 
             var fieldValueAsString = fieldValue.ToString();
@@ -91,7 +91,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				case ">":
 					return Compare(fieldValue, condition, argumentValue) > 0;
 				default:
-					throw new InvalidOperationException("Неизвестное условие!");
+					throw new InvalidOperationException("Неизвестное условие!\n");
 			}
 		}
 
@@ -120,7 +120,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				return fieldComparable.CompareTo(conditionValueAsNumber);
 			}
 
-			throw new InvalidOperationException("Значения не сравнимы");
+			throw new InvalidOperationException("Значения не сравнимы!\n");
 		}
 
 		/// <summary>
@@ -137,26 +137,30 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
             {
                 // Если найдены отсутствующие поля, возвращаем строку с их перечислением
                 var missingFieldNames = string.Join(", ", missingFields.Select(field => field.Name));
-                return $"Неверные аргументы: {missingFieldNames}";
+                return $"Неверные аргументы: {missingFieldNames}!\n";
             }
 
             // Проверяем, что количество аргументов не превышает количество полей
             if (Arguments.Count > SelectedTable.Fields.Count)
             {
-                return $"Количество аргументов превышает количество полей в таблице";
+                return $"Количество аргументов превышает количество полей в таблице!\n";
             }
 
-            foreach (var argument in Arguments)
+			var result = "";
+
+			foreach (var argument in Arguments)
 			{
 				var field = SelectedTable.Fields.FirstOrDefault(f => f.Name == argument.Name);
 
 				if (field != null)
 				{
 					field.Data.Add(argument.Value);
-				}
-			}
 
-			return "Запись добавлена";
+					result += $"{argument.Name}: {argument.Value}; ";
+				}
+			}	
+
+			return $"Запись {result}добавлена!\n";
 		}
 
 		private object UpdateRecord()
@@ -170,6 +174,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				indicesToUpdate = indicesToUpdate.Where(index => EvaluateCondition(field.Data[index], condition, condition.Argument.Value)).ToList();
 			}
 
+			var result = "";
 			foreach (var index in indicesToUpdate)
 			{
 				foreach (var argument in Arguments)
@@ -178,11 +183,12 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 					if (field != null)
 					{
 						field.Data[index] = argument.Value;
+						result += $"{argument.Name}: {argument.Value}; ";
 					}
 				}
 			}
 
-			return "Запись обновлена";
+			return $"Запись {result}обновлена!\n";
 		}
 
 		private object DeleteRecord()
@@ -196,31 +202,17 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				indicesToDelete = indicesToDelete.Where(index => EvaluateCondition(field.Data[index], condition, condition.Argument.Value)).ToList();
 			}
 
+			var result = "";
 			foreach (var index in indicesToDelete.OrderByDescending(i => i))
 			{
 				foreach (var field in SelectedTable.Fields)
 				{
 					field.Data.RemoveAt(index);
+					result += $"{field.Name}: {field.Data[index]}; ";
 				}
 			}
 
-			return "Запись удалена";
+			return $"Запись {result}удалена!\n";
 		}
-
-
-
-
-		private bool CheckingConditions()
-        {
-            foreach (var condition in Conditions)
-            {
-				if (!condition.Check())
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
 	}
 }
