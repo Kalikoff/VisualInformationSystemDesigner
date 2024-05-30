@@ -76,7 +76,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
                         new()
                         {
                             Name = "Id",
-                            Data = [1,2,3]
+                            Data = ["1","2","3"]
                         },
                         new()
                         {

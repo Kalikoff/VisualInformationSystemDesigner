@@ -56,7 +56,7 @@
                             <ItemsControl ItemsSource="{Binding Data}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding}" Margin="5"/>
+                                        <TextBox Text="{Binding Path=., Mode=TwoWay}" Margin="5"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

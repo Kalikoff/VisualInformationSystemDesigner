@@ -102,7 +102,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                             new()
                             {
                                 Name = "Id",
-                                Data = [1,2,3]
+                                Data = ["1","2","3"]
                             },
                             new()
                             {
@@ -124,7 +124,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                             new()
                             {
                                 Name = "Id",
-                                Data = [1,2]
+                                Data = ["1","2"]
                             },
                             new()
                             {

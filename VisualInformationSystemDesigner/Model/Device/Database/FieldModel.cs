@@ -6,11 +6,11 @@ namespace VisualInformationSystemDesigner.Model.Device.Database
     {
         public string Name { get; set; } // Название
         public string Type { get; set; } // Тип поля
-        public ObservableCollection<object> Data { get; set; } // Данные
+        public ObservableCollection<string> Data { get; set; } // Данные
 
         public FieldModel()
         {
-            Data = new ObservableCollection<object>();
+            Data = new ObservableCollection<string>();
         }
 	}
 }
