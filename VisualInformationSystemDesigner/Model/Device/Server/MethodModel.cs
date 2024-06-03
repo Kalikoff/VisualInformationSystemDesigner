@@ -70,22 +70,19 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         /// <param name="argumentValue">Значеие аргумента</param>
         /// <returns>Статус</returns>
         /// <exception cref="InvalidOperationException">Ошибка данных</exception>
-        private bool EvaluateCondition(object fieldValue, ConditionModel condition, object argumentValue)
+        private bool EvaluateCondition(string fieldValue, ConditionModel condition, string argumentValue)
 		{
             if (condition.Argument.DataType == DataType.String && (condition.Condition == "<" || condition.Condition == ">"))
             {
                 throw new InvalidOperationException("Несравнимые типы данных!\n");
             }
 
-            var fieldValueAsString = fieldValue.ToString();
-			var argumentValueAsString = argumentValue.ToString();
-
             switch (condition.Condition)
 			{
 				case "==":
-					return Equals(fieldValueAsString, argumentValueAsString);
+					return Equals(fieldValue, argumentValue);
 				case "!=":
-					return !Equals(fieldValueAsString, argumentValueAsString);
+					return !Equals(fieldValue, argumentValue);
 				case "<":
 					return Compare(fieldValue, condition, argumentValue) < 0;
 				case ">":
@@ -102,7 +99,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 		/// <param name="conditionValue"></param>
 		/// <returns></returns>
 		/// <exception cref="InvalidOperationException"></exception>
-		private int Compare(object fieldValue, ConditionModel condition, object conditionValue)
+		private int Compare(string fieldValue, ConditionModel condition, string conditionValue)
 		{
 			object conditionValueAsNumber = null;
 

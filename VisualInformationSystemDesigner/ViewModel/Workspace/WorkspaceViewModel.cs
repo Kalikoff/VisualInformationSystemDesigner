@@ -102,17 +102,20 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                             new()
                             {
                                 Name = "Id",
-                                Data = ["1","2","3"]
+                                Data = ["1","2","3"],
+                                Type = DataType.Int
                             },
                             new()
                             {
                                 Name = "Name",
-                                Data = ["Masha", "Misha", "Alex"]
+                                Data = ["Masha", "Misha", "Alex"],
+                                Type = DataType.String
                             },
                             new()
                             {
                                 Name = "Role",
-                                Data = ["Admin", "Client", "Client"]
+                                Data = ["Admin", "Client", "Client"],
+                                Type = DataType.String
                             }
                         ]
                     },
@@ -124,12 +127,14 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                             new()
                             {
                                 Name = "Id",
-                                Data = ["1","2"]
+                                Data = ["1","2"],
+                                Type = DataType.Int
                             },
                             new()
                             {
                                 Name = "Work",
-                                Data = ["Admin", "Programmer"]
+                                Data = ["Admin", "Programmer"],
+                                Type = DataType.String
                             }
                         ]
                     }

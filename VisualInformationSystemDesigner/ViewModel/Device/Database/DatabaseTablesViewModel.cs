@@ -76,17 +76,20 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
                         new()
                         {
                             Name = "Id",
-                            Data = ["1","2","3"]
+                            Data = ["1","2","3"],
+                            Type = DataType.Int
                         },
                         new()
                         {
                             Name = "Name",
-                            Data = ["Masha", "Misha", "Alex"]
+                            Data = ["Masha", "Misha", "Alex"],
+                            Type = DataType.String
                         },
                         new()
                         {
                             Name = "Role",
-                            Data = ["Admin", "Client", "Client"]
+                            Data = ["Admin", "Client", "Client"],
+                            Type = DataType.String
                         }
                     ]
                 });
