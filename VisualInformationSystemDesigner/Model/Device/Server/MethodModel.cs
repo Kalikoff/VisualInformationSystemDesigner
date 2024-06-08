@@ -19,7 +19,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         }
 
 		/// <summary>
-		/// 
+		/// Получить ответ от сервера
 		/// </summary>
 		/// <returns></returns>
 		/// <exception cref="InvalidOperationException"></exception>

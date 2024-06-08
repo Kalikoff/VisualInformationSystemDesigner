@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using VisualInformationSystemDesigner.Model.Device;
+using VisualInformationSystemDesigner.ViewModel.Device;
 
 namespace VisualInformationSystemDesigner.Utilities
 {
@@ -20,8 +21,13 @@ namespace VisualInformationSystemDesigner.Utilities
         }
 
         public ObservableCollection<DeviceModel> Databases { get; set; }
+        public ObservableCollection<DeviceViewModel> DatabasesVM { get; set; }
+
         public ObservableCollection<DeviceModel> Servers { get; set; }
+        public ObservableCollection<DeviceViewModel> ServersVM { get; set; }
+
         public ObservableCollection<DeviceModel> Clients { get; set; }
+        public ObservableCollection<DeviceViewModel> ClientsVM { get; set; }
 
         private DeviceListLocator() { }
     }

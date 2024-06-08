@@ -51,4 +51,11 @@
         <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
     </Style>
 
+    <!--<Style x:Key="TextButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="{StaticResource BorderColor}"/>
+        <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+        <Setter Property="Padding" Value="3"/>
+    </Style>-->
+
 </ResourceDictionary>

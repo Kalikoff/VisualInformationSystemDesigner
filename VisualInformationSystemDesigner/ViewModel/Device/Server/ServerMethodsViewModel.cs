@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Model.Device.Server;
@@ -39,6 +40,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
             }
         }
 
+        public ICommand DeleteDeviceCommand { get; }
         public ICommand AddMethodCommand { get; }
 
         public ServerMethodsViewModel(ref DeviceModel server)
@@ -52,7 +54,21 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
                 MethodsVM.Add(new MethodViewModel(ref method));
             }
 
+            DeleteDeviceCommand = new RelayCommand<Window>(DeleteDevice);
             AddMethodCommand = new RelayCommand(AddMethod);
+        }
+
+        /// <summary>
+        /// Удалить это устройство
+        /// </summary>
+        /// <param name="window">Экземпляр текущего окна</param>
+        private void DeleteDevice(Window window)
+        {
+            DeviceListLocator.Instance.Servers.Remove(Server);
+            var databaseVM = DeviceListLocator.Instance.ServersVM.First(d => d.Device == Server);
+            DeviceListLocator.Instance.ServersVM.Remove(databaseVM);
+
+            window.Close();
         }
 
         /// <summary>

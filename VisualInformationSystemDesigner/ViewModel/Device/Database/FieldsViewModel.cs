@@ -2,6 +2,8 @@
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device.Database;
 using VisualInformationSystemDesigner.Utilities;
+using VisualInformationSystemDesigner.View.Dialogs;
+using VisualInformationSystemDesigner.ViewModel.Dialogs;
 
 namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 {
@@ -21,16 +23,31 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
             }
         }
 
-        public ICommand Command { get; }
-        
+        public ICommand AddFieldCommand { get; }
+        public ICommand DeleteFieldCommand { get; }
+
         public FieldsViewModel(ref TableModel table)
         {
             Table = table;
 
-            Command = new RelayCommand(MyCommand);
+            AddFieldCommand = new RelayCommand(AddField);
+            DeleteFieldCommand = new RelayCommand(DeleteField);
         }
 
-        private void MyCommand(object parameter)
+        private void AddField(object parameter)
+        {
+            var addFieldDialogViewModel = new AddFieldDialogViewModel();
+            var addFieldDialogView = new AddFieldDialogView();
+            addFieldDialogView.DataContext = addFieldDialogViewModel;
+
+            if (addFieldDialogView.ShowDialog() == true)
+            {
+                Table.Fields.Add(new FieldModel { Name = addFieldDialogViewModel.ItemName, Type = addFieldDialogViewModel.ItemDataType });
+                
+            }
+        }
+
+        private void DeleteField(object parameter)
         {
 
         }

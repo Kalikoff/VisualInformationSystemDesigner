@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Model.Device.Client;
@@ -38,8 +39,9 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 				}
 			}
 		}
-	
-		public ICommand AddRequestCommand { get; }
+
+        public ICommand DeleteDeviceCommand { get; }
+        public ICommand AddRequestCommand { get; }
 
 		public ClientRequestsViewModel(ref DeviceModel client)
 		{
@@ -52,14 +54,28 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 				RequestsVM.Add(new RequestViewModel(ref request));
 			}
 
-			AddRequestCommand = new RelayCommand(AddRequest);
+            DeleteDeviceCommand = new RelayCommand<Window>(DeleteDevice);
+            AddRequestCommand = new RelayCommand(AddRequest);
 		}
 
-		/// <summary>
-		/// Создание нового метода
-		/// </summary>
-		/// <param name="parameter"></param>
-		private void AddRequest(object parameter)
+        /// <summary>
+        /// Удалить это устройство
+        /// </summary>
+        /// <param name="window">Экземпляр текущего окна</param>
+        private void DeleteDevice(Window window)
+        {
+            DeviceListLocator.Instance.Clients.Remove(Client);
+            var databaseVM = DeviceListLocator.Instance.ClientsVM.First(d => d.Device == Client);
+            DeviceListLocator.Instance.ClientsVM.Remove(databaseVM);
+
+            window.Close();
+        }
+
+        /// <summary>
+        /// Создание нового метода
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void AddRequest(object parameter)
 		{
 			var dialogAddDeviceViewModel = new AddItemDialogViewModel();
 			var dialogAddDeviceView = new AddItemDialogView();

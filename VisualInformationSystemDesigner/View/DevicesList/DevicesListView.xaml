@@ -32,7 +32,8 @@
                            HorizontalAlignment="Stretch" 
                            VerticalAlignment="Center" 
                            Fill="{StaticResource BorderColor}" 
-                           Height="1"/>
+                           Height="1"
+                           RenderOptions.EdgeMode="Aliased"/>
             </Grid>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal">
@@ -57,11 +58,13 @@
                         <Rectangle HorizontalAlignment="Stretch" 
                                    VerticalAlignment="Center" 
                                    Height="8"
-                                   Style="{StaticResource RectangleStyle}"/>
-                        <Rectangle HorizontalAlignment="Center" 
+                                   Style="{StaticResource RectangleStyle}"
+                                   RenderOptions.EdgeMode="Aliased"/>
+                        <Rectangle HorizontalAlignment="Center"
                                    VerticalAlignment="Stretch" 
                                    Width="8"
-                                   Style="{StaticResource RectangleStyle}"/>
+                                   Style="{StaticResource RectangleStyle}"
+                                   RenderOptions.EdgeMode="Aliased"/>
                     </Grid>
 
                     <i:Interaction.Triggers>

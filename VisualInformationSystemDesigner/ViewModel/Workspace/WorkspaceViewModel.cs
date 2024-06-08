@@ -4,6 +4,7 @@ using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Model.Device.Database;
 using VisualInformationSystemDesigner.Model.Device.Server;
 using VisualInformationSystemDesigner.Utilities;
+using VisualInformationSystemDesigner.ViewModel.Device;
 using VisualInformationSystemDesigner.ViewModel.DevicesList;
 
 namespace VisualInformationSystemDesigner.ViewModel.Workspace
@@ -39,6 +40,20 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             }
         }
 
+        private ObservableCollection<DeviceViewModel> _databasesVM = new(); // Список моделей представления Баз данных
+        public ObservableCollection<DeviceViewModel> DatabasesVM
+        {
+            get => _databasesVM;
+            set
+            {
+                if (_databasesVM != value)
+                {
+                    _databasesVM = value;
+                    OnPropertyChanged(nameof(DatabasesVM));
+                }
+            }
+        }
+
 
         private ObservableCollection<DeviceModel> _servers = new(); // Список серверов
         public ObservableCollection<DeviceModel> Servers
@@ -50,6 +65,20 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                 {
                     _servers = value;
                     OnPropertyChanged(nameof(Servers));
+                }
+            }
+        }
+
+        private ObservableCollection<DeviceViewModel> _serversVM = new(); // Список моделей представления Серверов
+        public ObservableCollection<DeviceViewModel> ServersVM
+        {
+            get => _serversVM;
+            set
+            {
+                if (_serversVM != value)
+                {
+                    _serversVM = value;
+                    OnPropertyChanged(nameof(ServersVM));
                 }
             }
         }
@@ -69,21 +98,38 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             }
         }
 
+        private ObservableCollection<DeviceViewModel> _clientsVM = new(); // Список моделей представления Клиентов
+        public ObservableCollection<DeviceViewModel> ClientsVM
+        {
+            get => _clientsVM;
+            set
+            {
+                if (_clientsVM != value)
+                {
+                    _clientsVM = value;
+                    OnPropertyChanged(nameof(ClientsVM));
+                }
+            }
+        }
+
         public WorkspaceViewModel()
         {
+            DeviceListLocator.Instance.Databases = _databases;
+            DeviceListLocator.Instance.DatabasesVM = _databasesVM;
+            DeviceListLocator.Instance.Servers = _servers;
+            DeviceListLocator.Instance.ServersVM = _serversVM;
+            DeviceListLocator.Instance.Clients = _clients;
+            DeviceListLocator.Instance.ClientsVM = _clientsVM;
+
             Test();
 
-            var databases = new DevicesListViewModel("БАЗЫ ДАННЫХ", ref _databases, DeviceType.Database);
-            var servers = new DevicesListViewModel("СЕРВЕРА", ref _servers, DeviceType.Server);
-            var clients = new DevicesListViewModel("КЛИЕНТЫ", ref _clients, DeviceType.Client);
+            var databases = new DevicesListViewModel("БАЗЫ ДАННЫХ", ref _databases, ref _databasesVM, DeviceType.Database);
+            var servers = new DevicesListViewModel("СЕРВЕРА", ref _servers, ref _serversVM, DeviceType.Server);
+            var clients = new DevicesListViewModel("КЛИЕНТЫ", ref _clients, ref _clientsVM, DeviceType.Client);
 
             DevicesList.Add(databases);
             DevicesList.Add(servers);
             DevicesList.Add(clients);
-
-            DeviceListLocator.Instance.Databases = _databases;
-            DeviceListLocator.Instance.Servers = _servers;
-            DeviceListLocator.Instance.Clients = _clients;
         }
 
         private void Test()

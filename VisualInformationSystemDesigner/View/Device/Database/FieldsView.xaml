@@ -41,31 +41,76 @@
             </Grid>
 
             <!--Данные-->
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding Table.Fields}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left">
+                <ItemsControl ItemsSource="{Binding Table.Fields}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="5"/>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Margin="5, 0">
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" FontWeight="Bold" Margin="5"/>
 
-                            <ItemsControl ItemsSource="{Binding Data}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBox Text="{Binding Path=., Mode=TwoWay}" Margin="5"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                <ItemsControl ItemsSource="{Binding Data}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding Path=., Mode=TwoWay}"
+                                                     Margin="0, 5"
+                                                     FontFamily="Segoe UI"
+                                                     Foreground="{StaticResource BorderColor}"
+                                                     Background="{StaticResource PrimaryColor}"
+                                                     
+                                                     FontSize="14"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                
+                                <Border Style="{StaticResource BorderStyle}"
+                                        Height="Auto"
+                                        Width="Auto"
+                                        BorderThickness="1"
+                                        Margin="0, 3">
+                                    <TextBlock Text="Удалить"
+                                               Style="{StaticResource TextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Padding="4, 0"/>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.DeleteFieldCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                   CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
 
-            <!--<Button Grid.Row="2" Command="{Binding Command}"/>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Border Style="{StaticResource BorderStyle}"
+                        Height="Auto"
+                        Width="Auto"
+                        BorderThickness="1"
+                        VerticalAlignment="Top">
+                    <TextBlock Text="Добавить"
+                               Style="{StaticResource TextBlockStyle}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Padding="4, 0"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding AddFieldCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Border>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

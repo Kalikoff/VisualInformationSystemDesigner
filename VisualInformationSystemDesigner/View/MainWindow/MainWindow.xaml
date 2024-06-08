@@ -7,8 +7,10 @@
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.MainWindow"
         mc:Ignorable="d"
         Title="Визуальный конструктор информационной системы"
-        Height="900"
-        Width="1200">
+        Width="850"
+        Height="619"
+        MinWidth="850"
+        MinHeight="619">
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>
     </Window.DataContext>

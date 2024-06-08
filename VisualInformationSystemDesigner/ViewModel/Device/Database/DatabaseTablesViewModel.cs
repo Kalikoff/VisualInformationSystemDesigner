@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Model.Device.Database;
@@ -39,6 +40,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
             }
         }
 
+        public ICommand DeleteDeviceCommand { get; }
         public ICommand AddTableCommand { get; }
         
         public DatabaseTablesViewModel(ref DeviceModel database)
@@ -52,7 +54,21 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
                 TablesVM.Add(new TableViewModel(ref table));
             }
 
+            DeleteDeviceCommand = new RelayCommand<Window>(DeleteDevice);
             AddTableCommand = new RelayCommand(AddTable);
+        }
+
+        /// <summary>
+        /// Удалить это устройство
+        /// </summary>
+        /// <param name="window">Экземпляр текущего окна</param>
+        private void DeleteDevice(Window window)
+        {
+            DeviceListLocator.Instance.Databases.Remove(Database);
+            var databaseVM = DeviceListLocator.Instance.DatabasesVM.First(d => d.Device == Database);
+            DeviceListLocator.Instance.DatabasesVM.Remove(databaseVM);
+
+            window.Close();
         }
 
         /// <summary>

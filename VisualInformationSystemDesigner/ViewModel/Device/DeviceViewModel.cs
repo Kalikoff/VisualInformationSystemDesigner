@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Utilities;
 
@@ -21,11 +22,14 @@ namespace VisualInformationSystemDesigner.ViewModel.Device
             }
         }
 
+        public BitmapImage Image { get; set; }
+
         public ICommand ShowDeviceInfoWindowCommand { get; }
 
-        public DeviceViewModel(ref DeviceModel device)
+        public DeviceViewModel(ref DeviceModel device, BitmapImage image)
         {
             _device = device;
+            Image = image;
 
             ShowDeviceInfoWindowCommand = new RelayCommand(ShowDeviceInfoWindow);
         }
