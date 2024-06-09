@@ -20,8 +20,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
-            <MenuItem Header="Файл"/>
+        <Menu Grid.Row="0"
+              Background="{StaticResource PrimaryColor}"
+              Foreground="{StaticResource BorderColor}"
+              FontSize="14">
+            <MenuItem Header="Проект"
+                      Style="{StaticResource ParentMenuItem}">
+                <MenuItem Header="Сохранить"/>
+                <MenuItem Header="Загрузить"/>
+            </MenuItem>
         </Menu>
 
         <!--Рабочая область-->

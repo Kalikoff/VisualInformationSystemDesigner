@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VisualInformationSystemDesigner.View.Device.Client"
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.Device.Client"
+        xmlns:converter="clr-namespace:VisualInformationSystemDesigner.Utilities"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Настройки запроса"
@@ -13,6 +14,10 @@
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=viewModel:RequestSettingsViewModel}"
         Style="{StaticResource WindowStyle}">
+    <Window.Resources>
+        <converter:DataTypeToStringConverter x:Key="DataTypeToStringConverter"/>
+    </Window.Resources>
+    
     <Grid Background="{StaticResource PrimaryColor}" Margin="10">
         <Grid Margin="10">
             <Grid.RowDefinitions>
@@ -25,6 +30,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
@@ -37,41 +43,112 @@
                          Foreground="{StaticResource BorderColor}"
                          BorderBrush="{StaticResource BorderColor}"
                          FontSize="14"/>
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource BorderStyle}"
+                        Height="Auto"
+                        Width="Auto"
+                        BorderThickness="1"
+                        Margin="10, 0, 0, 0">
+                    <TextBlock Text="Удалить"
+                               Style="{StaticResource TextBlockStyle}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Padding="4, 0"
+                               FontSize="14"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding DeleteDeviceCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Border>
             </Grid>
 
-            <TabControl Grid.Row="1">
-                <TabItem>
+            <TabControl Grid.Row="1"
+                        Background="{StaticResource PrimaryColor}"
+                        BorderBrush="{StaticResource AccentColor}"
+                        RenderOptions.EdgeMode="Aliased">
+                <TabItem Style="{StaticResource CustomTabItemStyle}">
                     <TabItem.Header>
-                        <TextBlock Text="Настройка запроса"/>
+                        <TextBlock Text="Настройка запроса"
+                                   Style="{StaticResource TextBlockStyle}"/>
                     </TabItem.Header>
 
                     <TabItem.Content>
-                        <StackPanel Orientation="Vertical">
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Сервер:"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Grid.Row="0"
+                                       Grid.Column="0"
+                                       Margin="0, 0, 5, 0"/>
                             <ComboBox ItemsSource="{Binding Servers}"
                                       SelectedItem="{Binding Request.SelectedServer}"
-                                      DisplayMemberPath="Name"/>
+                                      DisplayMemberPath="Name"
+                                      Style="{StaticResource ComboBoxStyle}"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      Margin="0, 0, 0, 5"/>
+
+                            <TextBlock Text="Метод:"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Grid.Row="1"
+                                       Grid.Column="0"
+                                       Margin="0, 0, 5, 0"/>
                             <ComboBox ItemsSource="{Binding Request.SelectedServer.Methods}"
                                       SelectedItem="{Binding Request.SelectedMethod}"
-                                      DisplayMemberPath="Name"/>
+                                      DisplayMemberPath="Name"
+                                      Style="{StaticResource ComboBoxStyle}"
+                                      Grid.Row="1"
+                                      Grid.Column="1"
+                                      Margin="0, 0, 0, 5"/>
 
-                            <ListBox ItemsSource="{Binding Request.SelectedMethod.Arguments}">
+                            <TextBlock Text="Аргументы:"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Grid.Row="2"
+                                       Grid.ColumnSpan="2"
+                                       Margin="0, 0, 0, 5"/>
+                            <ListBox ItemsSource="{Binding Request.SelectedMethod.Arguments}"
+                                     Background="{StaticResource PrimaryColor}"
+                                     Grid.Row="3"
+                                     Grid.ColumnSpan="2">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" Margin="0, 5">
-                                            <TextBlock Text="{Binding Name}" Width="100"/>
-                                            <TextBlock Text="{Binding Type}" Width="100"/>
-                                            <TextBox Text="{Binding Value}" Width="150"/>
+                                            <TextBlock Text="{Binding Name}"
+                                                       Width="100"
+                                                       Style="{StaticResource TextBlockStyle}"/>
+                                            <TextBlock Text="{Binding Type, Converter={StaticResource DataTypeToStringConverter}}"
+                                                       Width="100"
+                                                       Style="{StaticResource TextBlockStyle}"/>
+                                            <TextBox Text="{Binding Value}"
+                                                     Width="150"
+                                                     Style="{StaticResource TextBoxStyle}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                        </StackPanel>
+                        </Grid>
                     </TabItem.Content>
                 </TabItem>
 
-                <TabItem>
+                <TabItem Style="{StaticResource CustomTabItemStyle}">
                     <TabItem.Header>
-                        <TextBlock Text="Выполнение запроса"/>
+                        <TextBlock Text="Выполнение запроса"
+                                   Style="{StaticResource TextBlockStyle}"/>
                     </TabItem.Header>
 
                     <TabItem.Content>
@@ -90,11 +167,47 @@
 				                     FontFamily="Consolas"
 				                     FontSize="16"
                                      Text="{Binding ConsoleOutput}"
-                                     Margin="0, 0, 0, 5"/>
+                                     Margin="0, 0, 0, 5"
+                                     SelectionBrush="{StaticResource BorderColor}"
+                                     BorderBrush="{StaticResource BorderColor}"/>
 
-                            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                <Button Content="Очистить" Command="{Binding ClearConsoleCommand}"/>
-                                <Button Content="Получить ответ" Command="{Binding GetResponseCommand}"/>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 0, 0, 5">
+                                <Border Style="{StaticResource BorderStyle}"
+                                        Height="Auto"
+                                        Width="Auto"
+                                        BorderThickness="1"
+                                        Margin="10, 0, 0, 0">
+                                    <TextBlock Text="Очистить"
+                                               Style="{StaticResource TextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Padding="4, 0"
+                                               FontSize="14"/>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding ClearConsoleCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
+
+                                <Border Style="{StaticResource BorderStyle}"
+                                        Height="Auto"
+                                        Width="Auto"
+                                        BorderThickness="1"
+                                        Margin="10, 0, 0, 0">
+                                    <TextBlock Text="Получить ответ"
+                                               Style="{StaticResource TextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Padding="4, 0"
+                                               FontSize="14"/>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding GetResponseCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
+                                
                             </StackPanel>
                         </Grid>
                     </TabItem.Content>

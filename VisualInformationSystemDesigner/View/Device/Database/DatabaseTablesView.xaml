@@ -34,10 +34,7 @@
 
                 <TextBox Grid.Column="1"
                          Text="{Binding Database.Name}"
-                         Background="{StaticResource PrimaryColor}"
-                         Foreground="{StaticResource BorderColor}"
-                         BorderBrush="{StaticResource BorderColor}"
-                         FontSize="14"/>
+                         Style="{StaticResource TextBoxStyle}"/>
 
                 <Border Grid.Column="2"
                         Style="{StaticResource BorderStyle}"

@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="Визуальный конструктор информационной системы"
         Width="850"
-        Height="619"
+        Height="626"
         MinWidth="850"
-        MinHeight="619">
+        MinHeight="626">
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>
     </Window.DataContext>

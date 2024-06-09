@@ -26,6 +26,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
@@ -34,10 +35,27 @@
 
                 <TextBox Grid.Column="1"
                          Text="{Binding Table.Name}"
-                         Background="{StaticResource PrimaryColor}"
-                         Foreground="{StaticResource BorderColor}"
-                         BorderBrush="{StaticResource BorderColor}"
-                         FontSize="14"/>
+                         Style="{StaticResource TextBoxStyle}"/>
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource BorderStyle}"
+                        Height="Auto"
+                        Width="Auto"
+                        BorderThickness="1"
+                        Margin="10, 0, 0, 0">
+                    <TextBlock Text="Удалить"
+                               Style="{StaticResource TextBlockStyle}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Padding="4, 0"
+                               FontSize="14"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding DeleteDeviceCommand}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Border>
             </Grid>
 
             <!--Данные-->
@@ -62,11 +80,7 @@
                                         <DataTemplate>
                                             <TextBox Text="{Binding Path=., Mode=TwoWay}"
                                                      Margin="0, 5"
-                                                     FontFamily="Segoe UI"
-                                                     Foreground="{StaticResource BorderColor}"
-                                                     Background="{StaticResource PrimaryColor}"
-                                                     
-                                                     FontSize="14"/>
+                                                     Style="{StaticResource TextBoxStyle}"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -75,7 +89,7 @@
                                         Height="Auto"
                                         Width="Auto"
                                         BorderThickness="1"
-                                        Margin="0, 3">
+                                        Margin="0, 10">
                                     <TextBlock Text="Удалить"
                                                Style="{StaticResource TextBlockStyle}"
                                                VerticalAlignment="Center"

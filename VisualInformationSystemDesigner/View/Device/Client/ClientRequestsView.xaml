@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.Device.Client"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="Настройки запросов"
+        Title="Запросы клиента"
         Height="510"
         Width="463"
         ResizeMode="NoResize"

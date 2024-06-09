@@ -10,8 +10,8 @@
         xmlns:variableType="clr-namespace:VisualInformationSystemDesigner.Model.Device"
         mc:Ignorable="d"
         Title="Настройки метода"
-        Height="600"
-        Width="700"
+        Height="550"
+        Width="600"
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=viewModel:MethodSettingsViewModel}"
         Style="{StaticResource WindowStyle}">
@@ -30,7 +30,7 @@
             <sys:String>Удалить</sys:String>
         </x:Array>
     </Window.Resources>
-    
+
     <Grid Background="{StaticResource PrimaryColor}" Margin="10">
         <Grid Margin="10">
             <Grid.RowDefinitions>
@@ -43,6 +43,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
@@ -51,17 +52,38 @@
 
                 <TextBox Grid.Column="1"
                          Text="{Binding Method.Name}"
-                         Background="{StaticResource PrimaryColor}"
-                         Foreground="{StaticResource BorderColor}"
-                         BorderBrush="{StaticResource BorderColor}"
-                         FontSize="14"/>
+                         Style="{StaticResource TextBoxStyle}"/>
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource BorderStyle}"
+                        Height="Auto"
+                        Width="Auto"
+                        BorderThickness="1"
+                        Margin="10, 0, 0, 0">
+                    <TextBlock Text="Удалить"
+                               Style="{StaticResource TextBlockStyle}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Padding="4, 0"
+                               FontSize="14"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding DeleteDeviceCommand}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Border>
             </Grid>
 
-            <TabControl Grid.Row="1">
+            <TabControl Grid.Row="1"
+                        Background="{StaticResource PrimaryColor}"
+                        BorderBrush="{StaticResource AccentColor}"
+                        RenderOptions.EdgeMode="Aliased">
                 <!--Выбор таблицы-->
-                <TabItem>
+                <TabItem Style="{StaticResource CustomTabItemStyle}">
                     <TabItem.Header>
-                        <TextBlock Text="Таблица" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Text="Таблица"
+                                   Style="{StaticResource TextBlockStyle}"/>
                     </TabItem.Header>
 
                     <TabItem.Content>
@@ -72,27 +94,70 @@
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
 
-                            <TreeView Grid.Column="0" ItemsSource="{Binding Databases}" x:Name="DatabaseTreeView">
+                            <TreeView Grid.Column="0"
+                                      x:Name="DatabaseTreeView"
+                                      ItemsSource="{Binding Databases}"
+                                      Background="{StaticResource PrimaryColor}"
+                                      BorderBrush="{StaticResource BorderColor}">
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Tables}">
-                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Name}"
+                                                   Foreground="{StaticResource BorderColor}"
+                                                   FontSize="14"/>
                                     </HierarchicalDataTemplate>
                                 </TreeView.ItemTemplate>
                             </TreeView>
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5, 0">
-                                <Button Content="→"
-                                        Command="{Binding SelectTableCommand}"
-                                        CommandParameter="{Binding ElementName=DatabaseTreeView, Path=SelectedItem}"/>
-                                <Button Content="←"
-                                        Command="{Binding DeselectTableCommand}"
-                                        CommandParameter="{Binding ElementName=SelectedTablesTreeView, Path=SelectedItem}"/>
+                                <Border Style="{StaticResource BorderStyle}"
+                                        Height="Auto"
+                                        Width="Auto"
+                                        BorderThickness="1"
+                                        Margin="0, 10">
+                                    <TextBlock Text="→"
+                                               Style="{StaticResource TextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Padding="5, 0, 5, 4"
+                                               FontSize="22"/>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding SelectTableCommand}"
+                                                                   CommandParameter="{Binding ElementName=DatabaseTreeView, Path=SelectedItem}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
+
+                                <Border Style="{StaticResource BorderStyle}"
+                                        Height="Auto"
+                                        Width="Auto"
+                                        BorderThickness="1">
+                                    <TextBlock Text="←"
+                                               Style="{StaticResource TextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Padding="5, 0, 5, 4"
+                                               FontSize="22"/>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding DeselectTableCommand}"
+                                                                   CommandParameter="{Binding ElementName=SelectedTablesTreeView, Path=SelectedItem}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
                             </StackPanel>
 
-                            <TreeView Grid.Column="2" ItemsSource="{Binding Tables}" x:Name="SelectedTablesTreeView">
+                            <TreeView Grid.Column="2"
+                                      x:Name="SelectedTablesTreeView"
+                                      ItemsSource="{Binding Tables}"
+                                      Background="{StaticResource PrimaryColor}"
+                                      BorderBrush="{StaticResource BorderColor}"
+                                      BorderThickness="2, 1, 1, 1">
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Fields}">
-                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Name}"
+                                                   Foreground="{StaticResource BorderColor}"
+                                                   FontSize="14"/>
                                     </HierarchicalDataTemplate>
                                 </TreeView.ItemTemplate>
                             </TreeView>
@@ -101,7 +166,7 @@
                 </TabItem>
 
                 <!--Аргументы метода-->
-                <TabItem>
+                <TabItem Style="{StaticResource CustomTabItemStyle}">
                     <TabItem.Header>
                         <TextBlock Text="Аргументы" Style="{StaticResource TextBlockStyle}"/>
                     </TabItem.Header>
@@ -114,7 +179,11 @@
                             </Grid.RowDefinitions>
 
                             <!--Список аргументов-->
-                            <ListBox Grid.Row="0" ItemsSource="{Binding Method.Arguments}">
+                            <ListBox Grid.Row="0"
+                                     ItemsSource="{Binding Method.Arguments}"
+                                     Background="{StaticResource PrimaryColor}"
+                                     Foreground="{StaticResource BorderColor}"
+                                     BorderBrush="{StaticResource BorderColor}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -122,13 +191,31 @@
                                                       DisplayMemberPath="Value"
                                                       SelectedValuePath="Key"
                                                       SelectedValue="{Binding DataType}"
-                                                      Width="100"/>
+                                                      Width="100"
+                                                      Style="{StaticResource ComboBoxStyle}"/>
+                                            
                                             <TextBox Text="{Binding Name}"
                                                      Width="150"
-                                                     Margin="10,0,10,0"/>
-                                            <Button Content="Удалить"
-                                                    Command="{Binding DataContext.RemoveArgumentCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-                                                    CommandParameter="{Binding}"/>
+                                                     Margin="10,0,10,0"
+                                                     Style="{StaticResource TextBoxStyle}"/>
+
+                                            <Border Style="{StaticResource BorderStyle}"
+                                                    Height="Auto"
+                                                    Width="Auto"
+                                                    BorderThickness="1">
+                                                <TextBlock Text="Удалить"
+                                                           Style="{StaticResource TextBlockStyle}"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           Padding="4, 0"
+                                                           FontSize="14"/>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.RemoveArgumentCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Border>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -140,19 +227,37 @@
                                           DisplayMemberPath="Value"
                                           SelectedValuePath="Key"
                                           SelectedValue="{Binding NewArgument.DataType}"
-                                          Width="100"/>
+                                          Width="100"
+                                          Style="{StaticResource ComboBoxStyle}"/>
+
                                 <TextBox Text="{Binding NewArgument.Name}"
                                          Width="150"
-                                         Margin="10,0,10,0"/>
-                                <Button Content="Добавить"
-                                        Command="{Binding AddArgumentCommand}" />
+                                         Margin="10,0,10,0"
+                                         Style="{StaticResource TextBoxStyle}"/>
+
+                                <Border Style="{StaticResource BorderStyle}"
+                                        Height="Auto"
+                                        Width="Auto"
+                                        BorderThickness="1">
+                                    <TextBlock Text="Добавить"
+                                               Style="{StaticResource TextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Padding="4, 0"
+                                               FontSize="14"/>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding AddArgumentCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
                             </StackPanel>
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
 
                 <!--Условия метода-->
-                <TabItem>
+                <TabItem Style="{StaticResource CustomTabItemStyle}">
                     <TabItem.Header>
                         <TextBlock Text="Условия" Style="{StaticResource TextBlockStyle}"/>
                     </TabItem.Header>
@@ -165,7 +270,11 @@
                             </Grid.RowDefinitions>
 
                             <!--Список условий-->
-                            <ListBox Grid.Row="0" ItemsSource="{Binding Method.Conditions}">
+                            <ListBox Grid.Row="0"
+                                     ItemsSource="{Binding Method.Conditions}"
+                                     Background="{StaticResource PrimaryColor}"
+                                     Foreground="{StaticResource BorderColor}"
+                                     BorderBrush="{StaticResource BorderColor}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -173,19 +282,39 @@
                                                       DisplayMemberPath="Name"
                                                       SelectedItem="{Binding Field}"
                                                       Width="150"
-                                                      Margin="0,0,10,0"/>
+                                                      Margin="0,0,10,0"
+                                                      Style="{StaticResource ComboBoxStyle}"/>
+                                            
                                             <ComboBox ItemsSource="{Binding Source={StaticResource ConditionTypes}}"
                                                       SelectedItem="{Binding Condition}"
                                                       Width="50"
-                                                      Margin="0,0,10,0"/>
+                                                      Margin="0,0,10,0"
+                                                      Style="{StaticResource ComboBoxStyle}"/>
+                                            
                                             <ComboBox ItemsSource="{Binding DataContext.Method.Arguments, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                       DisplayMemberPath="Name"
                                                       SelectedItem="{Binding Argument}"
                                                       Width="150"
-                                                      Margin="0,0,10,0"/>
-                                            <Button Content="Удалить"
-                                                    Command="{Binding DataContext.RemoveConditionCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                    CommandParameter="{Binding}"/>
+                                                      Margin="0,0,10,0"
+                                                      Style="{StaticResource ComboBoxStyle}"/>
+
+                                            <Border Style="{StaticResource BorderStyle}"
+                                                    Height="Auto"
+                                                    Width="Auto"
+                                                    BorderThickness="1">
+                                                <TextBlock Text="Удалить"
+                                                           Style="{StaticResource TextBlockStyle}"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           Padding="4, 0"
+                                                           FontSize="14"/>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction  Command="{Binding DataContext.RemoveConditionCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                                                CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Border>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -197,25 +326,45 @@
                                           DisplayMemberPath="Name"
                                           SelectedItem="{Binding NewCondition.Field}"
                                           Width="150"
-                                          Margin="0,0,10,0"/>
+                                          Margin="0,0,10,0"
+                                          Style="{StaticResource ComboBoxStyle}"/>
+                                
                                 <ComboBox ItemsSource="{Binding Source={StaticResource ConditionTypes}}"
                                           SelectedItem="{Binding NewCondition.Condition}"
                                           Width="50"
-                                          Margin="0,0,10,0"/>
+                                          Margin="0,0,10,0"
+                                          Style="{StaticResource ComboBoxStyle}"/>
+                                
                                 <ComboBox ItemsSource="{Binding Method.Arguments}"
                                           DisplayMemberPath="Name"
                                           SelectedItem="{Binding NewCondition.Argument}"
                                           Width="150"
-                                          Margin="0,0,10,0"/>
-                                <Button Content="Добавить"
-                                        Command="{Binding AddConditionCommand}"/>
+                                          Margin="0,0,10,0"
+                                          Style="{StaticResource ComboBoxStyle}"/>
+
+                                <Border Style="{StaticResource BorderStyle}"
+                                        Height="Auto"
+                                        Width="Auto"
+                                        BorderThickness="1">
+                                    <TextBlock Text="Добавить"
+                                               Style="{StaticResource TextBlockStyle}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Padding="4, 0"
+                                               FontSize="14"/>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding AddConditionCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
                             </StackPanel>
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
 
                 <!--Действие метода-->
-                <TabItem>
+                <TabItem Style="{StaticResource CustomTabItemStyle}">
                     <TabItem.Header>
                         <TextBlock Text="Действие" Style="{StaticResource TextBlockStyle}"/>
                     </TabItem.Header>
@@ -227,10 +376,12 @@
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0" Orientation="Vertical">
-                                <TextBlock Text="Выбор дейтсвия:"/>
+                                <TextBlock Text="Выбор дейтсвия метода:" Style="{StaticResource TextBlockStyle}"/>
                                 <ComboBox ItemsSource="{StaticResource ActionTypes}"
                                           SelectedItem="{Binding Method.ActionName}"
-                                          Width="150"/>
+                                          Width="150"
+                                          FontSize="14"
+                                          Style="{StaticResource ComboBoxStyle}"/>
                             </StackPanel>
                         </Grid>
                     </TabItem.Content>
