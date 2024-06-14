@@ -1,7 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Utilities;
 using VisualInformationSystemDesigner.View.Dialogs;
@@ -47,7 +46,7 @@ namespace VisualInformationSystemDesigner.ViewModel.DevicesList
             for (int i = 0; i < _devices.Count; i++)
             {
                 var device = _devices[i];
-                DevicesVM.Add(new DeviceViewModel(ref device, GetDeviceImage()));
+                DevicesVM.Add(new DeviceViewModel(ref device));
             }
 
             AddDeviceCommand = new RelayCommand(AddDevice);
@@ -72,33 +71,9 @@ namespace VisualInformationSystemDesigner.ViewModel.DevicesList
                 _devices.Add(newDevice);
                 var device = _devices[^1];
 
-                var deviceVM = new DeviceViewModel(ref device, GetDeviceImage());
+                var deviceVM = new DeviceViewModel(ref device);
                 DevicesVM.Add(deviceVM);
             }
-        }
-
-        /// <summary>
-        /// Получить изображение из ресурсов
-        /// </summary>
-        /// <returns>Ссылка на изображение из ресурсов</returns>
-        private BitmapImage GetDeviceImage()
-        {
-            string imageName = "";
-
-            if (_deviceType == DeviceType.Database)
-            {
-                imageName = "database-icon.png";
-            }
-            else if (_deviceType == DeviceType.Server)
-            {
-                imageName = "server-icon.png";
-            }
-            else if (_deviceType == DeviceType.Client)
-            {
-                imageName = "client-icon.png";
-            }
-            
-            return new BitmapImage(new Uri($"pack://application:,,,/Resources/{imageName}"));
         }
     }
 }

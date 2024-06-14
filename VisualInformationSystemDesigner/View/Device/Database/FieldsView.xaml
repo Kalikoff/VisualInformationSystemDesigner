@@ -51,7 +51,7 @@
                                FontSize="14"/>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding DeleteDeviceCommand}"
+                            <i:InvokeCommandAction Command="{Binding DeleteTableCommand}"
                                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

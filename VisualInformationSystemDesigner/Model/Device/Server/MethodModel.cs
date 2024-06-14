@@ -72,7 +72,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         /// <exception cref="InvalidOperationException">Ошибка данных</exception>
         private bool EvaluateCondition(string fieldValue, ConditionModel condition, string argumentValue)
 		{
-            if (condition.Argument.DataType == DataType.String && (condition.Condition == "<" || condition.Condition == ">"))
+            if (condition.Argument.DataType == "String" && (condition.Condition == "<" || condition.Condition == ">"))
             {
                 throw new InvalidOperationException("Несравнимые типы данных!\n");
             }
@@ -101,20 +101,23 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 		/// <exception cref="InvalidOperationException"></exception>
 		private int Compare(string fieldValue, ConditionModel condition, string conditionValue)
 		{
+			object fieldValueAsNumber = null;
 			object conditionValueAsNumber = null;
 
-			if (condition.Argument.DataType == DataType.Int)
+            if (condition.Argument.DataType == "Int")
 			{
+				fieldValueAsNumber = Convert.ToInt32(fieldValue);
                 conditionValueAsNumber = Convert.ToInt32(conditionValue);
             }
-			else if (condition.Argument.DataType == DataType.Double)
+			else if (condition.Argument.DataType == "Double")
 			{
+                fieldValueAsNumber = Convert.ToDouble(fieldValue);
                 conditionValueAsNumber = Convert.ToDouble(conditionValue);
             }
 
-            if (fieldValue is IComparable fieldComparable && conditionValue is IComparable conditionComparable)
+            if (fieldValueAsNumber is IComparable fieldComparable && conditionValueAsNumber is IComparable conditionComparable)
 			{
-				return fieldComparable.CompareTo(conditionValueAsNumber);
+				return fieldComparable.CompareTo(conditionComparable);
 			}
 
 			throw new InvalidOperationException("Значения не сравнимы!\n");
@@ -185,7 +188,7 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 				}
 			}
 
-			return $"Запись {result}обновлена!\n";
+			return result;
 		}
 
 		private object DeleteRecord()
@@ -204,12 +207,12 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
 			{
 				foreach (var field in SelectedTable.Fields)
 				{
-					field.Data.RemoveAt(index);
 					result += $"{field.Name}: {field.Data[index]}; ";
+					field.Data.RemoveAt(index);
 				}
 			}
 
-			return $"Запись {result}удалена!\n";
+			return result;
 		}
 	}
 }

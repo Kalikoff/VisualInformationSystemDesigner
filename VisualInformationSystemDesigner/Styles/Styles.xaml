@@ -159,20 +159,12 @@
                             </Grid>
                         </Popup>
                     </Grid>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
-        <Setter Property="Foreground" Value="{StaticResource BorderColor}"/>
-    </Style>
 
-    <!-- Стиль для элементов ComboBox -->
-    <Style TargetType="ComboBoxItem">
-        <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
         <Setter Property="Foreground" Value="{StaticResource BorderColor}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
-        <Setter Property="Margin" Value="0, 2"/>
     </Style>
 
     <!-- Шаблон ToggleButton для ComboBox -->

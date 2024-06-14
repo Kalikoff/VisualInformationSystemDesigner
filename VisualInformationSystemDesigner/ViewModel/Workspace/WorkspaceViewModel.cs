@@ -1,5 +1,9 @@
 ﻿using MvvmHelpers;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Input;
+using VisualInformationSystemDesigner.Model;
 using VisualInformationSystemDesigner.Model.Device;
 using VisualInformationSystemDesigner.Model.Device.Database;
 using VisualInformationSystemDesigner.Model.Device.Server;
@@ -112,6 +116,9 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             }
         }
 
+        public ICommand SaveProjectCommand { get; }
+        public ICommand UploadProjectCommand { get; }
+
         public WorkspaceViewModel()
         {
             DeviceListLocator.Instance.Databases = _databases;
@@ -130,6 +137,68 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             DevicesList.Add(databases);
             DevicesList.Add(servers);
             DevicesList.Add(clients);
+
+            SaveProjectCommand = new RelayCommand(SaveProject);
+            UploadProjectCommand = new RelayCommand(UploadProject);
+        }
+
+        private void SaveProject(object parameter)
+        {
+            var dataToSave = new DataToSave
+            {
+                Databases = _databases,
+                Servers = _servers,
+                Clients = _clients
+            };
+
+            string json = JsonConvert.SerializeObject(dataToSave, Formatting.Indented);
+
+            File.WriteAllText("project.json", json);
+        }
+
+        public void UploadProject(object parameter)
+        {
+            string loadedJson = File.ReadAllText("project.json");
+            var loadedData = JsonConvert.DeserializeObject<DataToSave>(loadedJson);
+
+            _databases.Clear();
+            _databasesVM.Clear();
+
+            _servers.Clear();
+            _serversVM.Clear();
+
+            _clients.Clear();
+            _clientsVM.Clear();
+
+            foreach(var database in loadedData.Databases)
+            {
+                _databases.Add(database);
+                var refDatabase = _databases[^1];
+                _databasesVM.Add(new DeviceViewModel(ref refDatabase));
+
+                OnPropertyChanged(nameof(Databases));
+                OnPropertyChanged(nameof(DatabasesVM));
+            }
+
+            foreach (var server in loadedData.Servers)
+            {
+                _servers.Add(server);
+                var refServer = _servers[^1];
+                _serversVM.Add(new DeviceViewModel(ref refServer));
+
+                OnPropertyChanged(nameof(Servers));
+                OnPropertyChanged(nameof(ServersVM));
+            }
+
+            foreach (var client in loadedData.Clients)
+            {
+                _clients.Add(client);
+                var refClient = _clients[^1];
+                _clientsVM.Add(new DeviceViewModel(ref refClient));
+
+                OnPropertyChanged(nameof(Clients));
+                OnPropertyChanged(nameof(ClientsVM));
+            }
         }
 
         private void Test()
@@ -149,19 +218,19 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                             {
                                 Name = "Id",
                                 Data = ["1","2","3"],
-                                Type = DataType.Int
+                                DataType = "Int"
                             },
                             new()
                             {
                                 Name = "Name",
                                 Data = ["Masha", "Misha", "Alex"],
-                                Type = DataType.String
+                                DataType = "String"
                             },
                             new()
                             {
                                 Name = "Role",
                                 Data = ["Admin", "Client", "Client"],
-                                Type = DataType.String
+                                DataType = "String"
                             }
                         ]
                     },
@@ -174,13 +243,13 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                             {
                                 Name = "Id",
                                 Data = ["1","2"],
-                                Type = DataType.Int
+                                DataType = "Int"
                             },
                             new()
                             {
                                 Name = "Work",
                                 Data = ["Admin", "Programmer"],
-                                Type = DataType.String
+                                DataType = "String"
                             }
                         ]
                     }

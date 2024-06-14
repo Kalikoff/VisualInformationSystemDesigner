@@ -22,11 +22,14 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
             }
         }
 
+        private DatabaseModel _database; // Ссылка на базу данных
+
         public ICommand ShowFieldsWindowCommand { get; }
 
-        public TableViewModel(ref TableModel table)
+        public TableViewModel(ref TableModel table, ref DatabaseModel database)
         {
             Table = table;
+            _database = database;
 
             ShowFieldsWindowCommand = new RelayCommand(ShowFieldsWindow);
         }
@@ -37,7 +40,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
         /// <param name="parameter"></param>
         public void ShowFieldsWindow(object parameter)
         {
-            var fieldsViewModel = new FieldsViewModel(ref _table);
+            var fieldsViewModel = new FieldsViewModel(ref _table, ref _database);
             var fieldsView = new FieldsView();
 			fieldsView.DataContext = fieldsViewModel;
 			fieldsView.Show();

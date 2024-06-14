@@ -14,10 +14,6 @@
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=viewModel:RequestSettingsViewModel}"
         Style="{StaticResource WindowStyle}">
-    <Window.Resources>
-        <converter:DataTypeToStringConverter x:Key="DataTypeToStringConverter"/>
-    </Window.Resources>
-    
     <Grid Background="{StaticResource PrimaryColor}" Margin="10">
         <Grid Margin="10">
             <Grid.RowDefinitions>
@@ -131,7 +127,7 @@
                                             <TextBlock Text="{Binding Name}"
                                                        Width="100"
                                                        Style="{StaticResource TextBlockStyle}"/>
-                                            <TextBlock Text="{Binding Type, Converter={StaticResource DataTypeToStringConverter}}"
+                                            <TextBlock Text="{Binding DataType}"
                                                        Width="100"
                                                        Style="{StaticResource TextBlockStyle}"/>
                                             <TextBox Text="{Binding Value}"

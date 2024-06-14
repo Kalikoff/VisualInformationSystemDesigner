@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using System.Windows;
 using VisualInformationSystemDesigner.Utilities;
-using VisualInformationSystemDesigner.Model.Device;
 
 namespace VisualInformationSystemDesigner.ViewModel.Dialogs
 {
@@ -22,8 +21,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Dialogs
             }
         }
 
-        private DataType _itemDataType;
-        public DataType ItemDataType
+        private string _itemDataType;
+        public string ItemDataType
         {
             get => _itemDataType;
             set

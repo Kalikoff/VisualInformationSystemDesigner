@@ -5,13 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VisualInformationSystemDesigner.View.Dialogs"
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.Dialogs"
-        xmlns:variableType="clr-namespace:VisualInformationSystemDesigner.Model.Device"
+        xmlns:sys="clr-namespace:System;assembly=netstandard"
         mc:Ignorable="d"
         Title="Добавление поля"
         Height="150"
         Width="350"
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=viewModel:AddFieldDialogViewModel}">
+    <Window.Resources>
+        <x:Array x:Key="DataTypes" Type="sys:String">
+            <sys:String>Int</sys:String>
+            <sys:String>Double</sys:String>
+            <sys:String>String</sys:String>
+        </x:Array>
+    </Window.Resources>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -47,9 +55,7 @@
                        VerticalAlignment="Center"/>
             <ComboBox  Grid.Column="1"
                        Grid.Row="1"
-                       ItemsSource="{x:Static variableType:VariableType.dataTypeDictionary}"
-                       DisplayMemberPath="Value"
-                       SelectedValuePath="Key"
+                       ItemsSource="{Binding Source={StaticResource DataTypes}}"
                        SelectedValue="{Binding ItemDataType}"
                        VerticalAlignment="Center"/>
         </Grid>

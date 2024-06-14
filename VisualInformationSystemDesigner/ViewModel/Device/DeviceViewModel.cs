@@ -26,10 +26,10 @@ namespace VisualInformationSystemDesigner.ViewModel.Device
 
         public ICommand ShowDeviceInfoWindowCommand { get; }
 
-        public DeviceViewModel(ref DeviceModel device, BitmapImage image)
+        public DeviceViewModel(ref DeviceModel device)
         {
             _device = device;
-            Image = image;
+            Image = GetDeviceImage();
 
             ShowDeviceInfoWindowCommand = new RelayCommand(ShowDeviceInfoWindow);
         }
@@ -41,6 +41,30 @@ namespace VisualInformationSystemDesigner.ViewModel.Device
         public void ShowDeviceInfoWindow(object parameter)
         {
             _device.ShowDeviceInformation(ref _device);
+        }
+
+        /// <summary>
+        /// Получить изображение из ресурсов
+        /// </summary>
+        /// <returns>Ссылка на изображение из ресурсов</returns>
+        private BitmapImage GetDeviceImage()
+        {
+            string imageName = "";
+
+            if (_device.DeviceType == DeviceType.Database)
+            {
+                imageName = "database-icon.png";
+            }
+            else if (_device.DeviceType == DeviceType.Server)
+            {
+                imageName = "server-icon.png";
+            }
+            else if (_device.DeviceType == DeviceType.Client)
+            {
+                imageName = "client-icon.png";
+            }
+
+            return new BitmapImage(new Uri($"pack://application:,,,/Resources/{imageName}"));
         }
     }
 }

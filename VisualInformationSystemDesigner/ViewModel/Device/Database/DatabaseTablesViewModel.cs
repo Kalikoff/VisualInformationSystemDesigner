@@ -51,7 +51,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
             for (int i = 0; i < Database.Tables.Count; i++)
             {
                 var table = Database.Tables[i];
-                TablesVM.Add(new TableViewModel(ref table));
+                TablesVM.Add(new TableViewModel(ref table, ref _database));
             }
 
             DeleteDeviceCommand = new RelayCommand<Window>(DeleteDevice);
@@ -93,19 +93,19 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
                         {
                             Name = "Id",
                             Data = ["1","2","3"],
-                            Type = DataType.Int
+                            DataType = "Int"
                         },
                         new()
                         {
                             Name = "Name",
                             Data = ["Masha", "Misha", "Alex"],
-                            Type = DataType.String
+                            DataType = "String"
                         },
                         new()
                         {
                             Name = "Role",
                             Data = ["Admin", "Client", "Client"],
-                            Type = DataType.String
+                            DataType = "String"
                         }
                     ]
                 });
@@ -115,7 +115,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 
                 var table = Database.Tables[^1];
 
-                TablesVM.Add(new TableViewModel(ref table));
+                TablesVM.Add(new TableViewModel(ref table, ref _database));
             }
         }
     }

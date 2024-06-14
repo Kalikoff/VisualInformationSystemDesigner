@@ -14,8 +14,23 @@
         <viewModel:WorkspaceViewModel/>
     </Page.DataContext>
 
-    <Grid Background="{StaticResource SecondaryColor}" Margin="10">
-        <ItemsControl ItemsSource="{Binding DevicesList}">
+    <Grid Background="{StaticResource SecondaryColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0"
+              Background="{StaticResource PrimaryColor}"
+              Foreground="{StaticResource BorderColor}"
+              FontSize="14">
+            <MenuItem Header="Проект" Style="{StaticResource ParentMenuItem}">
+                <MenuItem Header="Сохранить" Command="{Binding SaveProjectCommand}"/>
+                <MenuItem Header="Загрузить" Command="{Binding UploadProjectCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding DevicesList}" Margin="10">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical"/>
@@ -30,39 +45,3 @@
         </ItemsControl>
     </Grid>
 </Page>
-    
-<!--<Canvas Background="White"
-            AllowDrop="True">
-        
-        <ItemsControl ItemsSource="{Binding Items}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding Left}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Top}" />
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <local:ItemView/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-
-        --><!--<i:Interaction.Triggers>
-            <i:EventTrigger EventName="DragEnter">
-                <i:InvokeCommandAction Command="{Binding CanvasDragEnterCommand}"/>
-            </i:EventTrigger>
-
-            <i:EventTrigger EventName="Drop">
-                <i:InvokeCommandAction Command="{Binding CanvasDropCommand}"/>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>--><!--
-    </Canvas>-->

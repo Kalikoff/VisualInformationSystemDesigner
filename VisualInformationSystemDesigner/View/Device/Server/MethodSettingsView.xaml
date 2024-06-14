@@ -7,7 +7,6 @@
         xmlns:viewModel="clr-namespace:VisualInformationSystemDesigner.ViewModel.Device.Server"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:sys="clr-namespace:System;assembly=netstandard"
-        xmlns:variableType="clr-namespace:VisualInformationSystemDesigner.Model.Device"
         mc:Ignorable="d"
         Title="Настройки метода"
         Height="550"
@@ -16,6 +15,12 @@
         d:DataContext="{d:DesignInstance Type=viewModel:MethodSettingsViewModel}"
         Style="{StaticResource WindowStyle}">
     <Window.Resources>
+        <x:Array x:Key="DataTypes" Type="sys:String">
+            <sys:String>Int</sys:String>
+            <sys:String>Double</sys:String>
+            <sys:String>String</sys:String>
+        </x:Array>
+
         <x:Array x:Key="ConditionTypes" Type="sys:String">
             <sys:String>==</sys:String>
             <sys:String>!=</sys:String>
@@ -187,9 +192,7 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <ComboBox ItemsSource="{x:Static variableType:VariableType.dataTypeDictionary}"
-                                                      DisplayMemberPath="Value"
-                                                      SelectedValuePath="Key"
+                                            <ComboBox ItemsSource="{Binding Source={StaticResource DataTypes}}"
                                                       SelectedValue="{Binding DataType}"
                                                       Width="100"
                                                       Style="{StaticResource ComboBoxStyle}"/>
@@ -223,9 +226,7 @@
 
                             <!--Добавление нового арумента-->
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
-                                <ComboBox ItemsSource="{x:Static variableType:VariableType.dataTypeDictionary}"
-                                          DisplayMemberPath="Value"
-                                          SelectedValuePath="Key"
+                                <ComboBox ItemsSource="{Binding Source={StaticResource DataTypes}}"
                                           SelectedValue="{Binding NewArgument.DataType}"
                                           Width="100"
                                           Style="{StaticResource ComboBoxStyle}"/>

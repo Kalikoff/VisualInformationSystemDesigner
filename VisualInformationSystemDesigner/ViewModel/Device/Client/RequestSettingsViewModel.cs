@@ -72,9 +72,9 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 		{
 			var response = Request.SelectedMethod.GetResponse();
 
-			if (response is List<Dictionary<string, object>>)
+			if (response is List<Dictionary<string, string>>)
 			{
-                foreach (var record in (List<Dictionary<string, object>>)response)
+                foreach (var record in (List<Dictionary<string, string>>)response)
                 {
                     string recordString = string.Join(", ", record.Select(kv => $"{kv.Key}: {kv.Value}"));
                     ConsoleOutput += recordString + "\n";
@@ -87,12 +87,12 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 		}
 
 		/// <summary>
-		/// 
+		/// Очистка консоли
 		/// </summary>
 		/// <param name="parameter"></param>
         private void ClearConsole(object parameter)
         {
-
+			ConsoleOutput = "";
         }
     }
 }

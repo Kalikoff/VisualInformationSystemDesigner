@@ -1,6 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Windows.Controls;
-using VisualInformationSystemDesigner.View.Home;
+using VisualInformationSystemDesigner.View.Workspace;
 
 namespace VisualInformationSystemDesigner.ViewModel.MainWindow
 {
@@ -10,7 +10,7 @@ namespace VisualInformationSystemDesigner.ViewModel.MainWindow
 
         public MainWindowViewModel()
         {
-            CurrentPage = new HomeView();
+            CurrentPage = new WorkspaceView();
         }
     }
 }
