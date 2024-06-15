@@ -69,7 +69,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         public ICommand AddConditionCommand { get; } // Добавить условие
         public ICommand RemoveConditionCommand { get; } // Удалить условие
 
-		public MethodSettingsViewModel(ref MethodModel method, MethodViewModel methodVM)
+        public MethodSettingsViewModel(ref MethodModel method, MethodViewModel methodVM)
         {
             Method = method;
             _methodVM = methodVM;
@@ -169,8 +169,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
                 return;
             }
 
-			Method.Conditions.Add(NewCondition);
-			NewCondition = new ConditionModel();
+            Method.Conditions.Add(NewCondition);
+            NewCondition = new ConditionModel();
         }
 
         /// <summary>
@@ -184,5 +184,5 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
                 Method.Conditions.Remove(conditionToRemove);
             }
         }
-	}
+    }
 }

@@ -10,6 +10,6 @@ namespace VisualInformationSystemDesigner.Model.Device.Client
         public MethodModel SelectedMethod { get; set; }
 
 
-		public RequestModel() { }
+        public RequestModel() { }
     }
 }

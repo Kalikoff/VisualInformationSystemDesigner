@@ -9,5 +9,5 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         public ArgumentModel Argument { get; set; } // Аргумент
 
         public ConditionModel() { }
-	}
+    }
 }

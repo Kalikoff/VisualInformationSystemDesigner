@@ -18,49 +18,49 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
             Conditions = new ObservableCollection<ConditionModel>();
         }
 
-		/// <summary>
-		/// Получить ответ от сервера
-		/// </summary>
-		/// <returns></returns>
-		/// <exception cref="InvalidOperationException"></exception>
-		public object GetResponse()
-		{
-			switch (ActionName)
-			{
-				case "Получить":
-					return GetRecords();
-				case "Добавить":
-					return AddRecord();
-				case "Изменить":
-					return UpdateRecord();
-				case "Удалить":
-					return DeleteRecord();
-				default:
-					throw new InvalidOperationException("Неизвестное действие!\n");
-			}
-		}
+        /// <summary>
+        /// Получить ответ от сервера
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public object GetResponse()
+        {
+            switch (ActionName)
+            {
+                case "Получить":
+                    return GetRecords();
+                case "Добавить":
+                    return AddRecord();
+                case "Изменить":
+                    return UpdateRecord();
+                case "Удалить":
+                    return DeleteRecord();
+                default:
+                    throw new InvalidOperationException("Неизвестное действие!\n");
+            }
+        }
 
-		/// <summary>
-		/// Получить записи из таблицы
-		/// </summary>
-		/// <returns></returns>
-		private object GetRecords()
-		{
-			var records = SelectedTable.Fields.First().Data
-				.Select((_, index) => SelectedTable.Fields.ToDictionary(field => field.Name, field => field.Data[index]))
-				.ToList();
+        /// <summary>
+        /// Получить записи из таблицы
+        /// </summary>
+        /// <returns></returns>
+        private object GetRecords()
+        {
+            var records = SelectedTable.Fields.First().Data
+                .Select((_, index) => SelectedTable.Fields.ToDictionary(field => field.Name, field => field.Data[index]))
+                .ToList();
 
-			foreach (var condition in Conditions)
-			{
-				var field = condition.Field;
-				var fieldIndex = SelectedTable.Fields.IndexOf(field);
-				var argumentValue = condition.Argument.Value;
+            foreach (var condition in Conditions)
+            {
+                var field = condition.Field;
+                var fieldIndex = SelectedTable.Fields.IndexOf(field);
+                var argumentValue = condition.Argument.Value;
 
-				records = records.Where(record => EvaluateCondition(record[field.Name], condition, argumentValue)).ToList();
-			}
+                records = records.Where(record => EvaluateCondition(record[field.Name], condition, argumentValue)).ToList();
+            }
 
-			return records;
-		}
+            return records;
+        }
 
         /// <summary>
         /// Сравнение всех записей с значением аргумента
@@ -71,64 +71,64 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
         /// <returns>Статус</returns>
         /// <exception cref="InvalidOperationException">Ошибка данных</exception>
         private bool EvaluateCondition(string fieldValue, ConditionModel condition, string argumentValue)
-		{
+        {
             if (condition.Argument.DataType == "String" && (condition.Condition == "<" || condition.Condition == ">"))
             {
                 throw new InvalidOperationException("Несравнимые типы данных!\n");
             }
 
             switch (condition.Condition)
-			{
-				case "==":
-					return Equals(fieldValue, argumentValue);
-				case "!=":
-					return !Equals(fieldValue, argumentValue);
-				case "<":
-					return Compare(fieldValue, condition, argumentValue) < 0;
-				case ">":
-					return Compare(fieldValue, condition, argumentValue) > 0;
-				default:
-					throw new InvalidOperationException("Неизвестное условие!\n");
-			}
-		}
+            {
+                case "==":
+                    return Equals(fieldValue, argumentValue);
+                case "!=":
+                    return !Equals(fieldValue, argumentValue);
+                case "<":
+                    return Compare(fieldValue, condition, argumentValue) < 0;
+                case ">":
+                    return Compare(fieldValue, condition, argumentValue) > 0;
+                default:
+                    throw new InvalidOperationException("Неизвестное условие!\n");
+            }
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="fieldValue"></param>
-		/// <param name="conditionValue"></param>
-		/// <returns></returns>
-		/// <exception cref="InvalidOperationException"></exception>
-		private int Compare(string fieldValue, ConditionModel condition, string conditionValue)
-		{
-			object fieldValueAsNumber = null;
-			object conditionValueAsNumber = null;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldValue"></param>
+        /// <param name="conditionValue"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        private int Compare(string fieldValue, ConditionModel condition, string conditionValue)
+        {
+            object fieldValueAsNumber = null;
+            object conditionValueAsNumber = null;
 
             if (condition.Argument.DataType == "Int")
-			{
-				fieldValueAsNumber = Convert.ToInt32(fieldValue);
+            {
+                fieldValueAsNumber = Convert.ToInt32(fieldValue);
                 conditionValueAsNumber = Convert.ToInt32(conditionValue);
             }
-			else if (condition.Argument.DataType == "Double")
-			{
+            else if (condition.Argument.DataType == "Double")
+            {
                 fieldValueAsNumber = Convert.ToDouble(fieldValue);
                 conditionValueAsNumber = Convert.ToDouble(conditionValue);
             }
 
             if (fieldValueAsNumber is IComparable fieldComparable && conditionValueAsNumber is IComparable conditionComparable)
-			{
-				return fieldComparable.CompareTo(conditionComparable);
-			}
+            {
+                return fieldComparable.CompareTo(conditionComparable);
+            }
 
-			throw new InvalidOperationException("Значения не сравнимы!\n");
-		}
+            throw new InvalidOperationException("Значения не сравнимы!\n");
+        }
 
-		/// <summary>
-		/// Добавить запись
-		/// </summary>
-		/// <returns></returns>
-		private object AddRecord()
-		{
+        /// <summary>
+        /// Добавить запись
+        /// </summary>
+        /// <returns></returns>
+        private object AddRecord()
+        {
             // Проверяем наличие всех полей с названиями аргументов
             var missingFields = Arguments.Where(argument =>
                 SelectedTable.Fields.All(field => field.Name != argument.Name)).ToList();
@@ -146,73 +146,73 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
                 return $"Количество аргументов превышает количество полей в таблице!\n";
             }
 
-			var result = "";
+            var result = "";
 
-			foreach (var argument in Arguments)
-			{
-				var field = SelectedTable.Fields.FirstOrDefault(f => f.Name == argument.Name);
+            foreach (var argument in Arguments)
+            {
+                var field = SelectedTable.Fields.FirstOrDefault(f => f.Name == argument.Name);
 
-				if (field != null)
-				{
-					field.Data.Add(argument.Value);
+                if (field != null)
+                {
+                    field.Data.Add(argument.Value);
 
-					result += $"{argument.Name}: {argument.Value}; ";
-				}
-			}	
+                    result += $"{argument.Name}: {argument.Value}; ";
+                }
+            }	
 
-			return $"Запись {result}добавлена!\n";
-		}
+            return $"Запись {result}добавлена!\n";
+        }
 
-		private object UpdateRecord()
-		{
-			var indicesToUpdate = Enumerable.Range(0, SelectedTable.Fields.First().Data.Count).ToList();
+        private object UpdateRecord()
+        {
+            var indicesToUpdate = Enumerable.Range(0, SelectedTable.Fields.First().Data.Count).ToList();
 
-			foreach (var condition in Conditions)
-			{
-				var field = condition.Field;
-				var fieldIndex = SelectedTable.Fields.IndexOf(field);
-				indicesToUpdate = indicesToUpdate.Where(index => EvaluateCondition(field.Data[index], condition, condition.Argument.Value)).ToList();
-			}
+            foreach (var condition in Conditions)
+            {
+                var field = condition.Field;
+                var fieldIndex = SelectedTable.Fields.IndexOf(field);
+                indicesToUpdate = indicesToUpdate.Where(index => EvaluateCondition(field.Data[index], condition, condition.Argument.Value)).ToList();
+            }
 
-			var result = "";
-			foreach (var index in indicesToUpdate)
-			{
-				foreach (var argument in Arguments)
-				{
-					var field = SelectedTable.Fields.FirstOrDefault(f => f.Name == argument.Name);
-					if (field != null)
-					{
-						field.Data[index] = argument.Value;
-						result += $"{argument.Name}: {argument.Value}; ";
-					}
-				}
-			}
+            var result = "";
+            foreach (var index in indicesToUpdate)
+            {
+                foreach (var argument in Arguments)
+                {
+                    var field = SelectedTable.Fields.FirstOrDefault(f => f.Name == argument.Name);
+                    if (field != null)
+                    {
+                        field.Data[index] = argument.Value;
+                        result += $"{argument.Name}: {argument.Value}; ";
+                    }
+                }
+            }
 
-			return result;
-		}
+            return result;
+        }
 
-		private object DeleteRecord()
-		{
-			var indicesToDelete = Enumerable.Range(0, SelectedTable.Fields.First().Data.Count).ToList();
+        private object DeleteRecord()
+        {
+            var indicesToDelete = Enumerable.Range(0, SelectedTable.Fields.First().Data.Count).ToList();
 
-			foreach (var condition in Conditions)
-			{
-				var field = condition.Field;
-				var fieldIndex = SelectedTable.Fields.IndexOf(field);
-				indicesToDelete = indicesToDelete.Where(index => EvaluateCondition(field.Data[index], condition, condition.Argument.Value)).ToList();
-			}
+            foreach (var condition in Conditions)
+            {
+                var field = condition.Field;
+                var fieldIndex = SelectedTable.Fields.IndexOf(field);
+                indicesToDelete = indicesToDelete.Where(index => EvaluateCondition(field.Data[index], condition, condition.Argument.Value)).ToList();
+            }
 
-			var result = "";
-			foreach (var index in indicesToDelete.OrderByDescending(i => i))
-			{
-				foreach (var field in SelectedTable.Fields)
-				{
-					result += $"{field.Name}: {field.Data[index]}; ";
-					field.Data.RemoveAt(index);
-				}
-			}
+            var result = "";
+            foreach (var index in indicesToDelete.OrderByDescending(i => i))
+            {
+                foreach (var field in SelectedTable.Fields)
+                {
+                    result += $"{field.Name}: {field.Data[index]}; ";
+                    field.Data.RemoveAt(index);
+                }
+            }
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 }

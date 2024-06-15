@@ -7,5 +7,5 @@
         public string Value { get; set; } // Значение
 
         public ArgumentModel() { }
-	}
+    }
 }

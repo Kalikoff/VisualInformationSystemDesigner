@@ -50,8 +50,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
         {
             var fieldsViewModel = new FieldsViewModel(ref _table, this);
             var fieldsView = new FieldsView();
-			fieldsView.DataContext = fieldsViewModel;
-			fieldsView.Show();
+            fieldsView.DataContext = fieldsViewModel;
+            fieldsView.Show();
         }
     }
 }

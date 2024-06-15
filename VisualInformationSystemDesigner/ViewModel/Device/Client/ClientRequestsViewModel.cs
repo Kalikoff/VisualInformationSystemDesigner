@@ -10,53 +10,53 @@ using VisualInformationSystemDesigner.ViewModel.Dialogs;
 
 namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 {
-	class ClientRequestsViewModel : BaseViewModel
+    class ClientRequestsViewModel : BaseViewModel
     {
-		private ClientModel _client; // Ссылка на клиента
-		public ClientModel Client
-		{
-			get => _client;
-			set
-			{
-				if (_client != value)
-				{
-					_client = value;
-					OnPropertyChanged(nameof(Client));
-				}
-			}
-		}
+        private ClientModel _client; // Ссылка на клиента
+        public ClientModel Client
+        {
+            get => _client;
+            set
+            {
+                if (_client != value)
+                {
+                    _client = value;
+                    OnPropertyChanged(nameof(Client));
+                }
+            }
+        }
 
-		private ObservableCollection<RequestViewModel> _requestsVM = new(); // Список запросов клиента
-		public ObservableCollection<RequestViewModel> RequestsVM
-		{
-			get => _requestsVM;
-			set
-			{
-				if (_requestsVM != value)
-				{
-					_requestsVM = value;
-					OnPropertyChanged(nameof(RequestsVM));
-				}
-			}
-		}
+        private ObservableCollection<RequestViewModel> _requestsVM = new(); // Список запросов клиента
+        public ObservableCollection<RequestViewModel> RequestsVM
+        {
+            get => _requestsVM;
+            set
+            {
+                if (_requestsVM != value)
+                {
+                    _requestsVM = value;
+                    OnPropertyChanged(nameof(RequestsVM));
+                }
+            }
+        }
 
         public ICommand DeleteDeviceCommand { get; }
         public ICommand AddRequestCommand { get; }
 
-		public ClientRequestsViewModel(ref DeviceModel client)
-		{
-			Client = (ClientModel)client;
+        public ClientRequestsViewModel(ref DeviceModel client)
+        {
+            Client = (ClientModel)client;
 
-			// Получение всех запросов из Клиента
-			for (int i = 0; i < Client.Requests.Count; i++)
-			{
-				var request = Client.Requests[i];
-				RequestsVM.Add(new RequestViewModel(ref request, this));
-			}
+            // Получение всех запросов из Клиента
+            for (int i = 0; i < Client.Requests.Count; i++)
+            {
+                var request = Client.Requests[i];
+                RequestsVM.Add(new RequestViewModel(ref request, this));
+            }
 
             DeleteDeviceCommand = new RelayCommand<Window>(DeleteDevice);
             AddRequestCommand = new RelayCommand(AddRequest);
-		}
+        }
 
         /// <summary>
         /// Удаление представления модели запроса
@@ -64,10 +64,10 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
         /// <param name="request"></param>
         /// <param name="requestVM"></param>
         public void DeleteRequest(RequestModel request, RequestViewModel requestVM)
-		{
-			_client.Requests.Remove(request);
-			_requestsVM.Remove(requestVM);
-		}
+        {
+            _client.Requests.Remove(request);
+            _requestsVM.Remove(requestVM);
+        }
 
         /// <summary>
         /// Удалить это устройство
@@ -87,19 +87,19 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
         /// </summary>
         /// <param name="parameter"></param>
         private void AddRequest(object parameter)
-		{
-			var dialogAddDeviceViewModel = new AddItemDialogViewModel();
-			var dialogAddDeviceView = new AddItemDialogView();
-			dialogAddDeviceView.DataContext = dialogAddDeviceViewModel;
+        {
+            var dialogAddDeviceViewModel = new AddItemDialogViewModel();
+            var dialogAddDeviceView = new AddItemDialogView();
+            dialogAddDeviceView.DataContext = dialogAddDeviceViewModel;
 
-			if (dialogAddDeviceView.ShowDialog() == true)
-			{
-				Client.Requests.Add(new RequestModel() { Name = dialogAddDeviceViewModel.ItemName}); // Добавление запроса
+            if (dialogAddDeviceView.ShowDialog() == true)
+            {
+                Client.Requests.Add(new RequestModel() { Name = dialogAddDeviceViewModel.ItemName}); // Добавление запроса
 
-				var request = Client.Requests[^1];
+                var request = Client.Requests[^1];
 
-				RequestsVM.Add(new RequestViewModel(ref request, this));
-			}
-		}
-	}
+                RequestsVM.Add(new RequestViewModel(ref request, this));
+            }
+        }
+    }
 }

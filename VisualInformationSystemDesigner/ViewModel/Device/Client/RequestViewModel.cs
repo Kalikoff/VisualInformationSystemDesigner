@@ -6,39 +6,39 @@ using VisualInformationSystemDesigner.View.Device.Client;
 
 namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 {
-	class RequestViewModel : BaseViewModel
+    class RequestViewModel : BaseViewModel
     {
-		private RequestModel _request; // Ссылка на запрос
-		public RequestModel Request
-		{
-			get => _request;
-			set
-			{
-				if (_request != value)
-				{
-					_request = value;
-					OnPropertyChanged(nameof(Request));
-				}
-			}
-		}
+        private RequestModel _request; // Ссылка на запрос
+        public RequestModel Request
+        {
+            get => _request;
+            set
+            {
+                if (_request != value)
+                {
+                    _request = value;
+                    OnPropertyChanged(nameof(Request));
+                }
+            }
+        }
 
-		private ClientRequestsViewModel _clientRequestsVM;
+        private ClientRequestsViewModel _clientRequestsVM;
 
         public ICommand ShowRequestsWindowCommand { get; }
 
-		public RequestViewModel(ref RequestModel request, ClientRequestsViewModel clientRequestsVM)
-		{
-			Request = request;
-			_clientRequestsVM = clientRequestsVM;
+        public RequestViewModel(ref RequestModel request, ClientRequestsViewModel clientRequestsVM)
+        {
+            Request = request;
+            _clientRequestsVM = clientRequestsVM;
 
-			ShowRequestsWindowCommand = new RelayCommand(ShowRequestsWindow);
-		}
+            ShowRequestsWindowCommand = new RelayCommand(ShowRequestsWindow);
+        }
 
-		/// <summary>
-		/// Удаление запроса
-		/// </summary>
-		public void DeleteRequest()
-		{
+        /// <summary>
+        /// Удаление запроса
+        /// </summary>
+        public void DeleteRequest()
+        {
             _clientRequestsVM.DeleteRequest(Request, this);
         }
 
@@ -47,11 +47,11 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
         /// </summary>
         /// <param name="parameter"></param>
         public void ShowRequestsWindow(object parameter)
-		{
-			var requestSettingsViewModel = new RequestSettingsViewModel(ref _request, this);
-			var requestSettingsView = new RequestSettingsView();
-			requestSettingsView.DataContext = requestSettingsViewModel;
-			requestSettingsView.Show();
-		}
-	}
+        {
+            var requestSettingsViewModel = new RequestSettingsViewModel(ref _request, this);
+            var requestSettingsView = new RequestSettingsView();
+            requestSettingsView.DataContext = requestSettingsViewModel;
+            requestSettingsView.Show();
+        }
+    }
 }
