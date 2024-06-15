@@ -22,13 +22,21 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
             }
         }
 
+        private ServerMethodsViewModel _serverMethodsVM;
+
         public ICommand ShowMethodSettingsWindowCommand { get; }
 
-        public MethodViewModel(ref MethodModel method)
+        public MethodViewModel(ref MethodModel method, ServerMethodsViewModel serverMethodsVM)
         {
             Method = method;
+            _serverMethodsVM = serverMethodsVM;
 
             ShowMethodSettingsWindowCommand = new RelayCommand(ShowMethodSettingsWindow);
+        }
+
+        public void DeleteMethod()
+        {
+            _serverMethodsVM.DeleteMethod(Method, this);
         }
 
         /// <summary>
@@ -37,7 +45,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         /// <param name="parameter"></param>
         public void ShowMethodSettingsWindow(object parameter)
         {
-            var methodSettingsViewModel = new MethodSettingsViewModel(ref _method);
+            var methodSettingsViewModel = new MethodSettingsViewModel(ref _method, this);
             var methodSettingsView = new MethodSettingsView();
             methodSettingsView.DataContext = methodSettingsViewModel;
             methodSettingsView.Show();

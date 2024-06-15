@@ -51,11 +51,22 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 			for (int i = 0; i < Client.Requests.Count; i++)
 			{
 				var request = Client.Requests[i];
-				RequestsVM.Add(new RequestViewModel(ref request));
+				RequestsVM.Add(new RequestViewModel(ref request, this));
 			}
 
             DeleteDeviceCommand = new RelayCommand<Window>(DeleteDevice);
             AddRequestCommand = new RelayCommand(AddRequest);
+		}
+
+        /// <summary>
+        /// Удаление представления модели запроса
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="requestVM"></param>
+        public void DeleteRequest(RequestModel request, RequestViewModel requestVM)
+		{
+			_client.Requests.Remove(request);
+			_requestsVM.Remove(requestVM);
 		}
 
         /// <summary>
@@ -87,7 +98,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 
 				var request = Client.Requests[^1];
 
-				RequestsVM.Add(new RequestViewModel(ref request));
+				RequestsVM.Add(new RequestViewModel(ref request, this));
 			}
 		}
 	}

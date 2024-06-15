@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device.Database;
 using VisualInformationSystemDesigner.Model.Device.Server;
@@ -22,6 +23,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
                 }
             }
         }
+
+        private MethodViewModel _methodVM;
 
         private ArgumentModel _newArgument = new(); // Новый аргумент
         public ArgumentModel NewArgument
@@ -55,6 +58,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
 
         public ObservableCollection<DatabaseModel> Databases { get; set; } // Список доступных баз данных
 
+        public ICommand DeleteMethodCommand { get; } // Удалить метод
+
         public ICommand AddArgumentCommand { get; } // Добавить аргумент
         public ICommand RemoveArgumentCommand { get; } // Удалить аргумент
 
@@ -64,9 +69,10 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         public ICommand AddConditionCommand { get; } // Добавить условие
         public ICommand RemoveConditionCommand { get; } // Удалить условие
 
-		public MethodSettingsViewModel(ref MethodModel method)
+		public MethodSettingsViewModel(ref MethodModel method, MethodViewModel methodVM)
         {
             Method = method;
+            _methodVM = methodVM;
 
             Databases = new ObservableCollection<DatabaseModel>(DeviceListLocator.Instance.Databases.Cast<DatabaseModel>());
 
@@ -74,6 +80,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
             {
                 Tables.Add(Method.SelectedTable);
             }
+
+            DeleteMethodCommand = new RelayCommand<Window>(DeleteMethod);
 
             AddArgumentCommand = new RelayCommand(AddArgument);
             RemoveArgumentCommand = new RelayCommand(RemoveArgument);
@@ -83,6 +91,16 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
 
             AddConditionCommand = new RelayCommand(AddCondition);
             RemoveConditionCommand = new RelayCommand(RemoveCondition);
+        }
+
+        /// <summary>
+        /// Удаление метода
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void DeleteMethod(Window window)
+        {
+            _methodVM.DeleteMethod();
+            window.Close();
         }
 
         /// <summary>

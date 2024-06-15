@@ -51,11 +51,21 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
             for (int i = 0; i < Database.Tables.Count; i++)
             {
                 var table = Database.Tables[i];
-                TablesVM.Add(new TableViewModel(ref table, ref _database));
+                TablesVM.Add(new TableViewModel(ref table, this));
             }
 
             DeleteDeviceCommand = new RelayCommand<Window>(DeleteDevice);
             AddTableCommand = new RelayCommand(AddTable);
+        }
+
+        /// <summary>
+        /// Удаление представлния модели таблицы из списка
+        /// </summary>
+        /// <param name="tableVM">Представлние модели таблицы</param>
+        public void DeleteTableVM(TableModel table, TableViewModel tableVM)
+        {
+            _database.Tables.Remove(table);
+            _tablesVM.Remove(tableVM);
         }
 
         /// <summary>
@@ -83,39 +93,11 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
 
             if (dialogAddDeviceView.ShowDialog() == true)
             {
-                // Тестовый код
-                Database.Tables.Add(new TableModel
-                {
-                    Name = dialogAddDeviceViewModel.ItemName,
-                    Fields =
-                    [
-                        new()
-                        {
-                            Name = "Id",
-                            Data = ["1","2","3"],
-                            DataType = "Int"
-                        },
-                        new()
-                        {
-                            Name = "Name",
-                            Data = ["Masha", "Misha", "Alex"],
-                            DataType = "String"
-                        },
-                        new()
-                        {
-                            Name = "Role",
-                            Data = ["Admin", "Client", "Client"],
-                            DataType = "String"
-                        }
-                    ]
-                });
-                ///////////////////////////////////////////////////
-
-                //Database.Tables.Add(new TableModel { Name = dialogAddDeviceViewModel.ItemName }); // Добавление таблицы
+                Database.Tables.Add(new TableModel { Name = dialogAddDeviceViewModel.ItemName }); // Добавление таблицы
 
                 var table = Database.Tables[^1];
 
-                TablesVM.Add(new TableViewModel(ref table, ref _database));
+                TablesVM.Add(new TableViewModel(ref table, this));
             }
         }
     }

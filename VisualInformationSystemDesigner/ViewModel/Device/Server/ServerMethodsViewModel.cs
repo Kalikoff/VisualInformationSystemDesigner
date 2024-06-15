@@ -51,11 +51,22 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
             for (int i = 0; i < Server.Methods.Count; i++)
             {
                 var method = Server.Methods[i];
-                MethodsVM.Add(new MethodViewModel(ref method));
+                MethodsVM.Add(new MethodViewModel(ref method, this));
             }
 
             DeleteDeviceCommand = new RelayCommand<Window>(DeleteDevice);
             AddMethodCommand = new RelayCommand(AddMethod);
+        }
+
+        /// <summary>
+        /// Удаление представления модели метода
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="methodVM"></param>
+        public void DeleteMethod(MethodModel method, MethodViewModel methodVM)
+        {
+            _server.Methods.Remove(method);
+            _methodsVM.Remove(methodVM);
         }
 
         /// <summary>
@@ -87,7 +98,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
 
                 var method = Server.Methods[^1];
 
-                MethodsVM.Add(new MethodViewModel(ref method));
+                MethodsVM.Add(new MethodViewModel(ref method, this));
             }
         }
     }

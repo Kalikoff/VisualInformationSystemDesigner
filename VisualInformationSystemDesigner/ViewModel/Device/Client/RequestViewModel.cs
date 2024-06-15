@@ -22,22 +22,33 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 			}
 		}
 
-		public ICommand ShowRequestsWindowCommand { get; }
+		private ClientRequestsViewModel _clientRequestsVM;
 
-		public RequestViewModel(ref RequestModel request)
+        public ICommand ShowRequestsWindowCommand { get; }
+
+		public RequestViewModel(ref RequestModel request, ClientRequestsViewModel clientRequestsVM)
 		{
 			Request = request;
+			_clientRequestsVM = clientRequestsVM;
 
 			ShowRequestsWindowCommand = new RelayCommand(ShowRequestsWindow);
 		}
 
 		/// <summary>
-		/// Отображение окна с настройками Запроса
+		/// Удаление запроса
 		/// </summary>
-		/// <param name="parameter"></param>
-		public void ShowRequestsWindow(object parameter)
+		public void DeleteRequest()
 		{
-			var requestSettingsViewModel = new RequestSettingsViewModel(ref _request);
+            _clientRequestsVM.DeleteRequest(Request, this);
+        }
+
+        /// <summary>
+        /// Отображение окна с настройками Запроса
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void ShowRequestsWindow(object parameter)
+		{
+			var requestSettingsViewModel = new RequestSettingsViewModel(ref _request, this);
 			var requestSettingsView = new RequestSettingsView();
 			requestSettingsView.DataContext = requestSettingsViewModel;
 			requestSettingsView.Show();

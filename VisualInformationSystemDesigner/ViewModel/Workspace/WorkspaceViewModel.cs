@@ -5,8 +5,6 @@ using System.IO;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model;
 using VisualInformationSystemDesigner.Model.Device;
-using VisualInformationSystemDesigner.Model.Device.Database;
-using VisualInformationSystemDesigner.Model.Device.Server;
 using VisualInformationSystemDesigner.Utilities;
 using VisualInformationSystemDesigner.ViewModel.Device;
 using VisualInformationSystemDesigner.ViewModel.DevicesList;
@@ -116,8 +114,8 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             }
         }
 
-        public ICommand SaveProjectCommand { get; }
-        public ICommand UploadProjectCommand { get; }
+        public ICommand SaveProjectCommand { get; } // Команда сохранения проекта в файл
+        public ICommand UploadProjectCommand { get; } // Команда загрузка проекта из файла
 
         public WorkspaceViewModel()
         {
@@ -127,8 +125,6 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             DeviceListLocator.Instance.ServersVM = _serversVM;
             DeviceListLocator.Instance.Clients = _clients;
             DeviceListLocator.Instance.ClientsVM = _clientsVM;
-
-            Test();
 
             var databases = new DevicesListViewModel("БАЗЫ ДАННЫХ", ref _databases, ref _databasesVM, DeviceType.Database);
             var servers = new DevicesListViewModel("СЕРВЕРА", ref _servers, ref _serversVM, DeviceType.Server);
@@ -142,6 +138,10 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             UploadProjectCommand = new RelayCommand(UploadProject);
         }
 
+        /// <summary>
+        /// Сохранение проекта в файл
+        /// </summary>
+        /// <param name="parameter"></param>
         private void SaveProject(object parameter)
         {
             var dataToSave = new DataToSave
@@ -156,10 +156,19 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
             File.WriteAllText("project.json", json);
         }
 
+        /// <summary>
+        /// Загрузка проекта из файла
+        /// </summary>
+        /// <param name="parameter"></param>
         public void UploadProject(object parameter)
         {
             string loadedJson = File.ReadAllText("project.json");
             var loadedData = JsonConvert.DeserializeObject<DataToSave>(loadedJson);
+
+            if (loadedData == null)
+            {
+                return;
+            }
 
             _databases.Clear();
             _databasesVM.Clear();
@@ -175,9 +184,6 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                 _databases.Add(database);
                 var refDatabase = _databases[^1];
                 _databasesVM.Add(new DeviceViewModel(ref refDatabase));
-
-                OnPropertyChanged(nameof(Databases));
-                OnPropertyChanged(nameof(DatabasesVM));
             }
 
             foreach (var server in loadedData.Servers)
@@ -185,9 +191,6 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                 _servers.Add(server);
                 var refServer = _servers[^1];
                 _serversVM.Add(new DeviceViewModel(ref refServer));
-
-                OnPropertyChanged(nameof(Servers));
-                OnPropertyChanged(nameof(ServersVM));
             }
 
             foreach (var client in loadedData.Clients)
@@ -195,72 +198,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
                 _clients.Add(client);
                 var refClient = _clients[^1];
                 _clientsVM.Add(new DeviceViewModel(ref refClient));
-
-                OnPropertyChanged(nameof(Clients));
-                OnPropertyChanged(nameof(ClientsVM));
             }
-        }
-
-        private void Test()
-        {
-            Databases.Add(new DatabaseModel
-            {
-                DeviceType = DeviceType.Database,
-                Name = "DB1",
-                Tables = new ObservableCollection<TableModel>
-                {
-                    new TableModel
-                    {
-                        Name = "t1",
-                        Fields =
-                        [
-                            new()
-                            {
-                                Name = "Id",
-                                Data = ["1","2","3"],
-                                DataType = "Int"
-                            },
-                            new()
-                            {
-                                Name = "Name",
-                                Data = ["Masha", "Misha", "Alex"],
-                                DataType = "String"
-                            },
-                            new()
-                            {
-                                Name = "Role",
-                                Data = ["Admin", "Client", "Client"],
-                                DataType = "String"
-                            }
-                        ]
-                    },
-                    new TableModel
-                    {
-                        Name = "t2",
-                        Fields =
-                        [
-                            new()
-                            {
-                                Name = "Id",
-                                Data = ["1","2"],
-                                DataType = "Int"
-                            },
-                            new()
-                            {
-                                Name = "Work",
-                                Data = ["Admin", "Programmer"],
-                                DataType = "String"
-                            }
-                        ]
-                    }
-                }
-            });
-
-            Servers.Add(new ServerModel
-            {
-                DeviceType = DeviceType.Server,
-                Name = "S1"
-            });
         }
     }
 }

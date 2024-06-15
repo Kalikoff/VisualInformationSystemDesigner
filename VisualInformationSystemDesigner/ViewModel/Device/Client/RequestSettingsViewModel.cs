@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device.Client;
 using VisualInformationSystemDesigner.Model.Device.Server;
@@ -23,7 +24,9 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
 			}
 		}
 
-		private ObservableCollection<ServerModel> _servers;
+        private RequestViewModel _requestVM;
+
+        private ObservableCollection<ServerModel> _servers;
 		public ObservableCollection<ServerModel> Servers
 		{
 			get => _servers;
@@ -51,24 +54,37 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
             }
         }
 
-		public ICommand GetResponseCommand { get; set; }
-		public ICommand ClearConsoleCommand { get; set; }
+		public ICommand DeleteRequestCommand { get; }
+        public ICommand GetResponseCommand { get; }
+		public ICommand ClearConsoleCommand { get; }
 
-        public RequestSettingsViewModel(ref RequestModel request)
+        public RequestSettingsViewModel(ref RequestModel request, RequestViewModel requestVM)
         {
 			Request = request;
+			_requestVM = requestVM;
 
 			Servers = new ObservableCollection<ServerModel>(DeviceListLocator.Instance.Servers.Cast<ServerModel>());
 
+			DeleteRequestCommand = new RelayCommand<Window>(DeleteRequest);
 			GetResponseCommand = new RelayCommand(GetResponse);
 			ClearConsoleCommand = new RelayCommand(ClearConsole);
 		}
 
 		/// <summary>
-		/// Получить ответ от выбранного метода
+		/// Удаление запроса
 		/// </summary>
-		/// <param name="parameter"></param>
-		private void GetResponse(object parameter)
+		/// <param name="window"></param>
+		private void DeleteRequest(Window window)
+		{
+            _requestVM.DeleteRequest();
+            window.Close();
+        }
+
+        /// <summary>
+        /// Получить ответ от выбранного метода
+        /// </summary>
+        /// <param name="parameter"></param>
+        private void GetResponse(object parameter)
 		{
 			var response = Request.SelectedMethod.GetResponse();
 

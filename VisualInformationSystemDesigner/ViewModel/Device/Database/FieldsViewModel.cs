@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using MvvmHelpers;
+﻿using MvvmHelpers;
 using System.Windows;
 using System.Windows.Input;
 using VisualInformationSystemDesigner.Model.Device.Database;
@@ -25,30 +24,30 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Database
             }
         }
 
-        private DatabaseModel _database;
+        public TableViewModel _tableVM; // Ссылка на представление моделеи таблицы
 
         public ICommand DeleteTableCommand { get; }
         public ICommand AddFieldCommand { get; }
         public ICommand DeleteFieldCommand { get; }
 
-        public FieldsViewModel(ref TableModel table, ref DatabaseModel database)
+        public FieldsViewModel(ref TableModel table, TableViewModel tableVM)
         {
             Table = table;
-            _database = database;
+            _tableVM = tableVM;
 
             DeleteTableCommand = new RelayCommand<Window>(DeleteTable);
             AddFieldCommand = new RelayCommand(AddField);
             DeleteFieldCommand = new RelayCommand(DeleteField);
         }
 
+        /// <summary>
+        /// Удаление таблицы
+        /// </summary>
+        /// <param name="window"></param>
         private void DeleteTable(Window window)
         {
-            //DeviceListLocator.Instance.Databases.Remove(Database);
-            //var databaseVM = DeviceListLocator.Instance.DatabasesVM.First(d => d.Device == Database);
-            //DeviceListLocator.Instance.DatabasesVM.Remove(databaseVM);
-
-
-            //_database.Tables.Remove(Table);
+            _tableVM.DeleteTable();
+            window.Close();
         }
 
         private void AddField(object parameter)
