@@ -1,4 +1,5 @@
-﻿using MvvmHelpers;
+﻿using Microsoft.Win32;
+using MvvmHelpers;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -153,7 +154,17 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
 
             string json = JsonConvert.SerializeObject(dataToSave, Formatting.Indented);
 
-            File.WriteAllText("project.json", json);
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "VISD files (*.visd)|*.visd",
+                DefaultExt = "visd",
+                AddExtension = true
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, json);
+            }
         }
 
         /// <summary>
@@ -162,42 +173,51 @@ namespace VisualInformationSystemDesigner.ViewModel.Workspace
         /// <param name="parameter"></param>
         public void UploadProject(object parameter)
         {
-            string loadedJson = File.ReadAllText("project.json");
-            var loadedData = JsonConvert.DeserializeObject<DataToSave>(loadedJson);
-
-            if (loadedData == null)
+            OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                return;
-            }
+                Filter = "VISD files (*.visd)|*.visd",
+                DefaultExt = "visd"
+            };
 
-            _databases.Clear();
-            _databasesVM.Clear();
-
-            _servers.Clear();
-            _serversVM.Clear();
-
-            _clients.Clear();
-            _clientsVM.Clear();
-
-            foreach(var database in loadedData.Databases)
+            if (openFileDialog.ShowDialog() == true)
             {
-                _databases.Add(database);
-                var refDatabase = _databases[^1];
-                _databasesVM.Add(new DeviceViewModel(ref refDatabase));
-            }
+                string loadedJson = File.ReadAllText(openFileDialog.FileName);
+                var loadedData = JsonConvert.DeserializeObject<DataToSave>(loadedJson);
 
-            foreach (var server in loadedData.Servers)
-            {
-                _servers.Add(server);
-                var refServer = _servers[^1];
-                _serversVM.Add(new DeviceViewModel(ref refServer));
-            }
+                if (loadedData == null)
+                {
+                    return;
+                }
 
-            foreach (var client in loadedData.Clients)
-            {
-                _clients.Add(client);
-                var refClient = _clients[^1];
-                _clientsVM.Add(new DeviceViewModel(ref refClient));
+                _databases.Clear();
+                _databasesVM.Clear();
+
+                _servers.Clear();
+                _serversVM.Clear();
+
+                _clients.Clear();
+                _clientsVM.Clear();
+
+                foreach (var database in loadedData.Databases)
+                {
+                    _databases.Add(database);
+                    var refDatabase = _databases[^1];
+                    _databasesVM.Add(new DeviceViewModel(ref refDatabase));
+                }
+
+                foreach (var server in loadedData.Servers)
+                {
+                    _servers.Add(server);
+                    var refServer = _servers[^1];
+                    _serversVM.Add(new DeviceViewModel(ref refServer));
+                }
+
+                foreach (var client in loadedData.Clients)
+                {
+                    _clients.Add(client);
+                    var refClient = _clients[^1];
+                    _clientsVM.Add(new DeviceViewModel(ref refClient));
+                }
             }
         }
     }
