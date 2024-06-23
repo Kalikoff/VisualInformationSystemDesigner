@@ -48,7 +48,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Dialogs
         {
             var window = parameter as Window;
 
-            if (window != null)
+            if (window != null && ItemName != null)
             {
                 window.DialogResult = true;
             }

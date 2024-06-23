@@ -59,7 +59,12 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
                 records = records.Where(record => EvaluateCondition(record[field.Name], condition, argumentValue)).ToList();
             }
 
-            return records;
+            if (records.Count != 0)
+            {
+                return records;
+            }
+
+            return "Записи не найдены!";
         }
 
         /// <summary>
@@ -188,7 +193,12 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
                 }
             }
 
-            return result;
+            if (result != string.Empty)
+            {
+                return result;
+            }
+
+            return "Записи для редактирования не найдены!";
         }
 
         private object DeleteRecord()
@@ -212,7 +222,12 @@ namespace VisualInformationSystemDesigner.Model.Device.Server
                 }
             }
 
-            return result;
+            if (result != string.Empty)
+            {
+                return result;
+            }
+
+            return "Записи для удаления не найдены!";
         }
     }
 }

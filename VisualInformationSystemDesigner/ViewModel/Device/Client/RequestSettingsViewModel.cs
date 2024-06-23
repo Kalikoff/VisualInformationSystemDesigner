@@ -100,6 +100,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Client
             {
                 ConsoleOutput += response + "\n";
             }
+            
         }
 
         /// <summary>

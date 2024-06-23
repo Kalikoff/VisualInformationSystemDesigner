@@ -37,7 +37,13 @@ namespace VisualInformationSystemDesigner.ViewModel.Dialogs
 
             if (window != null)
             {
-                window.DialogResult = true;
+                if (ItemName != null)
+                {
+                    if (ItemName != string.Empty)
+                    {
+                        window.DialogResult = true;
+                    }
+                }
             }
         }
 
