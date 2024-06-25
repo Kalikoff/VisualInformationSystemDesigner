@@ -109,7 +109,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Device.Server
         /// <param name="parameter"></param>
         private void AddArgument(object parameter)
         {
-            if (NewArgument.DataType == null || NewArgument.Name == null)
+            if (NewArgument.DataType == null || NewArgument.Name == string.Empty)
             {
                 return;
             }

@@ -78,8 +78,9 @@
                                 <ItemsControl ItemsSource="{Binding Data}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBox Text="{Binding Path=., Mode=TwoWay}"
+                                            <TextBox Text="{Binding Path=., Mode=OneWay}"
                                                      Margin="0, 5"
+                                                     IsReadOnly="True"
                                                      Style="{StaticResource TextBoxStyle}"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>

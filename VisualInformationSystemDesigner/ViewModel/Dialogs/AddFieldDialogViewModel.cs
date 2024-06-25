@@ -7,7 +7,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Dialogs
 {
     public class AddFieldDialogViewModel : BaseViewModel
     {
-        private string _itemName;
+        private string _itemName = string.Empty;
         public string ItemName
         {
             get => _itemName;
@@ -48,7 +48,7 @@ namespace VisualInformationSystemDesigner.ViewModel.Dialogs
         {
             var window = parameter as Window;
 
-            if (window != null && ItemName != null)
+            if (window != null && ItemName != string.Empty && ItemDataType != null)
             {
                 window.DialogResult = true;
             }

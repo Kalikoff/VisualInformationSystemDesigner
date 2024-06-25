@@ -55,7 +55,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <i:InvokeCommandAction Command="{Binding DeleteRequestCommand}"
-                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Border>

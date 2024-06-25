@@ -231,7 +231,7 @@
                                           Width="100"
                                           Style="{StaticResource ComboBoxStyle}"/>
 
-                                <TextBox Text="{Binding NewArgument.Name}"
+                                <TextBox Text="{Binding NewArgument.Name, UpdateSourceTrigger=PropertyChanged}"
                                          Width="150"
                                          Margin="10,0,10,0"
                                          Style="{StaticResource TextBoxStyle}"/>
